@@ -6,53 +6,35 @@ import { RouteConfig } from 'vue-router';
 
 const routes: RouteConfig = {
   path: 'clubs',
-  component: () =>
-    import(
-      /* webpackChunkName: "clubs" */ '../views/admin/clubs/clubs-home.vue'
-    ),
+  component: () => import('../views/admin/clubs/clubs-home.vue'),
   children: [
     {
       path: '',
-      component: () =>
-        import(
-          /* webpackChunkName: "clubs_admin_dashboard" */ '../views/admin/clubs/dashboard.vue'
-        ),
+      component: () => import('../views/admin/clubs/dashboard.vue'),
       name: 'Clubs Home',
       meta: { title: 'Home' },
     },
     {
       path: 'new',
       name: 'New Club',
-      component: () =>
-        import(
-          /* webpackChunkName: "clubs_form" */ '../views/admin/clubs/club-form.vue'
-        ),
+      component: () => import('../views/admin/clubs/club-form.vue'),
       meta: { title: 'New Club' },
       props: { isUpdate: false },
     },
     {
       path: ':id/:code',
-      component: () =>
-        import(
-          /* webpackChunkName: "club_home" */ '../views/admin/clubs/club-home.vue'
-        ),
+      component: () => import('../views/admin/clubs/club-home.vue'),
       children: [
         {
           path: '',
           name: 'View Club',
-          component: () =>
-            import(
-              /* webpackChunkName: "view_club" */ '../views/admin/clubs/view-club.vue'
-            ),
+          component: () => import('../views/admin/clubs/view-club.vue'),
           meta: { title: 'Club Home' },
         },
         {
           path: 'update',
           name: 'Update Club',
-          component: () =>
-            import(
-              /* webpackChunkName: "clubs_form" */ '../views/admin/clubs/club-form.vue'
-            ),
+          component: () => import('../views/admin/clubs/club-form.vue'),
           meta: { title: 'Update Club' },
           props: { isUpdate: true },
         },

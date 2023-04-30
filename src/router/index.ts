@@ -38,23 +38,18 @@ export function replaceParams(
 const routes: RouteConfig[] = [
   {
     path: '/auth',
-    component: () =>
-      import(/* webpackChunkName: "auth_home" */ '../views/auth/auth.vue'),
+    component: () => import('../views/auth/auth.vue'),
     name: 'Auth',
     redirect: 'auth/login',
     children: [
       {
         path: 'login',
-        component: () =>
-          import(/* webpackChunkName: "login" */ '../views/auth/login.vue'),
+        component: () => import('../views/auth/login.vue'),
         name: 'Login',
       },
       {
         path: 'join',
-        component: () =>
-          import(
-            /* webpackChunkName: "register" */ '../views/auth/register.vue'
-          ),
+        component: () => import('../views/auth/register.vue'),
         name: 'Register',
       },
     ],
@@ -72,23 +67,16 @@ const routes: RouteConfig[] = [
     children: [
       {
         path: 'a',
-        component: () =>
-          import(/* webpackChunkName: "admin" */ '../views/admin/admin.vue'),
+        component: () => import('../views/admin/admin.vue'),
         children: [
           {
             path: '',
-            component: () =>
-              import(
-                /* webpackChunkName: "admin_home" */ '../views/admin/dashboard.vue'
-              ),
+            component: () => import('../views/admin/dashboard.vue'),
             name: 'Admin Home',
           },
           {
             path: 'calendar',
-            component: () =>
-              import(
-                /* webpackChunkName: "calendar" */ '../views/admin/calendar/calendar.vue'
-              ),
+            component: () => import('../views/admin/calendar/calendar.vue'),
             name: 'Calendar',
           },
           competitions,
@@ -100,40 +88,27 @@ const routes: RouteConfig[] = [
       },
       {
         path: 'u',
-        component: () =>
-          import(/* webpackChunkName: "user" */ '../views/user/user.vue'),
+        component: () => import('../views/user/user.vue'),
         children: [
           {
             path: '',
-            component: () =>
-              import(
-                /* webpackChunkName: "admin" */ '../views/user/dashboard.vue'
-              ),
+            component: () => import('../views/user/dashboard.vue'),
             name: 'User Home',
           },
 
           {
             path: 'fixtures',
-            component: () =>
-              import(
-                /* webpackChunkName: "all_fixtures" */ '../views/user/seasons/fixtures.vue'
-              ),
+            component: () => import('../views/user/seasons/fixtures.vue'),
             name: 'All Fixtures',
           },
           {
             path: 'stats/:type/:season_id',
-            component: () =>
-              import(
-                /* webpackChunkName: "season_stats" */ '../views/user/seasons/stats.vue'
-              ),
+            component: () => import('../views/user/seasons/stats.vue'),
             name: 'Season Stats',
           },
           {
             path: 'lobby',
-            component: () =>
-              import(
-                /* webpackChunkName: "user_lobby" */ '../views/user/lobby.vue'
-              ),
+            component: () => import('../views/user/lobby.vue'),
             name: 'User Lobby',
           },
 
@@ -143,26 +118,17 @@ const routes: RouteConfig[] = [
       },
       {
         path: '/matchzone/:fixture',
-        component: () =>
-          import(
-            /* webpackChunkName: "matchzone" */ '../views/game/matchzone.vue'
-          ),
+        component: () => import('../views/game/matchzone.vue'),
         name: 'MatchZone',
       },
       {
         path: '/finish/season/:season_id',
-        component: () =>
-          import(
-            /* webpackChunkName: "finish_season" */ '../views/misc/end-of-season.vue'
-          ),
+        component: () => import('../views/misc/end-of-season.vue'),
         name: 'Finish Season',
       },
       {
         path: '/finish/year/:calendar_id',
-        component: () =>
-          import(
-            /* webpackChunkName: "finish_year" */ '../views/misc/end-of-year.vue'
-          ),
+        component: () => import('../views/misc/end-of-year.vue'),
         name: 'Finish Year',
       },
     ],

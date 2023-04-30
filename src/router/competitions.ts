@@ -12,7 +12,7 @@ const routes: RouteConfig = {
   path: 'competitions',
   component: () =>
     import(
-      /* webpackChunkName: "competitions" */ '../views/admin/competitions/Competitions.vue'
+      '../views/admin/competitions/Competitions.vue'
     ),
   children: [
     {
@@ -60,7 +60,7 @@ const routes: RouteConfig = {
           path: 'seasons',
           component: () =>
             import(
-              /* webpackChunkName: "seasons" */ '../views/admin/seasons/seasons-home.vue'
+            '../views/admin/seasons/seasons-home.vue'
             ),
           children: [
             {

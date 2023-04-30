@@ -6,10 +6,7 @@ import ManagerHome from '@/views/admin/managers/manager-home.vue';
 
 const routes: RouteConfig = {
   path: 'managers',
-  component: () =>
-    import(
-      /* webpackChunkName: "managers" */ '../views/admin/managers/managers-home.vue'
-    ),
+  component: () => import('../views/admin/managers/managers-home.vue'),
   children: [
     {
       path: '',
