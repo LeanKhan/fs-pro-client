@@ -1,5 +1,11 @@
-import Vue from 'vue';
-import Vuetify from 'vuetify/lib';
+import 'vuetify/styles'
+
+import { createVuetify } from 'vuetify'
+
+import '@mdi/font/css/materialdesignicons.css';
+
+import { aliases, mdi } from 'vuetify/iconsets/mdi';
+
 import LasenaUnitedIcon from '../icons/LU.vue';
 import DagadaRangersIcon from '../icons/DR.vue';
 import RisingThundersIcon from '../icons/RT.vue';
@@ -45,10 +51,51 @@ import BatsIcon from '../icons/BAT.vue';
 import NettsIcon from '../icons/NET.vue';
 import StorrLokomotivIcon from '../icons/LKM.vue';
 
-Vue.use(Vuetify);
+import * as components from 'vuetify/components';
+import * as directives from 'vuetify/directives';
 
-export default new Vuetify({
+// Misc
+import { loadFonts } from './webfontloader';
+
+await loadFonts();
+
+/**
+ * Vuetify Components
+ *
+ * Notice: This variable is used during development to load all components to speed up the display
+ *         and to reduce the size during build.
+ *
+ * @see {@link https://vuetifyjs.com/en/labs/introduction/}
+ */
+const vuetifyComponents = import.meta.env.DEV
+  ? {
+      components: {
+        components,
+      },
+      directives,
+    }
+  : {
+      components: {
+        components,
+      },
+    };
+    const fsProTheme = {
+      dark: false,
+      colors: {
+        primary: '#7535ed',
+        accent: '#c23361',
+        anchor: '#340f78',
+      }
+    }
+
+export default createVuetify({
+ vuetifyComponents,
   icons: {
+    defaultSet: 'mdi',
+    aliases,
+    sets: {
+      mdi,
+    },
     values: {
       LU: {
         component: LasenaUnitedIcon,
@@ -184,4 +231,11 @@ export default new Vuetify({
       },
     },
   },
+
+  theme: {
+    defaultTheme: 'fsProTheme',
+    themes: {
+      fsProTheme
+    }
+  }
 });

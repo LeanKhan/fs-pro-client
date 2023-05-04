@@ -1,68 +1,123 @@
-import { defineConfig } from 'vite';
-import { resolve } from 'path';
-import { createVuePlugin } from 'vite-plugin-vue2';
-import Components from 'unplugin-vue-components/vite';
-import { VuetifyResolver } from 'unplugin-vue-components/resolvers';
+import { fileURLToPath, URL } from 'node:url';
+import { writeFileSync } from 'node:fs';
 
-const rollupOptions = {};
+import { defineConfig, type UserConfig } from 'vite';
+import { visualizer } from 'rollup-plugin-visualizer';
+import { checker } from 'vite-plugin-checker';
+import vue from '@vitejs/plugin-vue';
+import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify';
 
-const alias = [
-  { find: /^~/, replacement: '' },
-  { find: 'vue', replacement: 'vue/dist/vue.esm' },
-  {
-    find: '@',
-    replacement: resolve(__dirname, './src'),
-  },
-];
+// @ts-nocheck
+import pkg from './package.json';
 
-const proxy = {};
-
-const define = {
-  'process.env.NODE_ENV': '"development"',
-  'precess.env.SITE_NAME': '"FSPro"',
-};
-
-const esbuild = {};
-
-export default defineConfig({
-  resolve: {
-    alias,
-    extensions: [
-      '.mjs',
-      '.js',
-      '.ts',
-      '.jsx',
-      '.tsx',
-      '.json',
-      '.vue',
-      '.styl',
+/**
+ * Vite Configure
+ *
+ * @see {@link https://vitejs.dev/config/}
+ */
+export default defineConfig(async ({ command, mode }): Promise<UserConfig> => {
+  const config: UserConfig = {
+    // https://vitejs.dev/config/shared-options.html#base
+    base: './',
+    // https://vitejs.dev/config/shared-options.html#define
+    define: { 'process.env': {} },
+    plugins: [
+      // Vue3
+      vue({
+        template: {
+          // https://github.com/vuetifyjs/vuetify-loader/tree/next/packages/vite-plugin#image-loading
+          transformAssetUrls,
+        },
+      }),
+      // Vuetify Loader
+      // https://github.com/vuetifyjs/vuetify-loader/tree/next/packages/vite-plugin#vite-plugin-vuetify
+      vuetify({
+        autoImport: true,
+        styles: { configFile: 'src/styles/settings.scss' },
+      }),
+      // vite-plugin-checker
+      // https://github.com/fi3ework/vite-plugin-checker
+      checker({
+        typescript: true,
+        vueTsc: true,
+        eslint: {
+          lintCommand:
+            'eslint . --fix --cache --cache-location ./node_modules/.vite/vite-plugin-eslint', // for example, lint .ts & .tsx
+        },
+      }),
     ],
-    dedupe: ['vue-demi'],
-  },
-  build: {
-    target: 'es2015',
-    minify: 'terser',
-    manifest: false,
-    sourcemap: false,
-    outDir: 'build',
-    rollupOptions,
-  },
-  esbuild,
-  server: {
-    proxy,
-    port: 8080,
-  },
-  define,
-  plugins: [
-    createVuePlugin({
-      vueTemplateOptions: {
-        compilerOptions: {
-          whitespace: 'condense',
+    // https://vitejs.dev/config/server-options.html
+    server: {
+      fs: {
+        // Allow serving files from one level up to the project root
+        allow: ['..'],
+      },
+    },
+    // Resolver
+    resolve: {
+      // https://vitejs.dev/config/shared-options.html#resolve-alias
+      alias: {
+        '@': fileURLToPath(new URL('./src', import.meta.url)),
+        '~': fileURLToPath(new URL('./node_modules', import.meta.url)),
+      },
+      extensions: ['.js', '.json', '.jsx', '.mjs', '.ts', '.tsx', '.vue'],
+    },
+    // Build Options
+    // https://vitejs.dev/config/build-options.html
+    build: {
+      // Build Target
+      // https://vitejs.dev/config/build-options.html#build-target
+      target: 'esnext',
+      // Minify option
+      // https://vitejs.dev/config/build-options.html#build-minify
+      minify: 'esbuild',
+      // Rollup Options
+      // https://vitejs.dev/config/build-options.html#build-rollupoptions
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            // Split external library from transpiled code.
+            vue: ['vue', 'vue-router', 'pinia', 'pinia-plugin-persistedstate'],
+            vuetify: [
+              'vuetify',
+              'vuetify/components',
+              'vuetify/directives',
+              'webfontloader',
+            ],
+            materialdesignicons: ['@mdi/font/css/materialdesignicons.css'],
+          },
+          plugins: [
+            mode === 'analyze'
+              ? // rollup-plugin-visualizer
+                // https://github.com/btd/rollup-plugin-visualizer
+                visualizer({
+                  open: true,
+                  filename: 'dist/stats.html',
+                })
+              : undefined,
+          ],
         },
       },
-    }),
-    Components({
-      resolvers: [VuetifyResolver()],
-    }),
-  ],
+    },
+    esbuild: {
+      // Drop console when production build.
+      drop: command === 'serve' ? [] : ['console'],
+    },
+  };
+
+  // Write meta data.
+  writeFileSync(
+    fileURLToPath(new URL('./src/Meta.ts', import.meta.url)),
+    `import type MetaInterface from '@/interfaces/MetaInterface';
+
+// This file is auto-generated by the build system.
+const meta: MetaInterface = {
+  version: '${pkg.version}',
+  date: '${new Date().toISOString()}',
+};
+export default meta;
+`
+  );
+
+  return config;
 });

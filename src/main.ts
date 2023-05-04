@@ -1,28 +1,22 @@
-import Vue from 'vue';
+import { createApp } from 'vue';
 import App from './App.vue';
 import vuetify from './plugins/vuetify';
 import router from './router';
 import store, { apiUrl } from './store';
-import axios, { AxiosStatic } from 'axios';
+import axios from 'axios';
 import { roundTo, ordinal } from './helpers/misc';
 
 import VueSocketIOExt from 'vue-socket.io-extended';
 import io from 'socket.io-client';
 
-const socket = io(`${apiUrl}`, { autoConnect: false });
+const app = createApp(App);
 
-Vue.use(VueSocketIOExt, socket);
+const socket = io(`${apiUrl}`, { autoConnect: false });
 
 // baseURL: 'http://localhost:3000/api',
 
 export const $axios = axios.create({
   baseURL: `${apiUrl}/api`,
-});
-
-Vue.use({
-  install() {
-    Vue.prototype.$axios = $axios;
-  },
 });
 
 const formatter = new Intl.NumberFormat('en-US', {
@@ -31,23 +25,28 @@ const formatter = new Intl.NumberFormat('en-US', {
 });
 
 
-Vue.filter('currency', (value: number) => `${formatter.format(value)}`);
-
-Vue.filter('roundTo', roundTo);
-
-Vue.filter('ordinal', ordinal);
-
-declare module 'vue/types/vue' {
-  interface Vue {
-    $axios: AxiosStatic;
-  }
+app.config.globalProperties.$filters = {
+  currency: (value: number) => `${formatter.format(value)}`,
+  roundTo,
+  ordinal
 }
 
-Vue.config.productionTip = false;
+// declare module 'vue/types/vue' {
+//   interface Vue {
+//     $axios: AxiosStatic;
+//   }
+// }
 
-new Vue({
-  vuetify,
-  router,
-  store,
-  render: h => h(App),
-}).$mount('#app');
+app.use({
+  install() {
+    app.config.globalProperties.$axios = $axios;
+  },
+});
+
+app.use(VueSocketIOExt, socket);
+
+app.use(vuetify);
+app.use(router);
+app.use(store);
+
+app.mount("#app");

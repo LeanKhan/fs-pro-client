@@ -1,8 +1,6 @@
-**/icons/*.vue
 .husky/
 .vscode/
 .yarn/
-coverage/
 dist/
+coverage/
 public/assets/
-tsconfig.*.json

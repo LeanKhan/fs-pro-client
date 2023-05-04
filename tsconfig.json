@@ -1,31 +1,9 @@
 {
-  "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
-    "strict": true,
-    "jsx": "preserve",
-    "importHelpers": true,
-    "moduleResolution": "node",
-    "experimentalDecorators": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "sourceMap": true,
-    "baseUrl": ".",
-    "typeRoots": ["./node_modules/@types", "./node_modules/vuetify/types"],
-    "types": ["webpack-env", "vuetify", "node"],
-    "paths": {
-      "@/*": ["src/*"]
-    },
-    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
-  },
-  "include": [
-    "src/**/*.ts",
-    "vue.config.js",
-    "vite.config.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "tests/**/*.ts",
-    "tests/**/*.tsx"
-  ],
-  "exclude": ["node_modules"]
-}
+	"$schema": "https://json.schemastore.org/tsconfig.json",
+	"files": [],
+	"references": [
+	  { "path": "./tsconfig.app.json" },
+	  { "path": "./tsconfig.node.json" },
+	  { "path": "./tsconfig.vitest.json" }
+	]
+  }

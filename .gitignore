@@ -20,3 +20,18 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+
+# Yarn 3
+/.yarn/*
+# !/.yarn/patches
+# !/.yarn/plugins
+!/.yarn/releases
+# !/.yarn/sdks
+# !/.yarn/cache
+
+# Vitest coverage
+coverage/
+
+# Special File
+.husky/
+src/Meta.ts

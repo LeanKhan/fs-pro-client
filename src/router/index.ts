@@ -1,5 +1,4 @@
-import Vue from 'vue';
-import VueRouter, { RouteConfig } from 'vue-router';
+import { createRouter, type RouteRecordRaw } from 'vue-router';
 
 /** ADMIN ROUTES */
 import clubs from './clubs';
@@ -21,8 +20,9 @@ import AppView from '@/views/app-view.vue';
 // import Login from '@/views/auth/login.vue';
 // import Register from '@/views/auth/register.vue';
 import Credits from '@/views/credits.vue';
-
-Vue.use(VueRouter);
+import { createWebHistory } from 'vue-router';
+import type { RouteLocationNormalized } from 'vue-router';
+import type { NavigationGuardNext } from 'vue-router';
 
 export function replaceParams(
   path: string,
@@ -35,21 +35,21 @@ export function replaceParams(
   return path;
 }
 
-const routes: RouteConfig[] = [
+const routes: RouteRecordRaw[] = [
   {
     path: '/auth',
-    component: () => import('../views/auth/auth.vue'),
+    component: async () => await import('@/views/auth/auth.vue'),
     name: 'Auth',
     redirect: 'auth/login',
     children: [
       {
         path: 'login',
-        component: () => import('../views/auth/login.vue'),
+        component: async () => await import('@/views/auth/login.vue'),
         name: 'Login',
       },
       {
         path: 'join',
-        component: () => import('../views/auth/register.vue'),
+        component: async () => await import('@/views/auth/register.vue'),
         name: 'Register',
       },
     ],
@@ -67,16 +67,16 @@ const routes: RouteConfig[] = [
     children: [
       {
         path: 'a',
-        component: () => import('../views/admin/admin.vue'),
+        component: async () => await import('@/views/admin/admin.vue'),
         children: [
           {
             path: '',
-            component: () => import('../views/admin/dashboard.vue'),
+            component: async () => await import('@/views/admin/dashboard.vue'),
             name: 'Admin Home',
           },
           {
             path: 'calendar',
-            component: () => import('../views/admin/calendar/calendar.vue'),
+            component: async () => await import('@/views/admin/calendar/calendar.vue'),
             name: 'Calendar',
           },
           competitions,
@@ -88,27 +88,27 @@ const routes: RouteConfig[] = [
       },
       {
         path: 'u',
-        component: () => import('../views/user/user.vue'),
+        component: async () => await import('@/views/user/user.vue'),
         children: [
           {
             path: '',
-            component: () => import('../views/user/dashboard.vue'),
+            component: async () => await import('@/views/user/dashboard.vue'),
             name: 'User Home',
           },
 
           {
             path: 'fixtures',
-            component: () => import('../views/user/seasons/fixtures.vue'),
+            component: async () => await import('@/views/user/seasons/fixtures.vue'),
             name: 'All Fixtures',
           },
           {
             path: 'stats/:type/:season_id',
-            component: () => import('../views/user/seasons/stats.vue'),
+            component: async () => await import('@/views/user/seasons/stats.vue'),
             name: 'Season Stats',
           },
           {
             path: 'lobby',
-            component: () => import('../views/user/lobby.vue'),
+            component: async () => await import('@/views/user/lobby.vue'),
             name: 'User Lobby',
           },
 
@@ -118,33 +118,32 @@ const routes: RouteConfig[] = [
       },
       {
         path: '/matchzone/:fixture',
-        component: () => import('../views/game/matchzone.vue'),
+        component: async () => await import('@/views/game/matchzone.vue'),
         name: 'MatchZone',
       },
       {
         path: '/finish/season/:season_id',
-        component: () => import('../views/misc/end-of-season.vue'),
+        component: async () => await import('@/views/misc/end-of-season.vue'),
         name: 'Finish Season',
       },
       {
         path: '/finish/year/:calendar_id',
-        component: () => import('../views/misc/end-of-year.vue'),
+        component: async () => await import('@/views/misc/end-of-year.vue'),
         name: 'Finish Year',
       },
     ],
   },
 ];
 
-const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes,
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (_to: RouteLocationNormalized, _from: RouteLocationNormalized, next: NavigationGuardNext) => {
   const isAuthenticated = window.localStorage.getItem('fspro-user');
 
-  if (!RegExp(/\/auth/).test(to.path) && !isAuthenticated) {
+  if (!RegExp(/\/auth/).test(_to.path) && !isAuthenticated) {
     next({ name: 'Auth' });
   } else {
     next();
