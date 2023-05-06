@@ -33,7 +33,6 @@ export default defineConfig(async ({ command, mode }): Promise<UserConfig> => {
       // https://github.com/vuetifyjs/vuetify-loader/tree/next/packages/vite-plugin#vite-plugin-vuetify
       vuetify({
         autoImport: true,
-        styles: { configFile: 'src/styles/settings.scss' },
       }),
       // vite-plugin-checker
       // https://github.com/fi3ework/vite-plugin-checker
@@ -42,7 +41,7 @@ export default defineConfig(async ({ command, mode }): Promise<UserConfig> => {
         vueTsc: true,
         eslint: {
           lintCommand:
-            'eslint . --fix --cache --cache-location ./node_modules/.vite/vite-plugin-eslint', // for example, lint .ts & .tsx
+            'eslint . --cache --cache-location ./node_modules/.vite/vite-plugin-eslint', // for example, lint .ts & .tsx
         },
       }),
     ],
@@ -77,7 +76,7 @@ export default defineConfig(async ({ command, mode }): Promise<UserConfig> => {
         output: {
           manualChunks: {
             // Split external library from transpiled code.
-            vue: ['vue', 'vue-router', 'pinia', 'pinia-plugin-persistedstate'],
+            vue: ['vue', 'vue-router'],
             vuetify: [
               'vuetify',
               'vuetify/components',

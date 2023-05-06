@@ -3,8 +3,8 @@
   "extends": ["@vue/tsconfig/tsconfig.json", "@vue/tsconfig/tsconfig.dom.json"],
   "include": [
     "env.d.ts",
-	"src/**/*",
-	"./package.json",
+    "src/**/*",
+    "./package.json",
     "src/**/*.vue",
     "src/**/*.ts",
     "src/**/*.tsx",
@@ -14,6 +14,8 @@
   ],
   "exclude": ["src/**/__tests__/*"],
   "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
     "composite": true,
     "baseUrl": ".",
     "paths": { "@/*": ["./src/*"] },

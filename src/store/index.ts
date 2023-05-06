@@ -1,11 +1,9 @@
-import Vue from 'vue';
 import Vuex from 'vuex';
-import { Club } from '@/interfaces/club';
+import { type Club } from '@/interfaces/club';
 import { $axios } from '../main';
 import socket from './socket';
-import { ICalendar } from '@/interfaces/calendar';
+import { type ICalendar } from '@/interfaces/calendar';
 
-Vue.use(Vuex);
 
 // 'http://192.168.10.4:3000' - Network server url
 // 'http://localhost:3000' - Local server url
