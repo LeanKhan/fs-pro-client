@@ -1,10 +1,10 @@
-import { RouteConfig } from 'vue-router';
+import { type RouteRecordRaw } from 'vue-router';
 // import PlayersHome from '@/views/admin/players/dashboard.vue';
 // import ViewPlayer from '@/views/admin/players/view-player.vue';
 // import PlayerForm from '@/views/admin/players/players-form.vue';
 // import PlayerHome from '@/views/admin/players/player-home.vue';
 
-const routes: RouteConfig = {
+const routes: RouteRecordRaw = {
   path: 'players',
   component: () => import('../views/admin/players/players-home.vue'),
   children: [

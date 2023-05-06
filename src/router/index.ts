@@ -26,10 +26,10 @@ import type { NavigationGuardNext } from 'vue-router';
 
 export function replaceParams(
   path: string,
-  replacements: { search: string; replace: string }[]
+  replacements: { search: string; replace: string | string[] }[]
 ): string {
   replacements.forEach(r => {
-    path.replace(r.search, r.replace);
+    path.replace(r.search, r.replace as string);
   });
 
   return path;

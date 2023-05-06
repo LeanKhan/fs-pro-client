@@ -1,7 +1,7 @@
-import { RouteConfig } from 'vue-router';
+import { type RouteRecordRaw } from 'vue-router';
 import ClubDashboard from '@/views/user/club/dashboard.vue';
 
-const routes: RouteConfig = {
+const routes: RouteRecordRaw = {
   path: 'clubs',
   component: () =>
     import( '../../views/user/club/club.vue'),

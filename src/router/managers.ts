@@ -1,12 +1,12 @@
-import { RouteConfig } from 'vue-router';
+import { type RouteRecordRaw } from 'vue-router';
 import ManagersHome from '@/views/admin/managers/dashboard.vue';
 import ViewManager from '@/views/admin/managers/view-manager.vue';
 import ManagerForm from '@/views/admin/managers/manager-form.vue';
 import ManagerHome from '@/views/admin/managers/manager-home.vue';
 
-const routes: RouteConfig = {
+const routes: RouteRecordRaw = {
   path: 'managers',
-  component: () => import('../views/admin/managers/managers-home.vue'),
+  component: async () => await import('../views/admin/managers/managers-home.vue'),
   children: [
     {
       path: '',
