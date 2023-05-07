@@ -19,8 +19,8 @@ const routes: RouteRecordRaw = {
       name: 'Competition Home',
       component: CompetitionsHome,
       meta: {
-        title: 'Home',
-      },
+        title: 'Home'
+      }
     },
     {
       path: ':id/:code',
@@ -35,10 +35,10 @@ const routes: RouteRecordRaw = {
             to: () => {
               return replaceParams(route.path, [
                 { search: ':id', replace: route.params.id },
-                { search: ':code', replace: route.params.code },
+                { search: ':code', replace: route.params.code }
               ]);
-            },
-          }),
+            }
+          })
         },
         {
           path: 'update',
@@ -49,25 +49,26 @@ const routes: RouteRecordRaw = {
             to: () => {
               return replaceParams(route.path, [
                 { search: ':id', replace: route.params.id },
-                { search: ':code', replace: route.params.code },
+                { search: ':code', replace: route.params.code }
               ]);
             },
             isUpdate: true
-          }),
+          })
         },
         {
           path: 'seasons',
-          component: async () => await import('../views/admin/seasons/seasons-home.vue'),
+          component: async () =>
+            await import('../views/admin/seasons/seasons-home.vue'),
           children: [
             {
               path: '',
               component: CompetitionSeasonsHome,
-              name: 'Seasons Home',
+              name: 'Seasons Home'
             },
             {
               path: ':seasonId/:seasonCode',
               component: SeasonHome,
-              name: 'View Season',
+              name: 'View Season'
             },
             {
               path: 'new',
@@ -78,36 +79,35 @@ const routes: RouteRecordRaw = {
                 to: () => {
                   return replaceParams(route.path, [
                     { search: ':id', replace: route.params.id },
-                    { search: ':code', replace: route.params.code },
+                    { search: ':code', replace: route.params.code }
                   ]);
-                },
-              }),
-            },
+                }
+              })
+            }
           ],
-          meta: { title: 'Seasons' },
-        },
+          meta: { title: 'Seasons' }
+        }
       ],
       props: (route: RouteLocationNormalized) => ({
         title: (route.params.code as string).toUpperCase(),
         to: () => {
           return replaceParams(route.path, [
             { search: ':id', replace: route.params.id },
-            { search: ':code', replace: route.params.code },
+            { search: ':code', replace: route.params.code }
           ]);
-        },
-      }),
+        }
+      })
     },
     {
       path: 'new',
       name: 'New Competition',
       component: CompetitionForm,
       meta: { title: 'New Competition' },
-      props: { isUpdate: false },
-    },
+      props: { isUpdate: false }
+    }
   ],
   meta: {
-    title: 'Competitions Home',
-  },
+    title: 'Competitions Home'
+  }
 };
 export default routes;
-

@@ -24,6 +24,11 @@ import { createWebHistory } from 'vue-router';
 import type { RouteLocationNormalized } from 'vue-router';
 import type { NavigationGuardNext } from 'vue-router';
 
+/**
+ *
+ * @param path -
+ * @param replacements -
+ */
 export function replaceParams(
   path: string,
   replacements: { search: string; replace: string | string[] }[]
@@ -45,19 +50,19 @@ const routes: RouteRecordRaw[] = [
       {
         path: 'login',
         component: async () => await import('@/views/auth/login.vue'),
-        name: 'Login',
+        name: 'Login'
       },
       {
         path: 'join',
         component: async () => await import('@/views/auth/register.vue'),
-        name: 'Register',
-      },
-    ],
+        name: 'Register'
+      }
+    ]
   },
   {
     path: '/credits',
     component: Credits,
-    name: 'Credits',
+    name: 'Credits'
   },
   {
     path: '/',
@@ -72,19 +77,20 @@ const routes: RouteRecordRaw[] = [
           {
             path: '',
             component: async () => await import('@/views/admin/dashboard.vue'),
-            name: 'Admin Home',
+            name: 'Admin Home'
           },
           {
             path: 'calendar',
-            component: async () => await import('@/views/admin/calendar/calendar.vue'),
-            name: 'Calendar',
+            component: async () =>
+              await import('@/views/admin/calendar/calendar.vue'),
+            name: 'Calendar'
           },
           competitions,
           clubs,
           players,
-          managers,
+          managers
         ],
-        meta: { title: 'Admin' },
+        meta: { title: 'Admin' }
       },
       {
         path: 'u',
@@ -93,61 +99,69 @@ const routes: RouteRecordRaw[] = [
           {
             path: '',
             component: async () => await import('@/views/user/dashboard.vue'),
-            name: 'User Home',
+            name: 'User Home'
           },
 
           {
             path: 'fixtures',
-            component: async () => await import('@/views/user/seasons/fixtures.vue'),
-            name: 'All Fixtures',
+            component: async () =>
+              await import('@/views/user/seasons/fixtures.vue'),
+            name: 'All Fixtures'
           },
           {
             path: 'stats/:type/:season_id',
-            component: async () => await import('@/views/user/seasons/stats.vue'),
-            name: 'Season Stats',
+            component: async () =>
+              await import('@/views/user/seasons/stats.vue'),
+            name: 'Season Stats'
           },
           {
             path: 'lobby',
             component: async () => await import('@/views/user/lobby.vue'),
-            name: 'User Lobby',
+            name: 'User Lobby'
           },
 
-          userClubRoutes,
+          userClubRoutes
         ],
-        meta: { title: 'User' },
+        meta: { title: 'User' }
       },
       {
         path: '/matchzone/:fixture',
         component: async () => await import('@/views/game/matchzone.vue'),
-        name: 'MatchZone',
+        name: 'MatchZone'
       },
       {
         path: '/finish/season/:season_id',
         component: async () => await import('@/views/misc/end-of-season.vue'),
-        name: 'Finish Season',
+        name: 'Finish Season'
       },
       {
         path: '/finish/year/:calendar_id',
         component: async () => await import('@/views/misc/end-of-year.vue'),
-        name: 'Finish Year',
-      },
-    ],
-  },
+        name: 'Finish Year'
+      }
+    ]
+  }
 ];
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes,
+  routes
 });
 
-router.beforeEach(async (_to: RouteLocationNormalized, _from: RouteLocationNormalized, next: NavigationGuardNext) => {
-  const isAuthenticated = window.localStorage.getItem('fspro-user');
+router.beforeEach(
+  async (
+    _to: RouteLocationNormalized,
+    _from: RouteLocationNormalized,
+    next: NavigationGuardNext
+  ) => {
+    const isAuthenticated = window.localStorage.getItem('fspro-user');
 
-  if (!RegExp(/\/auth/).test(_to.path) && !isAuthenticated) {
-    next({ name: 'Auth' });
-  } else {
-    next();
+    if (!RegExp(/\/auth/).test(_to.path) && !isAuthenticated) {
+      next({ name: 'Auth' });
+    } else {
+      next();
+    }
   }
-});
+);
 
 export default router;

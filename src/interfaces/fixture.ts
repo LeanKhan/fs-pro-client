@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/interface-name-prefix */
 export interface IFixture {
   _id: string;
   Title: string;
@@ -65,11 +64,4 @@ export interface IMatchSideDetails {
   Passes: number;
   Events: IMatchEvent[];
   [key: string]: any;
-}
-
-interface IMatchAction {
-  type: 'pass' | 'goal';
-  playerID: string;
-  playerTeam: string;
-  timestamp: number;
 }

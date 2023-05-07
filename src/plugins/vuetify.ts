@@ -1,6 +1,6 @@
-import 'vuetify/styles'
+import 'vuetify/styles';
 
-import { createVuetify } from 'vuetify'
+import { createVuetify } from 'vuetify';
 
 import '@mdi/font/css/materialdesignicons.css';
 
@@ -70,166 +70,166 @@ await loadFonts();
 const vuetifyComponents = import.meta.env.DEV
   ? {
       components: {
-        components,
+        components
       },
-      directives,
+      directives
     }
   : {
       components: {
-        components,
-      },
-    };
-    const fsProTheme = {
-      dark: false,
-      colors: {
-        primary: '#7535ed',
-        accent: '#c23361',
-        anchor: '#340f78',
+        components
       }
-    }
+    };
+const fsProTheme = {
+  dark: false,
+  colors: {
+    primary: '#7535ed',
+    accent: '#c23361',
+    anchor: '#340f78'
+  }
+};
 
 export default createVuetify({
- vuetifyComponents,
+  vuetifyComponents,
   icons: {
     defaultSet: 'mdi',
     aliases,
     sets: {
-      mdi,
+      mdi
     },
     values: {
       LU: {
-        component: LasenaUnitedIcon,
+        component: LasenaUnitedIcon
       },
       DR: {
-        component: DagadaRangersIcon,
+        component: DagadaRangersIcon
       },
       RT: {
-        component: RisingThundersIcon,
+        component: RisingThundersIcon
       },
       RB: {
-        component: RainbowBoysIcon,
+        component: RainbowBoysIcon
       },
       K94: {
-        component: Khashiru94Icon,
+        component: Khashiru94Icon
       },
       BWH: {
-        component: BrickwallHadadIcon,
+        component: BrickwallHadadIcon
       },
       EF: {
-        component: EasdenFrydgelandIcon,
+        component: EasdenFrydgelandIcon
       },
       AM: {
-        component: AlMoomoodIcon,
+        component: AlMoomoodIcon
       },
       BFC: {
-        component: BinatoneFcIcon,
+        component: BinatoneFcIcon
       },
       GU: {
-        component: GuttersbergUnitedIcon,
+        component: GuttersbergUnitedIcon
       },
       IB: {
-        component: IvaniaBoysIcon,
+        component: IvaniaBoysIcon
       },
       LRU17: {
-        component: LonenRaidUnited17Icon,
+        component: LonenRaidUnited17Icon
       },
       NSM: {
-        component: NewSimeoneMirrorsIcon,
+        component: NewSimeoneMirrorsIcon
       },
       NU: {
-        component: NorthernUnitedIcon,
+        component: NorthernUnitedIcon
       },
       SPR: {
-        component: SouthportRangersIcon,
+        component: SouthportRangersIcon
       },
       VAS: {
-        component: VendoorsteinAthleticIcon,
+        component: VendoorsteinAthleticIcon
       },
       ZD: {
-        component: ZanderDragonsIcon,
+        component: ZanderDragonsIcon
       },
       AS: {
-        component: AlShalakatIcon,
+        component: AlShalakatIcon
       },
       ACP: {
-        component: ACPhilamentia,
+        component: ACPhilamentia
       },
       RP: {
-        component: RoyalPhilamentia,
+        component: RoyalPhilamentia
       },
       CHI: {
-        component: CevivaChiefsIcon,
+        component: CevivaChiefsIcon
       },
       CTR: {
-        component: CevivaTorrentsIcon,
+        component: CevivaTorrentsIcon
       },
       RED: {
-        component: RedKnightsIcon,
+        component: RedKnightsIcon
       },
       PAC: {
-        component: PaceIcon,
+        component: PaceIcon
       },
       TRI: {
-        component: FeedheinTridentsIcon,
+        component: FeedheinTridentsIcon
       },
       FUN: {
-        component: FeedheinUnitedIcon,
+        component: FeedheinUnitedIcon
       },
       JAC: {
-        component: JacwinthTanksIcon,
+        component: JacwinthTanksIcon
       },
       DOU: {
-        component: DominionUnitedIcon,
+        component: DominionUnitedIcon
       },
       KFZ: {
-        component: KyteIcon,
+        component: KyteIcon
       },
       GBL: {
-        component: GreenBlueIcon,
+        component: GreenBlueIcon
       },
       SPO: {
-        component: SportoMiduIcon,
+        component: SportoMiduIcon
       },
       GFZ: {
-        component: GiantsIcon,
+        component: GiantsIcon
       },
       PUN: {
-        component: PooventUnitedIcon,
+        component: PooventUnitedIcon
       },
       DYN: {
-        component: DynamiteIcon,
+        component: DynamiteIcon
       },
       PGS: {
-        component: PorgreggeIcon,
+        component: PorgreggeIcon
       },
       BFZ: {
-        component: BlazeCityIcon,
+        component: BlazeCityIcon
       },
       FZP: {
-        component: FZPreggeIcon,
+        component: FZPreggeIcon
       },
       BPG: {
-        component: BoruzziaPreggeIcon,
+        component: BoruzziaPreggeIcon
       },
       SDS: {
-        component: SdevSandsIcon,
+        component: SdevSandsIcon
       },
       SFZ: {
-        component: StallionsIcon,
+        component: StallionsIcon
       },
       SUN: {
-        component: SunnyCityIcon,
+        component: SunnyCityIcon
       },
       BAT: {
-        component: BatsIcon,
+        component: BatsIcon
       },
       NET: {
-        component: NettsIcon,
+        component: NettsIcon
       },
       LKM: {
-        component: StorrLokomotivIcon,
-      },
-    },
+        component: StorrLokomotivIcon
+      }
+    }
   },
 
   theme: {

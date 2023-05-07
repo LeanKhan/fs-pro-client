@@ -2,17 +2,15 @@ module.exports = {
   env: {
     browser: true,
     es2022: true, // Vuetify recommended
-    node: true,
+    node: true
   },
   extends: [
     'plugin:vue/vue3-recommended',
-    'standard-with-typescript',
-    'plugin:import/recommended',
-    'plugin:import/typescript',
+    '@vue/typescript/recommended',
     'plugin:vuejs-accessibility/recommended',
     'plugin:vuetify/base',
     'plugin:yaml/recommended',
-    '@vue/eslint-config-prettier',
+    '@vue/eslint-config-prettier'
   ],
   parser: 'vue-eslint-parser',
   parserOptions: {
@@ -22,7 +20,7 @@ module.exports = {
     createDefaultProgram: true,
     project: ['./tsconfig.json'],
     tsconfigRootDir: __dirname,
-    extraFileExtensions: '.vue',
+    extraFileExtensions: '.vue'
   },
   plugins: ['import', 'tsdoc', 'vue'],
   rules: {
@@ -30,7 +28,7 @@ module.exports = {
     'no-unused-vars': 'warn',
     '@typescript-eslint/array-type': [
       'error',
-      { default: 'array', readonly: 'array' },
+      { default: 'array', readonly: 'array' }
     ],
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/no-confusing-void-expression': 'off',
@@ -41,6 +39,8 @@ module.exports = {
     '@typescript-eslint/prefer-nullish-coalescing': 'off',
     '@typescript-eslint/strict-boolean-expressions': 'off',
     '@typescript-eslint/triple-slash-reference': 'off',
+    '@typescript-eslint/member-delimiter-style': 'off',
+    '@typescript-eslint/comma-dangle': 'warn',
     'import/default': 'off',
     'import/no-default-export': 'off', // Fix for Vuetify
     'import/no-named-as-default': 'off', // Fix for Vuetify
@@ -49,12 +49,12 @@ module.exports = {
     'vue/html-self-closing': ['error', { html: { void: 'always' } }],
     'vue/multi-word-component-names': 'off',
     'vue/no-template-shadow': 'off', // for Vuetify tooltip fix
-    'vuetify/no-deprecated-components': 'warn', // for Vuetify Labs Fix (v-data-tables etc.)
+    'vuetify/no-deprecated-components': 'warn' // for Vuetify Labs Fix (v-data-tables etc.)
   },
   settings: {
     'import/parsers': {
       '@typescript-eslint/parser': ['.ts', '.tsx'],
-      'vue-eslint-parser': ['.vue'],
+      'vue-eslint-parser': ['.vue']
     },
     'import/resolver': {
       typescript: true,
@@ -62,13 +62,13 @@ module.exports = {
       alias: {
         map: [
           ['@', './src'],
-          ['~', './node_modules'],
+          ['~', './node_modules']
         ],
-        extensions: ['.js', '.ts', '.jsx', '.tsx', '.vue'],
-      },
+        extensions: ['.js', '.ts', '.jsx', '.tsx', '.vue']
+      }
     },
     vite: {
-      configPath: './vite.config.ts',
-    },
-  },
+      configPath: './vite.config.ts'
+    }
+  }
 };

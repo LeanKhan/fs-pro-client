@@ -1,4 +1,4 @@
-import { PlayerStats } from './player';
+import { type PlayerStats } from './player';
 
 export interface Season {
   SeasonID: string;

@@ -3,10 +3,15 @@ import {
   MidfielderMultipliers,
   DefenderMultipliers,
   GoalkeeperMultipliers,
-  Multipliers,
-  PlayerAttributes,
+  type Multipliers,
+  type PlayerAttributes
 } from '@/interfaces/player';
 
+/**
+ *
+ * @param multiplier -
+ * @param attributes -
+ */
 function calculateTotal(multiplier: Multipliers, attributes: PlayerAttributes) {
   const total =
     attributes.Shooting * multiplier.Shooting +

@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/interface-name-prefix */
-import { IFixture } from './fixture';
+import { type IFixture } from './fixture';
 export interface ICalendarMatch {
   Fixture: IFixture;
   MatchType: string;

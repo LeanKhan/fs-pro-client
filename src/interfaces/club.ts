@@ -1,4 +1,4 @@
-import { Player } from './player';
+import { type Player } from './player';
 
 export interface Club {
   _id: string;
@@ -39,5 +39,5 @@ export interface Club {
     Country: string;
   };
   Budget: number;
-  Transactions: {};
+  Transactions: Record<string, unknown>;
 }

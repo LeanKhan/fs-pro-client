@@ -1,5 +1,5 @@
-import { Club } from './club';
-import { Season } from './season';
+import { type Club } from './club';
+import { type Season } from './season';
 
 export interface Competition {
   _id: string | undefined;

@@ -1,6 +1,7 @@
-const fs = require('fs');
-const eta = require('eta');
-const path = require('path');
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import fs from 'fs';
+import eta from 'eta';
+import path from 'path';
 
 const d: { clubCode: string; clubName: string }[] = [];
 
