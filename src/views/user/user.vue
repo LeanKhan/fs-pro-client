@@ -1,10 +1,10 @@
 <template>
-  <router-view></router-view>
+  <router-view />
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import { ICalendar } from '@/interfaces/calendar';
+import { Component, Vue } from 'vue-facing-decorator';
+import { type ICalendar } from '@/interfaces/calendar';
 
 @Component({})
 export default class User extends Vue {

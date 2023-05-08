@@ -39,16 +39,16 @@
               <template v-if="!selectedDay.isFree">
                 <v-row class="px-2">
                   <v-col cols="6">
-                    <fixture-card
+                    <FixtureCard
                       :Match="selectedMatch || selectedDay.Matches[0]"
-                    ></fixture-card>
+                    />
                   </v-col>
 
                   <v-col cols="6">
                     <v-card style="height: 300px;max-height: 300px;overflow-y: auto">
-                    <day-fixtures-list :Matches="selectedDay.Matches"
+                    <DayFixturesList :Matches="selectedDay.Matches"
                     Detail="details"
-                    @match-selected="matchSelected"></day-fixtures-list>
+                    @match-selected="matchSelected" />
                     </v-card>
                   </v-col>
                 </v-row>
@@ -134,8 +134,8 @@
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import DayScroll from '../../components/calendar/day-scroll.vue';
 import StandingsScroller from '@/components/seasons/standings-scroller.vue';
-import FixtureCard from '@/components/user-dashboard/fixture-card.vue';
-import DayFixturesList from '@/components/user-dashboard/day-fixtures-list.vue';
+import FixtureCard from '@/components/user-dashboard/FixtureCard.vue';
+import DayFixturesList from '@/components/user-dashboard/DayFixturesList.vue';
 
 @Component({
   components: {

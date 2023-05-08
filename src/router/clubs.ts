@@ -12,14 +12,14 @@ const routes: RouteRecordRaw = {
       path: '',
       component: async () => await import('../views/admin/clubs/dashboard.vue'),
       name: 'Clubs Home',
-      meta: { title: 'Home' },
+      meta: { title: 'Home' }
     },
     {
       path: 'new',
       name: 'New Club',
       component: async () => await import('../views/admin/clubs/club-form.vue'),
       meta: { title: 'New Club' },
-      props: { isUpdate: false },
+      props: { isUpdate: false }
     },
     {
       path: ':id/:code',
@@ -28,20 +28,22 @@ const routes: RouteRecordRaw = {
         {
           path: '',
           name: 'View Club',
-          component: async () => await import('../views/admin/clubs/view-club.vue'),
-          meta: { title: 'Club Home' },
+          component: async () =>
+            await import('../views/admin/clubs/view-club.vue'),
+          meta: { title: 'Club Home' }
         },
         {
           path: 'update',
           name: 'Update Club',
-          component: async () => await import('../views/admin/clubs/club-form.vue'),
+          component: async () =>
+            await import('../views/admin/clubs/club-form.vue'),
           meta: { title: 'Update Club' },
-          props: { isUpdate: true },
-        },
+          props: { isUpdate: true }
+        }
       ],
-      meta: { title: 'View Club' },
-    },
-  ],
+      meta: { title: 'View Club' }
+    }
+  ]
 };
 
 export default routes;

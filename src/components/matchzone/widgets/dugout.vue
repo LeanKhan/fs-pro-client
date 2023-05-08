@@ -41,10 +41,10 @@
 
       <v-tab-item>
         <v-card-text>
-           <day-fixtures-list :Matches="currentDay.Matches"
+           <DayFixturesList :Matches="currentDay.Matches"
            Detail="results"
            :MandatorySelect="false"
-            @match-selected="matchSelected"></day-fixtures-list>
+            @match-selected="matchSelected" />
         </v-card-text>
       </v-tab-item>
     </v-tabs-items>
@@ -54,7 +54,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import DugoutClub from './dugout-club.vue';
-import DayFixturesList from '@/components/user-dashboard/day-fixtures-list.vue';
+import DayFixturesList from '@/components/user-dashboard/DayFixturesList.vue';
 
 @Component({
   components: {

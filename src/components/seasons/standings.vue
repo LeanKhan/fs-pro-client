@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-card-title v-if="weekly" class="subtitle-2">
+    <v-card-title v-if="weekly" class="text-subtitle-2">
       Week {{ WeekStandings.Week }}
     </v-card-title>
     <v-data-table
@@ -12,7 +12,7 @@
       disable-pagination
       hide-default-footer
     >
-      <template v-slot:item.ClubCode="{ item }">
+      <template #item.ClubCode="{ item }">
         <v-icon>${{ item.ClubCode }}</v-icon>
       </template>
     </v-data-table>
@@ -21,18 +21,18 @@
 
 <script lang="ts">
 // import { Component, Vue, }
-import { Component, Vue, Prop } from 'vue-property-decorator';
-import { WeekStandings as IWeek } from '@/interfaces/season.ts';
+import { Component, Vue, Prop } from 'vue-facing-decorator';
+import { type WeekStandings as IWeek } from '@/interfaces/season.ts';
 
 @Component({
-  name: 'Standings',
+  name: 'Standings'
 })
 export default class Standings extends Vue {
   @Prop({ required: true }) WeekStandings!: IWeek;
   @Prop({ required: false, default: false }) weekly!: boolean;
 
   // private Table: IWeek['Table'] =
-   // this.WeekStandings.Table || this.WeekStandings;
+  // this.WeekStandings.Table || this.WeekStandings;
 
   private headers: any[] = [
     {
@@ -40,13 +40,13 @@ export default class Standings extends Vue {
       align: 'start',
       value: 'ClubCode',
       filterable: false,
-      sortable: false,
+      sortable: false
     },
     {
       text: 'Played',
       value: 'Played',
       filterable: false,
-      sortable: true,
+      sortable: true
     },
     { text: 'Wins', value: 'Wins', filterable: false, sortable: true },
     { text: 'Losses', value: 'Losses', filterable: false, sortable: true },
@@ -58,8 +58,8 @@ export default class Standings extends Vue {
       text: 'Points',
       value: 'Points',
       filterable: false,
-      sortable: true,
-    },
+      sortable: true
+    }
   ];
 
   get SortedTable() {

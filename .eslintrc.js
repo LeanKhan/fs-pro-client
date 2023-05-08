@@ -47,6 +47,7 @@ module.exports = {
     'import/no-named-as-default-member': 'off', // Fix for Vuetify
     'tsdoc/syntax': 'warn',
     'vue/html-self-closing': ['error', { html: { void: 'always' } }],
+    'vue/prop-name-casing': 'off',
     'vue/multi-word-component-names': 'off',
     'vue/no-template-shadow': 'off', // for Vuetify tooltip fix
     'vuetify/no-deprecated-components': 'warn' // for Vuetify Labs Fix (v-data-tables etc.)
