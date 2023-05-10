@@ -23,7 +23,7 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-facing-decorator';
 import SeasonsTable from '@/components/seasons/seasons-table.vue';
 import { Season } from '@/interfaces/season';
 

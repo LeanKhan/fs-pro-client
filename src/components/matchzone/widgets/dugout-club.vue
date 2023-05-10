@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-list-item dense>
+    <v-list-item density="compact">
       <v-list-item-avatar tile size="30px">
         <v-badge
           bordered
@@ -10,7 +10,7 @@
           offset-x="10"
           offset-y="10"
         >
-          <v-icon style="font-size: 30px; height: 30px" large>
+          <v-icon style="font-size: 30px; height: 30px" size="large">
             ${{ club.ClubCode }}
           </v-icon>
         </v-badge>
@@ -26,13 +26,11 @@
             {{ club.Manager.LastName }}
           </template>
 
-          <template>
-            No Manager
-          </template>
+          <template>No Manager</template>
         </v-list-item-subtitle>
       </v-list-item-content>
 
-      <v-spacer></v-spacer>
+      <v-spacer />
       <v-btn icon @click="showClubSquad = !showClubSquad">
         <v-icon>
           {{ showClubSquad ? 'mdi-chevron-up' : 'mdi-chevron-down' }}
@@ -41,23 +39,20 @@
     </v-list-item>
     <v-expand-transition>
       <div v-show="showClubSquad">
-        <v-divider></v-divider>
-        <squadlist
-          :squad="clubSquad"
-          :matchFinished="matchFinished"
-        ></squadlist>
+        <v-divider />
+        <Squadlist :squad="clubSquad" :match-finished="matchFinished" />
       </div>
     </v-expand-transition>
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'vue-facing-decorator';
 import Squadlist from './squadlist.vue';
 
 @Component({
   components: {
-    Squadlist,
-  },
+    Squadlist
+  }
 })
 export default class DugoutClub extends Vue {
   @Prop({ required: true }) club!: any;
@@ -65,6 +60,6 @@ export default class DugoutClub extends Vue {
   @Prop({ required: false, default: false }) matchFinished!: any;
   @Prop({ required: true }) isHome!: boolean;
 
-  private showClubSquad = false;
+  showClubSquad = false;
 }
 </script>

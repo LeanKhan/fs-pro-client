@@ -151,7 +151,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-facing-decorator';
 import { Route, RawLocation } from 'vue-router';
 import { apiUrl } from '@/store';
 

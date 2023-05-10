@@ -16,7 +16,7 @@
 
 <script lang="ts">
 // @ is an alias to /src
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-facing-decorator';
 import { apiUrl } from '@/store';
 
 @Component({})

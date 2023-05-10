@@ -6,7 +6,7 @@
   >
     <!-- <v-badge>
     <template v-slot:default>
-      
+
     </template>
   </v-badge> -->
     <v-list-item-avatar tile size="20px" color="transparent" class="caption">
@@ -18,7 +18,7 @@
       <v-list-item-subtitle>
         {{ player.FirstName }}
         {{ player.LastName }}
-        
+
         <b class="font-weight-bold pink--text">
           [{{ Math.round(player.Rating) }}]
         </b>
@@ -65,7 +65,7 @@
 // TODO: Should show players after the Match rating
 // TODO: Should indicate MOTM also
 // TODO: Should also show who scored and how many goals. How do we add a pitch there?
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'vue-facing-decorator';
 
 @Component({})
 export default class SquadPlayer extends Vue {

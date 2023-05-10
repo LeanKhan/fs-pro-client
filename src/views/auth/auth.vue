@@ -1,12 +1,12 @@
 <template>
   <v-app>
     <v-main>
-      <v-container class="indigo auth-background" fluid>
+      <v-container class="bg-indigo auth-background" fluid>
         <v-row>
           <v-col offset="7">
             <div
               class="d-flex justify-center align-center"
-              style="height: 100px;"
+              style="height: 100px"
             >
               <img
                 alt="FsPro Logo :)"
@@ -15,25 +15,25 @@
               />
             </div>
             <v-card color="dark">
-              <v-tabs background-color="transparent" color="green" grow>
+              <v-tabs bg-color="transparent" color="green" grow>
                 <v-tab title="Login" to="login">Login</v-tab>
 
                 <v-tab title="Join" to="join">Join</v-tab>
               </v-tabs>
-              <router-view></router-view>
+              <router-view />
             </v-card>
           </v-col>
         </v-row>
       </v-container>
     </v-main>
 
-    <v-footer class="text-center" dark padless tile>
+    <v-footer class="text-center" dark>
       <v-row dir="row" no-gutters class="justify-center">
         <v-col class="my-2">
-          <v-btn to="/credits" text>credits</v-btn>
+          <v-btn to="/credits" variant="text">credits</v-btn>
         </v-col>
-        <v-col class="ext-center white--text" cols="12">
-          <v-divider></v-divider>
+        <v-col class="ext-center text-white" cols="12">
+          <v-divider />
 
           {{ new Date().getFullYear() }} —
           <span>LeanKhan and Tobi</span>
@@ -44,12 +44,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-facing-decorator';
 import { apiUrl } from '@/store';
 
 @Component({})
 export default class Auth extends Vue {
-  private url = apiUrl;
+  url = apiUrl;
 }
 </script>
 <style scoped>

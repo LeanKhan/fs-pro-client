@@ -118,7 +118,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-facing-decorator';
 import { Season } from '@/interfaces/season';
 import StandingsScroller from '@/components/seasons/standings-scroller.vue';
 import FixturesTable from '@/components/seasons/fixtures-table.vue';

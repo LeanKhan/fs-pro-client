@@ -199,7 +199,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-facing-decorator';
 import { Route, RawLocation } from 'vue-router';
 // Zone Components
 import { ClubZone, SquadZone, TransferZone } from './zones';
@@ -272,7 +272,7 @@ export default class ClubHome extends Vue {
     return this.seasons.find(
       (s: any) => s.CompetitionCode == this.club.LeagueCode
     );
-  } 
+  }
 
   */
 

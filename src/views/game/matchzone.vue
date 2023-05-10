@@ -1,8 +1,8 @@
 <template>
   <div class="home">
-    <v-app-bar dense app color="dark">
+    <v-app-bar dense color="dark">
       <v-avatar tile size="30px">
-        <v-icon style="font-size: 30px; height: 30px" large>
+        <v-icon style="font-size: 30px; height: 30px" size="large">
           ${{ fixture.Home }}
         </v-icon>
       </v-avatar>
@@ -12,19 +12,19 @@
       <v-badge
         bordered
         bottom
-        color="green accent-3"
+        color="green-accent-3"
         dot
         offset-x="10"
         offset-y="10"
       >
         <v-avatar tile size="30px">
-          <v-icon style="font-size: 30px; height: 30px" large>
+          <v-icon style="font-size: 30px; height: 30px" size="large">
             ${{ fixture.Away }}
           </v-icon>
         </v-avatar>
       </v-badge>
 
-      <v-subheader class="mx-auto">
+      <div class="mx-auto">
         MATCHZONE
 
         <v-chip v-if="lastMatchOfSeason || fixture.isFinalMatch">
@@ -34,14 +34,14 @@
         Matchday {{ fixture.MatchDay }}
 
         <v-chip v-if="simulateRest" small color="primary">simulation</v-chip>
-      </v-subheader>
+      </div>
 
-      <v-spacer></v-spacer>
+      <v-spacer />
 
       <v-btn
         v-if="!matchFinished"
-        depressed
-        small
+        variant="flat"
+        size="small"
         icon
         @click="$router.push('/u')"
       >
@@ -50,7 +50,7 @@
 
       <v-btn
         v-else-if="!lastMatchOfSeason"
-        color="pink accent-3"
+        color="pink-accent-3"
         @click="$router.push('/u')"
       >
         FINISH MATCH
@@ -58,7 +58,7 @@
 
       <v-btn
         v-else-if="lastMatchOfSeason"
-        color="green accent-3"
+        color="green-accent-3"
         @click="finishSeason()"
       >
         &lt; FINISH SEASON &gt;
@@ -78,12 +78,12 @@
           </v-card>
         </v-col> -->
         <v-col cols="9" class="px-1">
-          <v-card tile height="100%">
-            <v-toolbar color="green accent-3" dense flat tile>
+          <v-card rounded="0" height="100%">
+            <v-toolbar color="green-accent-3" dense flat>
               Field
-              <v-spacer></v-spacer>
+              <v-spacer />
 
-              <v-switch v-model="simulateRest" label="Simulate Rest"></v-switch>
+              <v-switch v-model="simulateRest" label="Simulate Rest" />
             </v-toolbar>
             <!-- Data -->
 
@@ -91,22 +91,16 @@
               <v-col cols="8">
                 <v-card
                   flat
-                  tile
-                  color="secondary darken-4"
+                  rounded="0"
+                  color="secondary-darken-4"
                   class="py-2"
                   width="100%"
                 >
                   <div
-                    class="
-                      d-flex
-                      justify-center
-                      align-center
-                      flex-column
-                      caption
-                    "
+                    class="d-flex justify-center align-center flex-column text-caption"
                   >
-                    <span class="body-2 cyan--text text--accent-3">90:00</span>
-                    <span class="grey--text">
+                    <span class="text-body-2 text-cyan-accent-3">90:00</span>
+                    <span class="text-grey">
                       {{ fixture.LeagueCode }}
                     </span>
                   </div>
@@ -118,30 +112,22 @@
                       <template v-if="fixture.HomeTeam">
                         <club-widget
                           :winner="winner"
-                          :clubName="fixture.HomeTeam.Name"
-                          :clubCode="fixture.Home"
-                          :isHome="true"
+                          :club-name="fixture.HomeTeam.Name"
+                          :club-code="fixture.Home"
+                          :is-home="true"
                           :rating="fixture.HomeTeam.Rating"
-                          :clubStandings="homeStandings"
-                        ></club-widget>
+                          :club-standings="homeStandings"
+                        />
                       </template>
                     </v-col>
 
                     <!-- Scores and stats -->
                     <v-col
                       cols="2"
-                      class="
-                        align-center
-                        d-flex
-                        flex-column
-                        justify-center
-                        text-center
-                        py-4
-                        px-0
-                      "
+                      class="align-center d-flex flex-column justify-center text-center py-4 px-0"
                     >
                       <div style="width: 100%">
-                        <div class="display-2 ma-0 d-flex justify-space-around">
+                        <div class="text-h3 ma-0 d-flex justify-space-around">
                           <div>
                             <span>
                               {{ HomeTeamScore || '0' }}
@@ -152,12 +138,10 @@
                                 border-width: 2px !important;
                                 border-radius: 2px !important;
                               "
-                              class="deep-purple darken-3"
-                            ></v-divider>
+                              class="bg-deep-purple-darken-3"
+                            />
                           </div>
-                          <span
-                            class="text-muted secondary--text text--lighten-1"
-                          >
+                          <span class="text-muted text-secondary-lighten-1">
                             :
                           </span>
                           <div>
@@ -169,8 +153,8 @@
                                 border-width: 2px !important;
                                 border-radius: 2px !important;
                               "
-                              class="pink accent-3"
-                            ></v-divider>
+                              class="bg-pink-accent-3"
+                            />
                           </div>
                         </div>
 
@@ -181,7 +165,7 @@
                           <v-btn
                             v-if="!allReady"
                             class="mt-2"
-                            color="green accent-3"
+                            color="green-accent-3"
                             @click="openLobby = true"
                           >
                             START
@@ -195,38 +179,31 @@
                       <template v-if="fixture.AwayTeam">
                         <club-widget
                           :won="winner"
-                          :clubName="fixture.AwayTeam.Name"
-                          :clubCode="fixture.Away"
-                          :isHome="false"
+                          :club-name="fixture.AwayTeam.Name"
+                          :club-code="fixture.Away"
+                          :is-home="false"
                           :rating="fixture.AwayTeam.Rating"
-                          :clubStandings="awayStandings"
-                        ></club-widget>
+                          :club-standings="awayStandings"
+                        />
                       </template>
                     </v-col>
                   </v-row>
 
                   <!-- Setup button -->
-                  <v-overlay absolute :value="starting && !matchFinished">
+                  <v-overlay absolute :model-value="starting && !matchFinished">
                     <v-progress-circular
                       color="success"
                       size="130"
                       width="15"
                       indeterminate
-                    ></v-progress-circular>
+                    />
                   </v-overlay>
 
                   <v-row no-gutters class="mt-2">
                     <v-col
-                      class="
-                        align-center
-                        caption
-                        d-flex
-                        flex-column
-                        justify-center
-                        text-center
-                      "
+                      class="align-center text-caption d-flex flex-column justify-center text-center"
                     >
-                      <div class="caption grey--text">
+                      <div class="text-caption text-grey">
                         <span>
                           {{ fixture.SeasonCode }} - {{ fixture.Title }}
                         </span>
@@ -243,8 +220,8 @@
 
                 <v-row no-gutters>
                   <v-col cols="8" class="pr-1">
-                    <v-card flat tile min-height="320px">
-                      <v-toolbar color="green accent-3" dense flat tile>
+                    <v-card flat rounded="0" min-height="320px">
+                      <v-toolbar color="green-accent-3" dense flat>
                         Results
                       </v-toolbar>
                       <v-card-text class="d-flex justify-center flex-column">
@@ -256,25 +233,25 @@
                           v-if="matchFinished"
                           :home="fixture.Home"
                           :away="fixture.Away"
-                          :matchDetails="{
+                          :match-details="{
                             Home: fixture.HomeSideDetails,
-                            Away: fixture.AwaySideDetails,
+                            Away: fixture.AwaySideDetails
                           }"
-                        ></results>
+                        />
                       </v-card-text>
                     </v-card>
                   </v-col>
 
                   <v-col cols="4" class="pl-1">
-                    <v-card flat tile min-height="320px">
-                      <v-toolbar color="green accent-3" dense flat tile>
+                    <v-card flat rounded="0" min-height="320px">
+                      <v-toolbar color="green-accent-3" dense flat>
                         MOTM
                       </v-toolbar>
                       <v-card-text>
                         <template v-if="!matchFinished">No data</template>
 
                         <template v-else>
-                          <motm :motm_id="MOTM"></motm>
+                          <motm :motm_id="MOTM" />
                         </template>
                       </v-card-text>
                     </v-card>
@@ -285,7 +262,7 @@
               <v-col cols="4">
                 <v-card
                   flat
-                  tile
+                  rounded="0"
                   height="100%"
                   max-height="550px"
                   style="overflow-y: auto"
@@ -293,16 +270,14 @@
                   <!-- <v-toolbar color="green accent-3" dense flat tile>
                     Timeline
                   </v-toolbar> -->
-                  <v-card-subtitle
-                    class="text-center cyan--text text--accent-3"
-                  >
+                  <v-card-subtitle class="text-center text-cyan-accent-3">
                     Timeline
                   </v-card-subtitle>
                   <v-card-text>
                     <template v-if="!matchFinished">No data yet...</template>
                     <!-- TODO: I think this Timeline should be moved to where 'MOTM' widget is and here will be the actual field.  -->
                     <!-- Thank you Jesus! -->
-                    <timeline v-else :Events="fixture.Events"></timeline>
+                    <timeline v-else :events="fixture.Events" />
                   </v-card-text>
                 </v-card>
               </v-col>
@@ -312,44 +287,38 @@
 
         <!-- Other stuff.. userland -->
         <v-col cols="3" class="pl-2">
-          <v-card tile height="100%">
-            <v-toolbar color="green accent-3" dense flat tile>Dugout</v-toolbar>
+          <v-card rounded="0" height="100%">
+            <v-toolbar color="green-accent-3" dense flat>Dugout</v-toolbar>
             <dugout
               v-if="fixture.HomeTeam"
               :home="fixture.HomeTeam"
               :away="fixture.AwayTeam"
-              :homeSquad="mappedHomeSquad"
-              :awaySquad="mappedAwaySquad"
+              :home-squad="mappedHomeSquad"
+              :away-squad="mappedAwaySquad"
               :match="fixture"
-              :matchFinished="matchFinished"
-              :currentDay="currentDay"
-              :currentFixture="fixture._id"
+              :match-finished="matchFinished"
+              :current-day="currentDay"
+              :current-fixture="fixture._id"
               @match-selected="matchSelected"
-            ></dugout>
+            />
           </v-card>
         </v-col>
       </v-row>
       <game-lobby
         v-if="fixture.HomeTeam && fixture.AwayTeam"
-        :show.sync="openLobby"
-        @all-ready="ready"
+        v-model:show="openLobby"
         :home="{ Name: fixture.HomeTeam.Name, ClubCode: fixture.Home }"
         :away="{ Name: fixture.AwayTeam.Name, ClubCode: fixture.Away }"
-      ></game-lobby>
+        @all-ready="ready"
+      />
 
-      <v-skeleton-loader
-        v-else
-        class="mx-auto"
-        max-width="500"
-        type="card"
-      ></v-skeleton-loader>
+      <v-skeleton-loader v-else class="mx-auto" max-width="500" type="card" />
     </v-container>
   </div>
 </template>
 
 <script lang="ts">
-/* eslint-disable @typescript-eslint/camelcase */
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-facing-decorator';
 import ClubWidget from '@/components/matchzone/club.vue';
 import GameLobby from '@/components/matchzone/game-lobby.vue';
 // Widgets //
@@ -357,7 +326,7 @@ import {
   Dugout,
   Results,
   Timeline,
-  Motm,
+  Motm
 } from '../../components/matchzone/widgets';
 import { apiUrl } from '@/store';
 
@@ -369,49 +338,49 @@ import { apiUrl } from '@/store';
     GameLobby,
     Dugout,
     Results,
-    Timeline,
-  },
+    Timeline
+  }
 })
 export default class MatchZone extends Vue {
   public api: string = apiUrl;
 
   public whistle: any;
 
-  private fixture: any = {};
+  fixture: any = {};
 
-  private currentMatch: any = {};
+  currentMatch: any = {};
 
-  private currentDay: any = {};
+  currentDay: any = {};
 
-  private allReady = false;
+  allReady = false;
 
-  private openLobby = false;
+  openLobby = false;
 
-  private kickoffTimer = 0;
+  kickoffTimer = 0;
 
-  private starting = false;
+  starting = false;
 
-  private lastMatchOfSeason = false;
+  lastMatchOfSeason = false;
 
-  private showPlayOverlay = true;
+  showPlayOverlay = true;
 
-  private imSetup = false;
+  imSetup = false;
 
   // Match data //
-  private matchDetails: any = {};
+  matchDetails: any = {};
 
-  private matchEvents: any = {};
+  matchEvents: any = {};
 
-  private homeSquad: any = {};
+  homeSquad: any = {};
 
-  private awaySquad: any = {};
+  awaySquad: any = {};
 
-  private otherResults: any = [];
+  otherResults: any = [];
 
-  private standings: any = null;
+  standings: any = null;
 
   // Simulate rest
-  private simulateRest = false;
+  simulateRest = false;
 
   /** Computed */
 
@@ -471,7 +440,7 @@ export default class MatchZone extends Vue {
 
   /** Mathods */
 
-  private ready() {
+  ready() {
     this.openLobby = false;
 
     this.allReady = true;
@@ -481,7 +450,7 @@ export default class MatchZone extends Vue {
     this.playGame();
   }
 
-  private timer() {
+  timer() {
     let left = 0;
 
     const t = setInterval(() => {
@@ -494,15 +463,15 @@ export default class MatchZone extends Vue {
     }, 1000);
   }
 
-  private getFixture() {
+  getFixture() {
     this.$axios
       .get(`/fixtures/${this.fixtureId}`, {
         params: {
           populate: JSON.stringify([
             { path: 'HomeTeam', populate: ['Players', 'Manager'] },
-            { path: 'AwayTeam', populate: ['Players', 'Manager'] },
-          ]),
-        },
+            { path: 'AwayTeam', populate: ['Players', 'Manager'] }
+          ])
+        }
       })
       .then(response => {
         // Check for errors here o
@@ -517,7 +486,7 @@ export default class MatchZone extends Vue {
         this.starting = false;
       });
   }
-  private finishSeason() {
+  finishSeason() {
     const ans = confirm(
       'Season is over hurray!\nEnd Season now... you must say okay.'
     );
@@ -534,7 +503,7 @@ export default class MatchZone extends Vue {
         ...p,
         stats: this.fixture.HomeSideDetails.PlayerStats.find(
           (s: any) => p._id == s.Player
-        ),
+        )
       }));
     }
 
@@ -547,7 +516,7 @@ export default class MatchZone extends Vue {
         ...p,
         stats: this.fixture.AwaySideDetails.PlayerStats.find(
           (s: any) => p._id == s.Player
-        ),
+        )
       }));
     }
 
@@ -578,12 +547,15 @@ export default class MatchZone extends Vue {
     return { position, standing: this.standings[position - 1] };
   }
 
-  private playGame() {
+  playGame() {
     this.timer();
 
     this.whistle.play();
 
-    const params: { simulate_rest: boolean; send_other_results: boolean } = {};
+    // TODO: give specific type
+    const params:
+      | { simulate_rest: boolean; send_other_results: boolean }
+      | any = {};
 
     if (this.simulateRest) {
       params.simulate_rest = true;
@@ -611,7 +583,7 @@ export default class MatchZone extends Vue {
           HomeTeam: this.fixture.HomeTeam,
           AwayTeam: this.fixture.AwayTeam,
           HomeSideDetails,
-          AwaySideDetails,
+          AwaySideDetails
         };
         this.lastMatchOfSeason = main.lastMatchOfSeason;
         this.getStandings();
@@ -623,7 +595,7 @@ export default class MatchZone extends Vue {
       });
   }
 
-  private getFixtureDay() {
+  getFixtureDay() {
     this.$axios
       .get(`/calendar/day-of-fixture/${this.fixtureId}`)
       .then(response => {
@@ -636,7 +608,7 @@ export default class MatchZone extends Vue {
   }
 
   // TODO: put these network fetching methods separately...
-  private getStandings() {
+  getStandings() {
     console.log('Fetching Standings');
     if (this.fixture.Season) {
       this.$axios
@@ -651,14 +623,14 @@ export default class MatchZone extends Vue {
     }
   }
 
-  private matchSelected(match: any) {
+  matchSelected(match: any) {
     if (this.fixture.Played) {
       this.$router.push({ params: { fixture: match.Fixture._id } });
       this.initializeGame();
     }
   }
 
-  private initializeGame() {
+  initializeGame() {
     this.getFixture();
     this.getFixtureDay();
   }

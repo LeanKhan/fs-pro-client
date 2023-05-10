@@ -2,7 +2,7 @@
   <v-card>
     <v-card-title>
       Seasons
-      <v-spacer></v-spacer>
+      <v-spacer />
       <v-btn append-icon="mdi-plus" color="success" @click="openSeasonForm">
         Add
       </v-btn>
@@ -16,16 +16,14 @@
       no-data-text="No Seasons here, click add to create one"
       class="elevation-1"
     >
-      <template v-slot:item.Actions="{ item }">
-        <v-btn text icon color="success lighten-2">
-          <v-icon small @click="viewSeason(item._id, item.SeasonCode)">
+      <template #item.Actions="{ item }">
+        <v-btn variant="text" icon color="success-lighten-2">
+          <v-icon size="small" @click="viewSeason(item._id, item.SeasonCode)">
             mdi-eye
           </v-icon>
         </v-btn>
-        <v-btn text icon color="blue lighten-2">
-          <v-icon small @click="editSeason(item._id)">
-            mdi-pencil
-          </v-icon>
+        <v-btn variant="text" icon color="blue-lighten-2">
+          <v-icon size="small" @click="editSeason(item._id)">mdi-pencil</v-icon>
         </v-btn>
       </template>
     </v-data-table>
@@ -33,42 +31,46 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
-import { Season } from '@/interfaces/season';
+import { Component, Vue, Prop } from 'vue-facing-decorator';
+import { type Season } from '@/interfaces/season';
 
 @Component({})
 export default class SeasonsTable extends Vue {
   @Prop({ required: true }) readonly seasons!: Season;
   @Prop({ required: true }) readonly competitionId!: string;
 
-  private headers: any[] = [
+  headers: any[] = [
     {
       text: 'ID',
       align: 'start',
-      value: 'SeasonID',
+      value: 'SeasonID'
     },
     {
       text: 'Code',
-      value: 'SeasonCode',
+      value: 'SeasonCode'
     },
     { text: 'Title', value: 'Title' },
     { text: 'Start Date', value: 'StartDate', filterable: true },
-    { text: 'Actions', value: 'Actions', filterable: false, sortable: false },
+    { text: 'Actions', value: 'Actions', filterable: false, sortable: false }
   ];
 
-  private search = '';
+  search = '';
 
-  private openSeasonForm(): void {
+  openSeasonForm(): void {
     this.$router.push({
       name: 'New Season',
-      params: { compId: this.competitionId },
+      params: { compId: this.competitionId }
     });
   }
 
-  private viewSeason(seasonId: string, seasonCode: string): void {
+  editSeason(seasonId: string): void {
+    console.log('Editing this season => ', seasonId);
+  }
+
+  viewSeason(seasonId: string, seasonCode: string): void {
     this.$router.push({
       name: 'View Season',
-      params: { compId: this.competitionId, seasonId, seasonCode },
+      params: { compId: this.competitionId, seasonId, seasonCode }
     });
   }
 }

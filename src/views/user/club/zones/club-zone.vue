@@ -1,9 +1,7 @@
 <template>
   <div>
     <v-card>
-      <v-card-title>
-        Manager
-      </v-card-title>
+      <v-card-title>Manager</v-card-title>
       <v-card-text>
         <template v-if="club.Manager && club.Manager.FirstName">
           {{ club.Manager.FirstName }} {{ club.Manager.LastName }}
@@ -13,53 +11,58 @@
         </template>
       </v-card-text>
       <v-card-actions>
-        <v-btn v-if="club.Manager" color="error" @click="fireManager" depressed>
+        <v-btn
+          v-if="club.Manager"
+          color="error"
+          variant="flat"
+          @click="fireManager"
+        >
           Fire Manager
         </v-btn>
-        <v-btn v-else @click="hireManager" color="info" depressed>
+        <v-btn v-else color="info" variant="flat" @click="hireManager">
           Hire Manager
         </v-btn>
       </v-card-actions>
     </v-card>
 
-    <manager-picker
-      :show.sync="openManagerPicker"
-      @update-available="$emit('update-available')"
+    <ManagerPicker
+      v-model:show="openManagerPicker"
       :club="club._id"
-    ></manager-picker>
-    <manager-firer
-      :show.sync="openFireManager"
+      @update-available="$emit('update-available')"
+    />
+    <ManagerFirer
+      v-model:show="openFireManager"
       :manager="club.Manager"
       :club="club._id"
-    ></manager-firer>
+    />
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'vue-facing-decorator';
 import { ManagerPicker, ManagerFirer } from '@/components/clubzone';
 @Component({
   components: {
     ManagerPicker,
-    ManagerFirer,
-  },
+    ManagerFirer
+  }
 })
 export default class ClubZone extends Vue {
   @Prop({ required: true }) club!: any;
 
-  private openManagerPicker = false;
-  private openFireManager = false;
+  openManagerPicker = false;
+  openFireManager = false;
 
-  private hireManager() {
+  hireManager() {
     // hiring manager, thank you Jesus!
     this.openManagerPicker = !this.openManagerPicker;
   }
 
-  private fireManager() {
+  fireManager() {
     this.openFireManager = !this.openFireManager;
   }
 
-  private refresh() {
+  refresh() {
     this.$emit('update-available');
   }
 }

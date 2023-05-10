@@ -213,7 +213,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'vue-facing-decorator';
 import { Club } from '@/interfaces/club';
 import { apiUrl } from '@/store';
 import ImageUploader from '@/components/helpers/image-uploader.vue';

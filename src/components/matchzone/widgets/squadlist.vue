@@ -9,7 +9,7 @@
   </v-list>
 </template>
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'vue-facing-decorator';
 import SquadPlayer from './squadlist-player.vue';
 
 @Component({

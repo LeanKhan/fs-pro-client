@@ -26,31 +26,31 @@
     </v-card>
 
     <!-- loading overlay -->
-    <v-overlay :value="loading">
-      <v-progress-circular indeterminate size="68"></v-progress-circular>
+    <v-overlay :model-value="loading">
+      <v-progress-circular indeterminate size="68" />
     </v-overlay>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-facing-decorator';
 
-@Component
+@Component({})
 export default class EndOfYear extends Vue {
   // after end of season, check if the Year is alos over (that is, all the seasons are finished...)
   // then go to End Of Year...
 
-  private loading = false;
+  loading = false;
 
-  private ended = false;
+  ended = false;
 
-  private calendar: any = {};
+  calendar: any = {};
 
   get calendarId() {
     return this.$route.params.calendar_id;
   }
 
-  private endYear() {
+  endYear() {
     const ans = confirm('Are you sure you want to end this Year?');
 
     if (!ans) return false;

@@ -42,7 +42,7 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'vue-facing-decorator';
 @Component({})
 export default class Results extends Vue {
   @Prop({ required: true, type: String }) home!: any;

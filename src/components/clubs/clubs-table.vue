@@ -2,7 +2,7 @@
   <v-card>
     <v-card-title>
       Add Club to competition
-      <v-spacer></v-spacer>
+      <v-spacer />
 
       <v-text-field
         v-model="search"
@@ -10,13 +10,13 @@
         label="Search"
         single-line
         hide-details
-      ></v-text-field>
+      />
     </v-card-title>
 
     <v-data-table
+      v-model="selectedClub"
       :headers="headers"
       :items="clubs"
-      v-model="selectedClub"
       item-key="ClubCode"
       show-select
       :single-select="true"
@@ -38,74 +38,70 @@
         </v-btn>
       </template> -->
 
-      <template v-slot:item.Address="{ item }">
+      <template #item.Address="{ item }">
         {{ item.Address.City }}, {{ item.Address.Country.Name }}
       </template>
 
-      <template v-slot:item.Stadium="{ item }">
+      <template #item.Stadium="{ item }">
         {{ item.Stadium.Name }}
       </template>
 
-      <template v-slot:item.Players="{ item }">
+      <template #item.Players="{ item }">
         {{ item.Players.length }}
       </template>
     </v-data-table>
-    <v-divider></v-divider>
+    <v-divider />
     <v-card-actions>
-      <v-spacer></v-spacer>
-      <v-btn color="secondary" @click="close">
-        Close
-      </v-btn>
-      <v-btn color="success" v-if="selectedClub[0]" @click="addClub">
-        Add
-      </v-btn>
+      <v-spacer />
+      <v-btn color="secondary" @click="close">Close</v-btn>
+      <v-btn v-if="selectedClub[0]" color="success" @click="addClub">Add</v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import { Club } from '@/interfaces/club';
+import { Component, Vue } from 'vue-facing-decorator';
+import { type Club } from '@/interfaces/club';
 
 @Component({})
 export default class ClubsTable extends Vue {
   //   @Prop({ required: true }) readonly clubs!: Club;
 
-  private clubs: any[] = [];
+  clubs: any[] = [];
 
-  private selectedClub: Club[] | [] = [];
+  selectedClub: Club[] | [] = [];
 
-  private headers: any[] = [
+  headers: any[] = [
     {
       text: 'Code',
       align: 'start',
-      value: 'ClubCode',
+      value: 'ClubCode'
     },
     {
       text: 'Name',
-      value: 'Name',
+      value: 'Name'
     },
     { text: 'Address', value: 'Address', filterable: true, sortable: true },
     { text: 'Manager', value: 'Manager', filterable: true, sortable: false },
     { text: 'Stadium', value: 'Stadium', filterable: true, sortable: false },
     { text: 'League', value: 'LeagueCode', filterable: true, sortable: true },
-    { text: 'Players', value: 'Players', filterable: true, sortable: true },
+    { text: 'Players', value: 'Players', filterable: true, sortable: true }
   ];
 
-  private search = '';
+  search = '';
 
-  private addClub(): void {
+  addClub(): void {
     this.$emit('close-club-modal', {
       id: this.selectedClub[0]._id,
-      name: this.selectedClub[0].Name,
+      name: this.selectedClub[0].Name
     });
   }
 
-  private close(): void {
+  close(): void {
     this.$emit('close-club-modal');
   }
 
-  private mounted() {
+  mounted() {
     this.$axios
       .get('/clubs/all')
       .then(res => {

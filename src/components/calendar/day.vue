@@ -96,7 +96,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'vue-facing-decorator';
 import { IDay } from '../../interfaces/calendar';
 import DayMatch from './day-match.vue';
 

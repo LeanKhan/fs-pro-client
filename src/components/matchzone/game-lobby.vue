@@ -19,18 +19,18 @@
                 contain
                 class="mx-auto"
                 :src="`${api}/img/clubs/kits/${home.ClubCode}-kit.png`"
-              
+
                 max-width="200px"
               ></v-img>
               <v-overlay :absolute="true" :value="true" opacity="0.3">
-            
+
               <div class="headline">
                 {{ home.Name }}
               </div>
               <v-card-text class="pa-0">
                 <span v-if="!player1Ready">Are you ready?</span>
 
-                 
+
                 <template v-else>
                   Oya na!
                   <v-icon>
@@ -39,7 +39,7 @@
                 </template>
               </v-card-text>
               <v-card-actions class="justify-center">
-                
+
                   <v-btn
                     color="accent"
                     :depressed="player1Ready"
@@ -48,7 +48,7 @@
                   >
                     READY
                   </v-btn>
-              
+
               </v-card-actions>
               </v-overlay>
             </v-card>
@@ -60,18 +60,18 @@
                 contain
                 class="mx-auto"
                 :src="`${api}/img/clubs/kits/${away.ClubCode}-kit.png`"
-              
+
                 max-width="200px"
               ></v-img>
               <v-overlay :absolute="true" :value="true" opacity="0.3">
-            
+
              <div class="headline">
                 {{ away.Name }}
               </div>
               <v-card-text class="pa-0">
 <span v-if="!player2Ready">Are you ready?</span>
 
-                 
+
                 <template v-else>
                   Oya na!
                   <v-icon>
@@ -79,7 +79,7 @@
                   </v-icon>
                 </template>              </v-card-text>
               <v-card-actions class="justify-center">
-               
+
                   <v-btn
                     color="accent"
                     :depressed="player2Ready"
@@ -88,7 +88,7 @@
                   >
                     READY
                   </v-btn>
-                
+
               </v-card-actions>
               </v-overlay>
             </v-card>
@@ -99,7 +99,7 @@
   </v-dialog>
 </template>
 <script lang="ts">
-import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
+import { Component, Vue, Prop, Watch } from 'vue-facing-decorator';
 import { apiUrl } from '@/store';
 
 @Component({})

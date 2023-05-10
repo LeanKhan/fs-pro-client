@@ -13,7 +13,7 @@
         :clearable="true"
       ></v-text-field>
       <!--    <v-btn
-       
+
         append-icon="mdi-plus"
         color="success"
         @click="$emit('add-manager')"
@@ -70,7 +70,7 @@
   </v-card>
 </template>
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'vue-facing-decorator';
 // import { Player } from '@/interfaces/player';
 
 @Component({})

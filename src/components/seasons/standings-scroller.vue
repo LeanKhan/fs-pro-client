@@ -1,45 +1,45 @@
 <template>
   <v-card flat>
     <v-card-subtitle>
-      <v-spacer></v-spacer>
+      <v-spacer />
       <v-switch
         v-model="showWeekly"
-        dense
+        density="compact"
         hide-details
         label="Show Weekly Standings?"
-      ></v-switch>
+      />
     </v-card-subtitle>
     <v-window v-if="showWeekly" v-model="onboarding" reverse>
       <v-window-item v-for="(standing, i) in standings" :key="`standing-${i}`">
-        <standings :WeekStandings="standing" :compiled="showWeekly"></standings>
+        <Standings :week-standings="standing" :compiled="showWeekly" />
       </v-window-item>
     </v-window>
 
-    <standings
+    <Standings
       v-else
-      :WeekStandings="compiledStandings"
+      :week-standings="compiledStandings"
       :compiled="showWeekly"
-    ></standings>
+    />
 
     <v-card-actions v-if="showWeekly" class="justify-space-between">
-      <v-btn text @click="prev">
+      <v-btn variant="text" @click="prev">
         <v-icon>mdi-chevron-left</v-icon>
       </v-btn>
       <v-item-group v-model="onboarding" class="text-center" mandatory>
         <v-item
           v-for="n in length"
           :key="`btn-${n}`"
-          v-slot:default="{ active, toggle }"
+          v-slot="{ active, toggle }"
         >
           <!-- <v-avatar>
             {{ onboarding }}
         </v-avatar> -->
-          <v-btn :input-value="active" icon @click="toggle">
+          <v-btn :value="active" icon @click="toggle">
             {{ n }}
           </v-btn>
         </v-item>
       </v-item-group>
-      <v-btn text @click="next">
+      <v-btn variant="text" @click="next">
         <v-icon>mdi-chevron-right</v-icon>
       </v-btn>
     </v-card-actions>
@@ -47,35 +47,35 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'vue-facing-decorator';
 import Standings from '@/components/seasons/standings.vue';
-import { WeekStandings } from '@/interfaces/season.ts';
+import { type WeekStandings } from '@/interfaces/season.ts';
 @Component({
   name: 'StandingsScroller',
   components: {
     // Week Table
-    Standings,
-  },
+    Standings
+  }
 })
 export default class StandingsScroller extends Vue {
   @Prop({ required: true }) standings!: WeekStandings[];
 
-//  public length = this.standings.length;
-  public onboarding = 0;
-  public showWeekly = false;
+  //  public length = this.standings.length;
+  onboarding = 0;
+  showWeekly = false;
 
-  private next() {
+  next() {
     this.onboarding =
       this.onboarding + 1 === this.length ? 0 : this.onboarding + 1;
   }
 
-  private prev() {
+  prev() {
     this.onboarding =
       this.onboarding - 1 < 0 ? this.length - 1 : this.onboarding - 1;
   }
 
   get length() {
-  return this.standings.length;
+    return this.standings.length;
   }
 
   get total() {

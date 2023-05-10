@@ -9,9 +9,9 @@ import { type ICalendar } from '@/interfaces/calendar';
 @Component({})
 export default class User extends Vue {
   // get current calendar...
-  private currentCalendar: ICalendar | unknown = {};
+  currentCalendar: ICalendar | unknown = {};
 
-  private getCurrentCalendar() {
+  getCurrentCalendar() {
     this.$axios
       .get('/current')
       .then(response => {
@@ -22,7 +22,7 @@ export default class User extends Vue {
       });
   }
 
-  private mounted() {
+  mounted() {
     this.$store.dispatch('SET_CALENDAR');
 
     this.$nextTick(() => {

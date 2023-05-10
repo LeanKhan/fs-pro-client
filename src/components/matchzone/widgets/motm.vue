@@ -44,7 +44,7 @@
 </template>
 <script lang="ts">
 import { Player } from '@/interfaces/player';
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'vue-facing-decorator';
 @Component({})
 export default class MOTM extends Vue {
   @Prop({ required: true, type: String }) motm_id!: string;

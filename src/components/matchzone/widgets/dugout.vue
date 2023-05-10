@@ -52,7 +52,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'vue-facing-decorator';
 import DugoutClub from './dugout-club.vue';
 import DayFixturesList from '@/components/user-dashboard/DayFixturesList.vue';
 

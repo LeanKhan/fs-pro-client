@@ -6,26 +6,26 @@
           End of {{ season.Year }} {{ season.CompetitionCode }} Season
         </v-toolbar-title>
 
-        <v-spacer></v-spacer>
+        <v-spacer />
 
-        <v-btn v-if="!season.isFinished" depressed small icon @click="close()">
-          <v-icon>
-            mdi-close
-          </v-icon>
+        <v-btn
+          v-if="!season.isFinished"
+          variant="flat"
+          size="small"
+          icon
+          @click="close()"
+        >
+          <v-icon>mdi-close</v-icon>
         </v-btn>
 
-        <v-btn v-else color="pink accent-3" @click="close()">
-          CONTINUE
-        </v-btn>
+        <v-btn v-else color="pink-accent-3" @click="close()">CONTINUE</v-btn>
       </v-toolbar>
       <v-row>
         <v-col cols="9" class="px-1">
-          <v-card tile height="100%">
-            <v-toolbar color="pink accent-3" dense flat tile>
-              Results
-            </v-toolbar>
+          <v-card rounded="0" height="100%">
+            <v-toolbar color="pink-accent-3" dense flat>Results</v-toolbar>
 
-            <v-sheet class="pa-4 danger" v-if="!season.isFinished">
+            <v-sheet v-if="!season.isFinished" class="pa-4 danger">
               Ending Season
               <br />
               <v-btn
@@ -39,8 +39,8 @@
             </v-sheet>
 
             <v-sheet
-              class="d-flex flex-column pa-3 v-toolbar v-toolbar--prominent justify-center text-center"
               v-else-if="season.CompiledStandings || standings.length > 0"
+              class="d-flex flex-column pa-3 v-toolbar v-toolbar--prominent justify-center text-center"
             >
               <p>
                 Having Successfully completed
@@ -54,20 +54,18 @@
                     class="mx-auto"
                     :src="`${api}/img/clubs/logos/${standings[0].ClubCode}.png`"
                     width="140px"
-                  ></v-img>
+                  />
                 </template>
 
                 <template v-else-if="season.CompiledStandings">
                   <v-img
                     class="mx-auto"
-                    :src="
-                      `${api}/img/clubs/logos/${season.CompiledStandings[0].ClubCode}.png`
-                    "
+                    :src="`${api}/img/clubs/logos/${season.CompiledStandings[0].ClubCode}.png`"
                     width="140px"
-                  ></v-img>
+                  />
                 </template>
 
-                <p class="subtitle-1">
+                <p class="text-subtitle-1">
                   Champions {{ season.CompetitionCode }}
                   {{ season.Year }} Season
                 </p>
@@ -79,30 +77,27 @@
             </div>
 
             <template v-if="season.isFinished">
-              <player-awards
-                ref="awardsComponent"
-                :seasonId="seasonId"
-              ></player-awards>
+              <PlayerAwards ref="awardsComponent" :season-id="seasonId" />
             </template>
 
             <!-- Show top Players! -->
-            <player-stats :seasonId="seasonId"></player-stats>
+            <PlayerStats :season-id="seasonId" />
           </v-card>
         </v-col>
 
         <v-col cols="3" class="px-1">
-          <v-card tile height="100%">
-            <v-toolbar color="pink accent-3" dense flat tile>
+          <v-card rounded="0" height="100%">
+            <v-toolbar color="pink-accent-3" dense flat>
               Final Standings
             </v-toolbar>
 
             <p v-if="!season.isFinished">Ending Season {{ season.Title }}</p>
 
             <!-- TODO: highlight promoted or relegated -->
-            <standings
+            <Standings
               v-else-if="standings || season.CompiledStandings"
-              :WeekStandings="season.CompiledStandings || standings"
-            ></standings>
+              :week-standings="season.CompiledStandings || standings"
+            />
 
             <div v-else>
               Season is over, but data is not displayed here yet...
@@ -113,15 +108,14 @@
     </v-container>
 
     <!-- loading overlay -->
-    <v-overlay :value="loading">
-      <v-progress-circular indeterminate size="68"></v-progress-circular>
+    <v-overlay :model-value="loading">
+      <v-progress-circular indeterminate size="68" />
     </v-overlay>
   </div>
 </template>
 
 <script lang="ts">
-/* eslint-disable @typescript-eslint/camelcase */
-import { Component, Vue, Ref } from 'vue-property-decorator';
+import { Component, Vue, Ref } from 'vue-facing-decorator';
 import Standings from '@/components/seasons/standings.vue';
 import PlayerStats from '@/components/seasons/player-stats.vue';
 import PlayerAwards from '@/components/seasons/player-awards.vue';
@@ -131,32 +125,32 @@ import { apiUrl } from '@/store';
   components: {
     Standings,
     PlayerStats,
-    PlayerAwards,
-  },
+    PlayerAwards
+  }
 })
 export default class EndOfSeason extends Vue {
   @Ref('awardsComponent') readonly awardsComponent!: PlayerAwards;
   // after end of season, check if the Year is alos over (that is, all the seasons are finished...)
   // then go to End Of Year...
 
-  private loading = false;
+  loading = false;
 
-  private api = apiUrl;
+  api = apiUrl;
 
-  private season: any = {};
+  season: any = {};
 
-  private standings: any = {};
+  standings: any = {};
 
-  private failToEnd = false;
+  failToEnd = false;
 
   get seasonId() {
     return this.$route.params.season_id;
   }
-  private close() {
+  close() {
     this.$router.push('/u');
   }
 
-  private finishSeason() {
+  finishSeason() {
     console.log('Finishing Season...');
     this.loading = true;
     this.$axios
@@ -195,7 +189,7 @@ export default class EndOfSeason extends Vue {
 
         if (this.season.isFinished) {
           this.$nextTick(() => {
-                       this.awardsComponent.fetchAwards();
+            this.awardsComponent.fetchAwards();
           });
         }
       })

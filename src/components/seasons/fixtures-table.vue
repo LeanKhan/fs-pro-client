@@ -27,7 +27,7 @@
 // TODO: Allow filtering, maybe show only played matches?
 // TODO: Should be able to visit the Match page of played matches
 // TODO: Should show Day information...
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'vue-facing-decorator';
 
 @Component({
   name: 'Fixtures',
