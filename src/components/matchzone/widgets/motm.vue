@@ -10,7 +10,7 @@
     </v-btn>
 
     <template v-else-if="loadMOTM && Player">
-      <v-list dense flat tile>
+      <v-list density="compact">
         <!-- <v-list-item class="text-center center-text justify-center">
           <v-list-item-content>
             <v-avatar color="yellow">
@@ -23,9 +23,7 @@
 
         <v-list-item>
           <v-list-item-avatar tile size="50px" color="transparent" class="h3">
-            <span class="green--text font-weight-bold">
-              10
-            </span>
+            <span class="text-green font-weight-bold">10</span>
           </v-list-item-avatar>
           <v-list-item-content class="pa-0">
             <v-list-item-title>
@@ -37,23 +35,21 @@
       </v-list>
     </template>
 
-    <v-sheet v-else>
-      Could not load MOTM Data
-    </v-sheet>
+    <v-sheet v-else>Could not load MOTM Data</v-sheet>
   </div>
 </template>
 <script lang="ts">
-import { Player } from '@/interfaces/player';
+import { type Player } from '@/interfaces/player';
 import { Component, Vue, Prop } from 'vue-facing-decorator';
 @Component({})
 export default class MOTM extends Vue {
   @Prop({ required: true, type: String }) motm_id!: string;
 
-  private loading = false;
-  private loadMOTM = false;
-  private Player: any | Player = {};
+  loading = false;
+  loadMOTM = false;
+  Player: any | Player = {};
 
-  private getMOTM() {
+  getMOTM() {
     if (this.motm_id) {
       this.loading = true;
       this.$axios

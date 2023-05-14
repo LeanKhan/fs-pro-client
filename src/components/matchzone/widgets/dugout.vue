@@ -1,50 +1,44 @@
 <template>
   <div>
-    <v-tabs fixed-tabs v-model="tab">
-      <v-tab>
-        Squad
-      </v-tab>
+    <v-tabs v-model="tab" fixed-tabs>
+      <v-tab>Squad</v-tab>
 
-      <v-tab>
-        Setup
-      </v-tab>
+      <v-tab>Setup</v-tab>
 
-      <v-tab>
-        Today
-      </v-tab>
+      <v-tab>Today</v-tab>
     </v-tabs>
     <v-tabs-items v-model="tab">
       <v-tab-item>
         <div class="px-0 py-2">
-          <dugout-club
-            :matchFinished="matchFinished"
+          <DugoutClub
+            :match-finished="matchFinished"
             :club="home"
-            :clubSquad="homeSquad"
-            :isHome="true"
-          ></dugout-club>
+            :club-squad="homeSquad"
+            :is-home="true"
+          />
 
-          <v-divider></v-divider>
+          <v-divider />
           <!-- Away Squad -->
-          <dugout-club
-            :matchFinished="matchFinished"
+          <DugoutClub
+            :match-finished="matchFinished"
             :club="away"
-            :clubSquad="awaySquad"
-            :isHome="false"
-          ></dugout-club>
+            :club-squad="awaySquad"
+            :is-home="false"
+          />
         </div>
       </v-tab-item>
       <v-tab-item>
-        <v-card-text>
-          Coming soon...
-        </v-card-text>
+        <v-card-text>Coming soon...</v-card-text>
       </v-tab-item>
 
       <v-tab-item>
         <v-card-text>
-           <DayFixturesList :Matches="currentDay.Matches"
-           Detail="results"
-           :MandatorySelect="false"
-            @match-selected="matchSelected" />
+          <DayFixturesList
+            :matches="currentDay.Matches"
+            detail="results"
+            :mandatory-select="false"
+            @match-selected="matchSelected"
+          />
         </v-card-text>
       </v-tab-item>
     </v-tabs-items>
@@ -58,8 +52,8 @@ import DayFixturesList from '@/components/user-dashboard/DayFixturesList.vue';
 
 @Component({
   components: {
-    DugoutClub,
-  },
+    DugoutClub
+  }
 })
 export default class Dugout extends Vue {
   @Prop({ required: true }) home!: any;
@@ -71,10 +65,10 @@ export default class Dugout extends Vue {
   @Prop({ required: false }) currentDay!: any;
   @Prop({ required: true }) currentFixture!: any;
 
-  private tab: any = null;
+  tab: any = null;
 
-  private showHomeSquad = false;
-  private showAwaySquad = false;
+  showHomeSquad = false;
+  showAwaySquad = false;
 
   get HomeSideDetails() {
     if (this.match) return this.match.HomeSideDetails;
@@ -87,12 +81,13 @@ export default class Dugout extends Vue {
   }
 
   get otherFixtures() {
-    if(this.currentDay){
-      return this.currentDay.Matches.map(f => f.Fixture);
+    if (this.currentDay) {
+      // TODO: replace 'any' tyoe
+      return this.currentDay.Matches.map((f: any) => f.Fixture);
     }
   }
 
-  private matchSelected(match) {
+  matchSelected(match: any) {
     console.log('Selceted match => ', match);
     // change slectedLeague
     this.$emit('match-selected', match);

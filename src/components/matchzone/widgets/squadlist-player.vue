@@ -1,15 +1,20 @@
 <template>
   <v-list-item
-    style="min-height: 30px !important;height: 40px !important"
-    dense
-    two-line
+    style="min-height: 30px !important; height: 40px !important"
+    density="compact"
+    lines="two"
   >
     <!-- <v-badge>
     <template v-slot:default>
 
     </template>
   </v-badge> -->
-    <v-list-item-avatar tile size="20px" color="transparent" class="caption">
+    <v-list-item-avatar
+      tile
+      size="20px"
+      color="transparent"
+      class="text-caption"
+    >
       <span :class="positionColor">
         {{ position }}
       </span>
@@ -19,27 +24,27 @@
         {{ player.FirstName }}
         {{ player.LastName }}
 
-        <b class="font-weight-bold pink--text">
+        <b class="font-weight-bold text-pink">
           [{{ Math.round(player.Rating) }}]
         </b>
 
         <template v-if="matchFinished">
           <template v-if="player.stats.Goals > 0">
-            <v-icon class="ml-1" small color="blue accent--3">
+            <v-icon class="ml-1" size="small" color="blue accent--3">
               mdi-soccer
             </v-icon>
             x {{ player.stats.Goals }}
           </template>
 
           <template v-if="player.stats.Saves > 0">
-            <v-icon class="ml-1" small color="purple accent--3">
+            <v-icon class="ml-1" size="small" color="purple accent--3">
               mdi-pan
             </v-icon>
             x {{ player.stats.Saves }}
           </template>
 
           <template v-if="player.stats.Assists > 0">
-            <v-icon class="ml-1" small color="green accent--3">
+            <v-icon class="ml-1" size="small" color="green accent--3">
               mdi-fullscreen
             </v-icon>
             x {{ player.stats.Assists }}
@@ -53,9 +58,9 @@
       tile
       size="40px"
       :color="matchRatingColor(Math.round(player.stats.Points))"
-      class="caption"
+      class="text-caption"
     >
-      <span class="white--text font-weight-bold">
+      <span class="text-white font-weight-bold">
         {{ Math.round(player.stats.Points) }}
       </span>
     </v-list-item-avatar>

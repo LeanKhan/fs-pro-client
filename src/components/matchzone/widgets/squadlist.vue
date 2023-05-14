@@ -1,11 +1,11 @@
 <template>
-  <v-list dense two-line>
+  <v-list density="compact" lines="two">
     <squad-player
       v-for="(player, i) in squad"
       :key="i"
       :player="player"
-      :matchFinished="matchFinished"
-    ></squad-player>
+      :match-finished="matchFinished"
+    />
   </v-list>
 </template>
 <script lang="ts">
@@ -14,8 +14,8 @@ import SquadPlayer from './squadlist-player.vue';
 
 @Component({
   components: {
-    SquadPlayer,
-  },
+    SquadPlayer
+  }
 })
 export default class SquadList extends Vue {
   @Prop({ required: true, type: Array }) squad!: any;

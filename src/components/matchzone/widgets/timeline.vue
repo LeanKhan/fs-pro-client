@@ -3,10 +3,10 @@
     <v-timeline-item
       v-for="(event, i) in usefulEvents"
       :key="i"
-      :color="eventColor(event.type)"
+      :dot-color="eventColor(event.type)"
       :icon="eventIcon(event.type)"
     >
-      <template v-slot:opposite>
+      <template #opposite>
         <span class="font-weight-bold">"{{ event.time }}</span>
       </template>
       {{ event.message }}
@@ -28,7 +28,7 @@ export default class Timeline extends Vue {
     );
   }
 
-  private eventColor(type: string) {
+  eventColor(type: string) {
     switch (type) {
       case 'match':
         return 'yellow';
@@ -42,7 +42,7 @@ export default class Timeline extends Vue {
         return 'green accent-3';
     }
   }
-  private eventIcon(type: string) {
+  eventIcon(type: string) {
     switch (type) {
       case 'match':
         return 'mdi-flag';
