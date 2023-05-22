@@ -1,13 +1,15 @@
+/* eslint-disable no-unused-vars */
 import { createApp } from 'vue';
 import App from './App.vue';
 import vuetify from './plugins/vuetify';
 import router from './router';
-import store, { apiUrl } from './store';
+import store, { apiUrl, type RootState } from './store';
 import axios, { type AxiosInstance } from 'axios';
 import { roundTo, ordinal } from './helpers/misc';
 
 import VueSocketIOExt from 'vue-socket.io-extended';
 import io, { type Socket } from 'socket.io-client';
+import type { Store } from 'vuex/types/index.js';
 
 const app = createApp(App);
 
@@ -36,6 +38,7 @@ declare module 'vue' {
   interface ComponentCustomProperties {
     $axios: AxiosInstance;
     $socket: typeof Socket;
+    $store: Store<RootState>;
     $filters: {
       currency: (value: number) => string;
       roundTo: (number: number, decimalPlaces: number) => number;

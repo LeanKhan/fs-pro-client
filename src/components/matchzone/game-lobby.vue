@@ -146,30 +146,6 @@ export default defineComponent({
     }
   }
 });
-
-// @Component({})
-// export class GameLobby extends Vue {
-//   @Prop({ required: true, default: false, type: Boolean }) show!: boolean;
-//   @Prop({ required: true }) home!: any;
-//   @Prop({ required: true }) away!: any;
-
-//   player1Ready = false;
-//   player2Ready = false;
-//   skip = false;
-//   api = apiUrl;
-
-//   get allReady() {
-//     return this.player1Ready && this.player2Ready;
-//   }
-
-//   @Watch('onAllReady', { immediate: true })
-//   onAllReady(ready: boolean) {
-//     if (ready) {
-//       console.log('All are ready!');
-//       this.$emit('all-ready');
-//     }
-//   }
-// }
 </script>
 <style scoped>
 :root {

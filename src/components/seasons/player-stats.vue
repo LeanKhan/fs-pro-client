@@ -5,15 +5,15 @@
       <v-icon>mdi-chart-areaspline</v-icon>
     </v-toolbar>
     <v-row>
-      <template v-for="(attr, k) in stats_attributes">
-        <v-col :key="k" cols="6">
+      <template v-for="(attr, index) in stats_attributes" :key="index">
+        <v-col cols="6">
           <v-card color="green-accent-1">
             <v-card-title class="capitalize text-subtitle-1 text-black">
               Highest {{ attr }}
             </v-card-title>
 
             <v-list v-if="top_players[attr].length > 0">
-              <v-list-item v-for="(p, i) in top_players[attr]" :key="i">
+              <v-list-item v-for="(p, i) in (top_players[attr] as any)" :key="i">
                 <v-list-item-avatar>
                   <v-icon style="font-size: 30px; height: 30px" size="large">
                     ${{ p.player.ClubCode }}
@@ -37,7 +37,7 @@
                 variant="flat"
                 :disabled="loading_player_stats"
                 :loading="loading_player_stats"
-                @click="load_stats(attr)"
+                @click="loadStats(attr)"
               >
                 Load
               </v-btn>
@@ -78,8 +78,7 @@ export default class PlayerStats extends Vue {
     saves: []
   };
 
-  // eslint-disable-next-line @typescript-eslint/camelcase
-  load_stats(attribute: string) {
+  loadStats(attribute: string) {
     this.loading_player_stats = true;
     this.$axios
       .get(

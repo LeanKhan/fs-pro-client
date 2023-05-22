@@ -66,11 +66,11 @@ export default class ManagerFire extends Vue {
   @Prop({ required: true }) manager!: any;
   @Prop({ required: true }) club!: string;
 
-  private loading = false;
+   loading = false;
 
-  private reason = '';
+   reason = '';
 
-  private fireManager() {
+   fireManager() {
     this.loading = true;
     this.$axios
       .delete(

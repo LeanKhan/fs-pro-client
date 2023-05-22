@@ -1,64 +1,73 @@
 <template>
-  <v-slide-group show-arrows mandatory v-model="selectedDayIndex"
-   center-active
-   @click:next="nextDay()"
-   >
+  <v-slide-group
+    v-model="selectedDayIndex"
+    show-arrows
+    mandatory
+    center-active
+    @click:next="nextDay()"
+  >
     <v-slide-item
       v-for="(day, i) in days$"
       :key="i"
-      v-slot:default="{ active, toggle }"
+      v-slot="{ active, toggle }"
     >
       <calendar-day
         :day="day"
         :active="active"
         :toggle="toggle"
         :club="club"
-        :singleLeague="singleLeague$"
-      ></calendar-day>
+        :single-league="singleLeague"
+      />
     </v-slide-item>
   </v-slide-group>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Watch } from 'vue-facing-decorator';
+import { defineComponent } from 'vue';
 import CalendarDay from './day.vue';
-@Component({
+
+export default defineComponent({
   components: {
-    CalendarDay,
+    CalendarDay
   },
-})
-export default class DayScroll extends Vue {
-  @Prop({ required: true }) readonly days!: [{}];
-  @Prop({ required: true }) readonly singleLeague!: boolean;
-  @Prop() readonly club?: string;
-
-  public selectedDayIndex = 0;
-
-  // public days$ = this.days;
-  public singleLeague$ = this.singleLeague;
-
-  get days$() {
-    return this.days;
+  props: {
+    days: {
+      type: Array<object>,
+      required: true
+    },
+    singleLeague: {
+      type: Boolean,
+      required: true
+    },
+    club: String
+  },
+  emits: ['selected-day-index-changed'],
+  data() {
+    return {
+      selectedDayIndex: 0
+    };
+  },
+  computed: {
+    days$() {
+      return this.days;
+    },
+    currentDay() {
+      return this.$store.getters.calendar.CurrentDay;
+    }
+  },
+  watch: {
+    selectedDayIndex: {
+      handler(val: number) {
+        this.$emit('selected-day-index-changed', val);
+      }
+    }
+  },
+  methods: {
+    nextDay() {
+      console.log('Next clicked');
+    }
   }
-
-   get singleLeague$() {
-    return this.singleLeague;
-  }
-
-  get currentDay() {
-    return this.$store.getters.calendar.CurrentDay;
-  }
-  // private selectedDayIndex = this.currentDay ? (this.currentDay - 1) % 7 : 0;
-
-  @Watch('selectedDayIndex', { immediate: true })
-  onSelectedDayIndexChanged(val: number) {
-    this.$emit('selected-day-index-changed', val);
-  }
-
-  public nextDay() {
-    console.log('Next clicked')
-  }
-}
+});
 </script>
 
 <style></style>

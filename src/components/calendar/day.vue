@@ -16,11 +16,12 @@
         <template v-if="!day.isFree">
           <template v-if="!singleLeague">
             <v-col cols="12">
-              <day-match v-if="leagueMatch" :match="leagueMatch" :home="true"></day-match>
-              <v-btn
-                dark
-                icon
-              >
+              <day-match
+                v-if="leagueMatch"
+                :match="leagueMatch"
+                :home="true"
+              ></day-match>
+              <v-btn dark icon>
                 <v-icon>mdi-caret-down</v-icon>
               </v-btn>
             </v-col>
@@ -40,9 +41,7 @@
               </v-icon>
             </div>
 
-            <div v-else>
-              Not your match!
-            </div>
+            <div v-else>Not your match!</div>
           </template>
         </template>
 
@@ -60,48 +59,39 @@
       </v-chip>
       <v-spacer></v-spacer>
 
-    <v-dialog
-      v-model="dialog"
-      scrollable
-      max-width="400px"
-    >
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn
-                dark
-                icon
-                v-bind="attrs"
-                v-on="on"
-              >
-                <v-icon>mdi-dots-vertical</v-icon>
-              </v-btn>
-      </template>
-      <v-card>
-        <v-card-title>Other Matches Today</v-card-title>
-        <v-divider></v-divider>
-        <v-card-text style="height: 300px;">
-          <v-list dense>
-            <v-list-item v-for="(m, i) in day.Matches" :key="i">
-              <v-list-item-content>
-                <v-list-item-title>
-                  {{ m.Fixture.Title }}
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
+      <v-dialog v-model="dialog" scrollable max-width="400px">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn icon v-bind="attrs" v-on="on">
+            <v-icon>mdi-dots-vertical</v-icon>
+          </v-btn>
+        </template>
+        <v-card>
+          <v-card-title>Other Matches Today</v-card-title>
+          <v-divider />
+          <v-card-text style="height: 300px">
+            <v-list density="compact">
+              <v-list-item v-for="(m, i) in day.Matches" :key="i">
+                <v-list-item-content>
+                  <v-list-item-title>
+                    {{ m.Fixture.Title }}
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
     </v-card-actions>
   </v-card>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-facing-decorator';
-import { IDay } from '../../interfaces/calendar';
+import { type IDay } from '../../interfaces/calendar';
 import DayMatch from './day-match.vue';
 
 @Component({
-  components: { DayMatch },
+  components: { DayMatch }
 })
 export default class CalendarDay extends Vue {
   @Prop({ required: true }) readonly day!: IDay;
@@ -117,18 +107,19 @@ export default class CalendarDay extends Vue {
   }
 
   get leagueMatch() {
-  // this is just the first Match of the League matches that day. It should
-  // actually be the selected match!
-  if (this.$selectedLeague){
-    return this.day.Matches.find(m => m.CompetitionId == this.$selectedLeague)
-  }
+    // this is just the first Match of the League matches that day. It should
+    // actually be the selected match!
+    if (this.$selectedLeague) {
+      // idk if m.CompetitionId is going to be defined in this case...
+      return this.day.Matches.find(m => m.Competition == this.$selectedLeague);
+    }
   }
 
   get isClub(): boolean {
     if (this.club) {
       return (
-        this.leagueMatch.Fixture.Home == this.club ||
-        this.leagueMatch.Fixture.Away == this.club
+        this.leagueMatch!.Fixture.Home == this.club ||
+        this.leagueMatch!.Fixture.Away == this.club
       );
     }
 

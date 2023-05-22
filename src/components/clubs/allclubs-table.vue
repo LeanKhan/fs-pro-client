@@ -20,7 +20,7 @@
       :items="clubs"
       item-key="ClubCode"
       :search="search"
-      :loading="!clubs.length > 0"
+      :loading="clubs.length > 0"
       loading-text="Fetching Clubs..."
       no-data-text="No Clubs"
       class="elevation-1"
@@ -79,20 +79,20 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-facing-decorator';
-import { Club } from '@/interfaces/club';
+import { type Club } from '@/interfaces/club';
 
 @Component({})
 export default class AllClubsTable extends Vue {
-  @Prop({ required: true }) readonly clubs!: Club;
+  @Prop({ required: true }) readonly clubs!: Club[];
 
   // TODO: searches should be navigable. change url
-  private search = '';
+   search = '';
 
   get apiUrl() {
     return this.$store.getters.apiUrl;
   }
 
-  private headers: any[] = [
+   headers: any[] = [
     {
       text: 'Name',
       align: 'start',
@@ -106,14 +106,14 @@ export default class AllClubsTable extends Vue {
     { text: 'Actions', value: 'Actions', filterable: false, sortable: false },
   ];
 
-  private updateClub(clubId: string, clubCode: string): void {
+   updateClub(clubId: string, clubCode: string): void {
     this.$router.push({
       name: 'Update Club',
       params: { id: clubId, code: clubCode },
     });
   }
 
-  private viewClub(clubId: string, clubCode: string): void {
+   viewClub(clubId: string, clubCode: string): void {
     this.$router.push({
       name: 'View Club',
       params: { id: clubId, code: clubCode },

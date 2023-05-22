@@ -1,11 +1,11 @@
 <template>
-  <canvas width="144" height="154"></canvas>
+  <canvas width="144" height="154" />
 </template>
 
 <script lang="ts">
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Component, Vue, Prop } from 'vue-facing-decorator';
-import { Appearance } from '@/interfaces/player';
+import { type Appearance } from '@/interfaces/player';
 import { apiUrl } from '@/store';
 
 @Component({})
@@ -16,7 +16,7 @@ export default class PlayerAvatar extends Vue {
 
   // TODO: save the position of the facial features in db [?]
 
-  private mounted() {
+  mounted() {
     const cx = document.querySelector('canvas')?.getContext('2d');
 
     const baseHead = document.createElement('img');

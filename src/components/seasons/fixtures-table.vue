@@ -1,6 +1,6 @@
 <template>
-  <v-simple-table>
-    <template v-slot:default>
+  <v-table>
+    <template #default>
       <thead>
         <tr>
           <th class="text-left">Title</th>
@@ -10,15 +10,15 @@
       <tbody>
         <tr v-for="fx in fixtures" :key="fx._id" @click="goToMatch(fx._id)">
           <td>
-            <v-icon large>${{ fx.Home }}</v-icon>
+            <v-icon size="large">${{ fx.Home }}</v-icon>
             {{ fx.Title }}
-            <v-icon large>${{ fx.Away }}</v-icon>
+            <v-icon size="large">${{ fx.Away }}</v-icon>
           </td>
           <td>{{ fx.Played ? fx.Details.FullTimeScore : '- : -' }}</td>
         </tr>
       </tbody>
     </template>
-  </v-simple-table>
+  </v-table>
 </template>
 
 <script lang="ts">
@@ -30,7 +30,7 @@
 import { Component, Vue, Prop } from 'vue-facing-decorator';
 
 @Component({
-  name: 'Fixtures',
+  name: 'Fixtures'
 })
 export default class FixturesTable extends Vue {
   @Prop({ required: true }) fixtures!: any;
@@ -38,7 +38,7 @@ export default class FixturesTable extends Vue {
   /**
    * ID -  Fixture Id
    */
-  private goToMatch(id: string) {
+  goToMatch(id: string) {
     this.$router.push('/matchzone/' + id);
   }
 }

@@ -27,9 +27,7 @@
       <v-spacer></v-spacer>
 
       <v-btn @click="addClub" text icon color="primary lighten-2" class="mr-3">
-        <v-icon small>
-          mdi-plus
-        </v-icon>
+        <v-icon small>mdi-plus</v-icon>
         Add
       </v-btn>
     </v-card-actions>
@@ -38,17 +36,17 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-facing-decorator';
-import { Club } from '@/interfaces/club';
+import { type Club } from '@/interfaces/club';
 import { apiUrl } from '@/store';
 
-@Component
+@Component({})
 export default class ClubList extends Vue {
   @Prop({ required: true }) readonly clubs!: Club[];
   @Prop({ default: false, required: false }) readonly actions!: boolean;
 
   public api: string = apiUrl;
 
-  private addClub(): void {
+  addClub(): void {
     this.$emit('open-club-modal');
   }
 }

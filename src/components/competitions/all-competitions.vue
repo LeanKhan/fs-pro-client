@@ -91,12 +91,12 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-facing-decorator';
-import { Competition } from '@/interfaces/competition';
+import { type Competition } from '@/interfaces/competition';
 import { apiUrl } from '@/store';
 
 @Component({})
 export default class AllCompetitions extends Vue {
-  private competitions: Competition[] = [];
+   competitions: Competition[] = [];
 
   public selectedCompetition: any = {};
 

@@ -17,7 +17,7 @@
       <v-sheet
         v-if="!uploadedImage"
         :class="cardSheet.class"
-        color="secondary lighten-3"
+        color="secondary-lighten-3"
         :style="cardSheet.style"
         :height="cardSheet.height"
         :width="cardSheet.width"
@@ -37,16 +37,16 @@
       <v-img
         v-else
         :src="uploadedImage"
-        :contain="previewImage.contain"
+        :cover="previewImage.contain"
         :height="previewImage.height"
         :width="previewImage.width"
         :style="previewImage.style"
-      ></v-img>
+      />
       <!-- style: border-radius: 50px -->
     </v-card>
     <v-card-actions>
       <v-btn
-        text
+        variant="text"
         color="pink"
         :loading="uploading"
         :disabled="!image"
@@ -65,7 +65,7 @@
         @change="imageUploaded"
         label="Photo"
       >
-        <template v-slot:default>
+        <template #default>
           <v-btn>Select file!</v-btn>
         </template>
       </v-file-input>
@@ -107,7 +107,7 @@ export default class ImageUploader extends Vue {
       style: '',
     }),
   })
-  readonly cardSheet!: {};
+  readonly cardSheet!: any;
 
   @Prop({
     required: false,
@@ -119,16 +119,16 @@ export default class ImageUploader extends Vue {
       title: 'Upload Image',
     }),
   })
-  readonly card!: {};
+  readonly card!: any;
 
   @Prop({ required: false, default: true }) readonly compress!: boolean;
 
   @Prop({ required: true, type: String }) readonly filePath!: string;
   @Prop({ required: true, type: String }) readonly fileName!: string;
 
-  private image: File | null = null;
-  private uploadedImageSrc: any = '';
-  private uploading = false;
+   image: File | null = null;
+   uploadedImageSrc: any = '';
+   uploading = false;
 
   get uploadedImage() {
     if(this.uploadedImageSrc){
@@ -142,14 +142,14 @@ export default class ImageUploader extends Vue {
     this.previewImage.src = src;
   }
 
-  private selectImage() {
-    const fileUploader = this.$refs.imageUploader as Vue;
+   selectImage() {
+    const fileUploader = this.$refs.imageUploaderVue as any;
 
     const fileInput = fileUploader.$refs.input as HTMLInputElement;
     fileInput.click();
   }
 
-  private async imageUploaded(file: File) {
+   async imageUploaded(file: File) {
     if (file) {
       this.image = file;
 
@@ -179,7 +179,7 @@ export default class ImageUploader extends Vue {
     }
   }
 
-  private upload() {
+   upload() {
     const headers = {
       'Content-Type': 'multipart/form-data',
     };
