@@ -39,6 +39,7 @@ export default defineComponent({
       type: Boolean,
       required: true
     },
+    // eslint-disable-next-line vue/require-default-prop
     club: String
   },
   emits: ['selected-day-index-changed'],

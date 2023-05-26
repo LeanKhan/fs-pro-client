@@ -1,4 +1,4 @@
-import { RootState } from '.';
+import { type RootState } from '.';
 import { Module } from 'vuex';
 
 export interface SocketState {
@@ -6,19 +6,19 @@ export interface SocketState {
 }
 
 export const state: SocketState = {
-  poop: '',
+  poop: ''
 };
 
 const socket: Module<SocketState, RootState> = {
   namespaced: true,
   state,
   getters: {
-    poop: state => {
+    poop: (state: { poop: any; }) => {
       return state.poop;
-    },
+    }
   },
   mutations: {},
-  actions: {},
+  actions: {}
 };
 
 export default socket;

@@ -55,7 +55,7 @@ export const AttackerMultipliers: Multipliers = {
   Stamina: 0.05,
   Keeping: 0,
   SetPiece: 0.04,
-  Dribbling: 0.1,
+  Dribbling: 0.1
 };
 
 export const GoalkeeperMultipliers: Multipliers = {
@@ -70,7 +70,7 @@ export const GoalkeeperMultipliers: Multipliers = {
   Stamina: 0.03,
   Keeping: 0.7,
   SetPiece: 0.0,
-  Dribbling: 0.0,
+  Dribbling: 0.0
 };
 
 export const MidfielderMultipliers: Multipliers = {
@@ -85,7 +85,7 @@ export const MidfielderMultipliers: Multipliers = {
   Stamina: 0.08,
   Keeping: 0,
   SetPiece: 0.04,
-  Dribbling: 0.09,
+  Dribbling: 0.09
 };
 
 export const DefenderMultipliers: Multipliers = {
@@ -100,7 +100,7 @@ export const DefenderMultipliers: Multipliers = {
   Stamina: 0.04,
   Keeping: 0.0,
   SetPiece: 0.02,
-  Dribbling: 0.0,
+  Dribbling: 0.0
 };
 
 export interface Multipliers {

@@ -4,13 +4,13 @@
     <v-card
       :class="card.class"
       ripple
-      @click="selectImage"
       flat
       :height="card.height"
       :style="card.style"
       :width="card.width"
       :title="card.title"
       light
+      @click="selectImage"
     >
       <!-- class: mt-3 mx-auto d-flex justify-center -->
       <v-card-title>{{ card.title || 'Upload Image' }}</v-card-title>
@@ -23,9 +23,7 @@
         :width="cardSheet.width"
       >
         <div class="text-center mx-auto">
-          <v-icon color="white">
-            mdi-photo
-          </v-icon>
+          <v-icon color="white">mdi-photo</v-icon>
           <!-- <p class="body mt-2 white--text">
                     Circle Avatar
                   </p> -->
@@ -46,24 +44,24 @@
     </v-card>
     <v-card-actions>
       <v-btn
+        v-show="image"
         variant="text"
         color="pink"
         :loading="uploading"
         :disabled="!image"
-        v-show="image"
         @click="upload"
       >
         Upload
       </v-btn>
 
       <v-file-input
+        ref="imageUploader"
         accept="image/png, image/jpeg, image/gif, image/bmp, image/svg"
         placeholder="Pick an image"
         prepend-icon="mdi-image"
-        ref="imageUploader"
         class="d-none"
-        @change="imageUploaded"
         label="Photo"
+        @change="imageUploaded"
       >
         <template #default>
           <v-btn>Select file!</v-btn>
@@ -87,8 +85,8 @@ export default class ImageUploader extends Vue {
       width: '',
       style: '',
       src: '',
-      contain: false,
-    }),
+      contain: false
+    })
   })
   readonly previewImage!: {
     height: string;
@@ -104,8 +102,8 @@ export default class ImageUploader extends Vue {
       height: '300px',
       width: '245px',
       class: '',
-      style: '',
-    }),
+      style: ''
+    })
   })
   readonly cardSheet!: any;
 
@@ -116,8 +114,8 @@ export default class ImageUploader extends Vue {
       width: '245px',
       class: '',
       style: '',
-      title: 'Upload Image',
-    }),
+      title: 'Upload Image'
+    })
   })
   readonly card!: any;
 
@@ -126,13 +124,13 @@ export default class ImageUploader extends Vue {
   @Prop({ required: true, type: String }) readonly filePath!: string;
   @Prop({ required: true, type: String }) readonly fileName!: string;
 
-   image: File | null = null;
-   uploadedImageSrc: any = '';
-   uploading = false;
+  image: File | null = null;
+  uploadedImageSrc: any = '';
+  uploading = false;
 
   get uploadedImage() {
-    if(this.uploadedImageSrc){
-    return this.uploadedImageSrc;
+    if (this.uploadedImageSrc) {
+      return this.uploadedImageSrc;
     } else {
       return this.previewImage.src || '';
     }
@@ -142,14 +140,14 @@ export default class ImageUploader extends Vue {
     this.previewImage.src = src;
   }
 
-   selectImage() {
+  selectImage() {
     const fileUploader = this.$refs.imageUploaderVue as any;
 
     const fileInput = fileUploader.$refs.input as HTMLInputElement;
     fileInput.click();
   }
 
-   async imageUploaded(file: File) {
+  async imageUploaded(file: File) {
     if (file) {
       this.image = file;
 
@@ -179,9 +177,9 @@ export default class ImageUploader extends Vue {
     }
   }
 
-   upload() {
+  upload() {
     const headers = {
-      'Content-Type': 'multipart/form-data',
+      'Content-Type': 'multipart/form-data'
     };
 
     this.uploading = true;
@@ -195,7 +193,7 @@ export default class ImageUploader extends Vue {
         `/files/upload?filename=${this.fileName}&filepath=${this.filePath}`,
         formData,
         {
-          headers,
+          headers
         }
       )
       .then(response => {
@@ -210,7 +208,7 @@ export default class ImageUploader extends Vue {
 
         this.$store.dispatch('SHOW_TOAST', {
           message: 'Error uploading image',
-          style: 'error',
+          style: 'error'
         });
       })
       .finally(() => {

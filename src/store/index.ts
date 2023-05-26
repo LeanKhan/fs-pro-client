@@ -1,8 +1,10 @@
-import Vuex from 'vuex';
+// import Vuex from 'vuex';
 import { type Club } from '@/interfaces/club';
 import { $axios } from '../main';
 import socket from './socket';
-import { type ICalendar } from '@/interfaces/calendar';
+import type { ICalendar } from '@/interfaces/calendar';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const Vuex = require("vuex");
 
 
 // 'http://192.168.10.4:3000' - Network server url
@@ -72,7 +74,7 @@ const state = {
   lobby: false,
   // new
   selectedLeague: ''
-} as RootState;
+};
 
 export default new Vuex.Store({
   state,
@@ -152,7 +154,7 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    SET_USER: ({ commit }, payload: RootState['user']) => {
+    SET_USER: ({ commit }, payload) => {
       window.localStorage.setItem('fspro-user', JSON.stringify(payload));
       // this one is being saved as a js object, not string
       commit('SET_USER', payload);
@@ -183,7 +185,7 @@ export default new Vuex.Store({
       // window.localStorage.setItem('fspro-selected-league', payload);
       commit('SET_SELECTED_LEAGUE', payload);
     },
-    UNSET_SELECTED_LEAGUE: ({ commit }, payload: string) => {
+    UNSET_SELECTED_LEAGUE: ({ commit }) => {
       // window.localStorage.removeItem('fspro-selected-league');
       commit('SET_SELECTED_LEAGUE', '');
     },
@@ -212,7 +214,7 @@ export default new Vuex.Store({
           console.log('error => ', response);
         });
     },
-    SET_CALENDAR: ({ commit, dispatch }) => {
+    SET_CALENDAR: ({ commit }) => {
       $axios
         .get(`/calendar/current?page=1&limit=14&populate=false`)
         .then(response => {

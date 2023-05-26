@@ -2,27 +2,27 @@
   <div class="container">
     <v-row>
       <v-col cols="4">
-        <v-card class="mx-auto" max-width="300" tile elevation="1">
+        <v-card class="mx-auto" max-width="300" rounded="0" elevation="1">
           <v-list>
-            <v-subheader>Competitions</v-subheader>
+            <h3>Competitions</h3>
             <v-list-item-group color="primary">
               <v-list-item
                 v-for="(competition, i) in competitions"
                 :key="i"
                 color="#7535ed"
-                @click="showCompetition(competition.CompetitionCode)"
                 link
+                @click="showCompetition(competition.CompetitionCode)"
               >
                 <v-list-item-avatar>
                   <v-img
                     :src="`${api}/img/logos/${competition.CompetitionCode}.png`"
                     width="40px"
-                  ></v-img>
+                  />
                 </v-list-item-avatar>
                 <v-list-item-content>
-                  <v-list-item-title
-                    v-text="competition.Name"
-                  ></v-list-item-title>
+                  <v-list-item-title>
+                    {{ competition.Name }}
+                  </v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
             </v-list-item-group>
@@ -31,17 +31,15 @@
       </v-col>
 
       <v-col cols="8">
-        <v-card tile elevation="1" v-if="selectedCompetition.CompetitionID">
-          <v-card-title>
-            Selected Competition
-          </v-card-title>
+        <v-card v-if="selectedCompetition.CompetitionID" rounded="0" elevation="1">
+          <v-card-title>Selected Competition</v-card-title>
 
-          <v-list-item three-line>
+          <v-list-item lines="three">
             <v-list-item-content>
               <!-- <div class="overline mb-4">
                 Squad Size: {{ selectedClub.Players.length }}
               </div> -->
-              <v-list-item-title class="headline mb-1">
+              <v-list-item-title class="text-h5 mb-1">
                 {{ selectedCompetition.Name }}
                 <v-chip>{{ selectedCompetition.Type }}</v-chip>
               </v-list-item-title>
@@ -56,10 +54,8 @@
 
             <v-list-item-avatar tile size="80">
               <v-img
-                :src="
-                  `${api}/img/clubs/logos/${selectedCompetition.CompetitionCode}.png`
-                "
-              ></v-img>
+                :src="`${api}/img/clubs/logos/${selectedCompetition.CompetitionCode}.png`"
+              />
             </v-list-item-avatar>
           </v-list-item>
 
@@ -80,9 +76,7 @@
         </v-card>
 
         <v-card v-else>
-          <v-card-text class="text-center">
-            No selected competition
-          </v-card-text>
+          <v-card-text class="text-center">No selected competition</v-card-text>
         </v-card>
       </v-col>
     </v-row>
@@ -96,7 +90,7 @@ import { apiUrl } from '@/store';
 
 @Component({})
 export default class AllCompetitions extends Vue {
-   competitions: Competition[] = [];
+  competitions: Competition[] = [];
 
   public selectedCompetition: any = {};
 

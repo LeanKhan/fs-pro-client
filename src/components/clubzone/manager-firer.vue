@@ -1,18 +1,22 @@
 <template>
-  <v-dialog :value="show" @input="$emit('update:show', $event)" width="700">
+  <v-dialog
+    :model-value="show"
+    width="700"
+    @update:model-value="$emit('update:show', $event)"
+  >
     <v-card class="pa-0">
-      <v-card-title class="headline grey lighten-2" primary-title>
+      <v-card-title class="text-h5 bg-grey-lighten-2" primary-title>
         Relieve Manager
       </v-card-title>
       <v-card-text>
         <v-row no-gutters>
           <v-col cols="12">
-            <v-card flat tile>
-              <v-img></v-img>
+            <v-card rounded="0">
+              <v-img />
               <v-card-title>
                 {{ manager.FirstName }} {{ manager.LastName }}
               </v-card-title>
-              <v-list flat dense>
+              <v-list density="compact">
                 <v-list-item>
                   <strong>
                     <v-icon>mdi-globe</v-icon>
@@ -31,19 +35,19 @@
 
               <v-card-text>
                 <v-textarea
+                  id="reason"
+                  v-model="reason"
                   label="Details on Manager leaving"
                   hint="Details about this manager's leaving"
-                  v-model="reason"
                   placeholder="Why is he leaving?"
-                  id="reason"
-                ></v-textarea>
+                />
               </v-card-text>
 
               <v-card-actions>
                 <v-btn
-                  @click="fireManager"
                   :loading="loading"
                   :disabled="loading"
+                  @click="fireManager"
                 >
                   Fire
                 </v-btn>
@@ -66,11 +70,11 @@ export default class ManagerFire extends Vue {
   @Prop({ required: true }) manager!: any;
   @Prop({ required: true }) club!: string;
 
-   loading = false;
+  loading = false;
 
-   reason = '';
+  reason = '';
 
-   fireManager() {
+  fireManager() {
     this.loading = true;
     this.$axios
       .delete(
