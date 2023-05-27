@@ -3,12 +3,10 @@
     <v-row>
       <v-col cols="12">
         <v-card>
-          <v-toolbar flat color="amber darken-1">
-            <v-toolbar-title class="ml-1">
-              Dashboard
-            </v-toolbar-title>
+          <v-toolbar flat color="amber-darken-1">
+            <v-toolbar-title class="ml-1">Dashboard</v-toolbar-title>
 
-            <v-spacer></v-spacer>
+            <v-spacer />
 
             <v-btn append-icon="mdi-plus" color="success" to="./clubs/new">
               New
@@ -18,7 +16,7 @@
       </v-col>
 
       <v-col cols="12">
-        <all-clubs-table :clubs="clubs"></all-clubs-table>
+        <all-clubs-table :clubs="clubs" />
       </v-col>
     </v-row>
   </div>
@@ -26,18 +24,18 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-facing-decorator';
-import { Club } from '@/interfaces/club';
+import { type Club } from '@/interfaces/club';
 import AllClubsTable from '@/components/clubs/allclubs-table.vue';
 
 @Component({
   components: {
-    AllClubsTable,
-  },
+    AllClubsTable
+  }
 })
 export default class ClubsDashboard extends Vue {
-  private clubs: any[] = [];
+  clubs: any[] = [];
 
-  private mounted() {
+  mounted() {
     this.$axios
       .get('/clubs/all')
       .then(res => {

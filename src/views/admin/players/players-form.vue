@@ -4,11 +4,9 @@
     <v-row>
       <v-col cols="12">
         <v-card>
-          <v-toolbar flat color="indigo darken-1">
+          <v-toolbar flat color="indigo-darken-1">
             <v-btn icon @click="goBack">
-              <v-icon>
-                mdi-arrow-left
-              </v-icon>
+              <v-icon>mdi-arrow-left</v-icon>
             </v-btn>
 
             <v-toolbar-title class="ml-1">
@@ -21,13 +19,11 @@
     <v-form @submit.prevent="submit">
       <v-row>
         <v-col cols="3">
-          <v-card height="300" width="245" style="position: fixed;">
-            <v-card-title>
-              Player
-            </v-card-title>
+          <v-card height="300" width="245" style="position: fixed">
+            <v-card-title>Player</v-card-title>
 
-            <v-card-text class="d-flex justify-center pb-0 accent">
-              <player-avatar :appearance="form.Appearance"></player-avatar>
+            <v-card-text class="d-flex justify-center pb-0 bg-accent">
+              <player-avatar :appearance="form.Appearance" />
             </v-card-text>
 
             <v-card-actions>Rating: {{ rating }}</v-card-actions>
@@ -40,65 +36,65 @@
               <v-row>
                 <v-col cols="6">
                   <v-text-field
-                    color="indigo darken-1"
-                    label="First Name"
                     v-model="form.FirstName"
-                  ></v-text-field>
+                    color="indigo-darken-1"
+                    label="First Name"
+                  />
                 </v-col>
 
                 <v-col cols="6">
                   <v-text-field
-                    color="indigo darken-1"
-                    label="Last Name"
                     v-model="form.LastName"
-                  ></v-text-field>
+                    color="indigo-darken-1"
+                    label="Last Name"
+                  />
                 </v-col>
 
                 <v-col cols="6">
                   <v-text-field
-                    color="indigo darken-1"
+                    v-model="form.Age"
+                    color="indigo-darken-1"
                     type="number"
                     min="16"
                     max="45"
                     label="Age"
-                    v-model="form.Age"
-                  ></v-text-field>
+                  />
 
                   <v-select
-                    color="indigo darken-1"
+                    v-model="form.Nationality"
+                    color="indigo-darken-1"
                     label="Nationality"
                     :items="countries"
-                    item-text="Name"
+                    item-title="Name"
                     item-value="_id"
-                    v-model="form.Nationality"
-                  ></v-select>
+                  />
 
                   <v-select
-                    color="indigo darken-1"
+                    v-model="form.Position"
+                    color="indigo-darken-1"
                     label="Position"
                     :items="positions"
-                    v-model="form.Position"
-                  ></v-select>
+                  />
 
                   <v-radio-group
-                    label="Preferred Foot"
                     v-model="form.Attributes.PreferredFoot"
+                    label="Preferred Foot"
                   >
-                    <v-radio label="Left" value="left"></v-radio>
-                    <v-radio label="Right" value="right"></v-radio>
+                    <v-radio label="Left" value="left" />
+                    <v-radio label="Right" value="right" />
                   </v-radio-group>
 
-                  <div class="subtitle-1">Mindset</div>
+                  <div class="text-subtitle-1">Mindset</div>
                   <v-checkbox
                     v-model="form.Attributes.AttackingMindset"
                     label="Attacking"
-                  ></v-checkbox>
+                  />
                   <v-checkbox
                     v-model="form.Attributes.DefensiveMindset"
                     label="Defensive"
-                  ></v-checkbox>
+                  />
 
-                  <div class="subtitle-1">Appearance</div>
+                  <div class="text-subtitle-1">Appearance</div>
                   <div v-for="(f, x) in appearances" :key="x">
                     <span>{{ f.feature }}</span>
                     <ul v-for="(v, y) in f.variants" :key="y">
@@ -108,14 +104,13 @@
                 </v-col>
 
                 <v-col class="px-2" cols="6">
-                  <div class="subtitle-1">Attributes</div>
-                  <v-list two-line>
+                  <div class="text-subtitle-1">Attributes</div>
+                  <v-list lines="two">
                     <v-list-item v-for="(attr, i) in attributes" :key="i">
-                      <template v-slot:default>
+                      <template #default>
                         <v-list-item-avatar>
                           <v-avatar
-                            width="65"
-                            height="65"
+                            size="65 65"
                             :color="attrColor(form.Attributes[attr])"
                           >
                             {{ form.Attributes[attr] }}
@@ -128,25 +123,25 @@
 
                           <v-list-item-subtitle class="px-2">
                             <v-slider
-                              dense
                               v-model="form.Attributes[attr]"
+                              density="compact"
                               color="indigo"
                               track-color="grey"
                               min="0"
                               max="99"
                             >
-                              <template v-slot:prepend>
+                              <template #prepend>
                                 <v-icon
-                                  color="indigo lighten-3"
+                                  color="indigo-lighten-3"
                                   @click="form.Attributes[attr]--"
                                 >
                                   mdi-minus
                                 </v-icon>
                               </template>
 
-                              <template v-slot:append>
+                              <template #append>
                                 <v-icon
-                                  color="indigo lighten-3"
+                                  color="indigo-lighten-3"
                                   @click="form.Attributes[attr]++"
                                 >
                                   mdi-plus
@@ -162,22 +157,22 @@
               </v-row>
             </v-container>
 
-            <v-divider></v-divider>
+            <v-divider />
 
             <v-card-actions>
-              <v-spacer></v-spacer>
+              <v-spacer />
               <v-btn
-                @click="submit"
                 :color="`${isUpdate ? 'warning' : 'success'}`"
+                @click="submit"
               >
                 {{ isUpdate ? 'Update' : 'Create Player' }}
               </v-btn>
 
-              <v-btn @click="$router.push('../players')" color="secondary">
+              <v-btn color="secondary" @click="$router.push('../players')">
                 Cancel
               </v-btn>
 
-              <v-btn v-if="isUpdate" @click="deletePlayer" color="error">
+              <v-btn v-if="isUpdate" color="error" @click="deletePlayer">
                 Remove
               </v-btn>
             </v-card-actions>
@@ -196,14 +191,14 @@ import { calculatePlayerRating } from '@/helpers/players';
 
 @Component({
   components: {
-    PlayerAvatar,
-  },
+    PlayerAvatar
+  }
 })
 export default class PlayerForm extends Vue {
   @Prop({ required: false, default: false }) readonly isUpdate!: boolean;
-  private player: {} = {};
+  player: any = {};
 
-  private form: any = {
+  form: any = {
     FirstName: '',
     LastName: '',
     Nationality: '',
@@ -225,35 +220,35 @@ export default class PlayerForm extends Vue {
       Vision: 0,
       PreferredFoot: '',
       AttackingMindset: null,
-      DefensiveMindset: null,
+      DefensiveMindset: null
     },
     Appearance: {
       head: {
         variant: 'default',
-        style: 'light',
+        style: 'light'
       },
       complexion: 'light',
       hair: {
         variant: 'default',
-        style: 'brown',
+        style: 'brown'
       },
       eyes: {
         variant: 'default',
-        style: 'black',
+        style: 'black'
       },
       eyebrows: {
         variant: 'default',
-        style: 'brown',
+        style: 'brown'
       },
       nose: {
         variant: 'default',
-        style: 'light',
+        style: 'light'
       },
       mouth: {
         variant: 'default',
-        style: 'light',
-      },
-    },
+        style: 'light'
+      }
+    }
   };
 
   //   TODO: Be able to change Players shirt number from Club -> Edit Player view
@@ -263,9 +258,9 @@ export default class PlayerForm extends Vue {
   // as at 20/08/21 -> Stov does not exist!
   public appearances: any[] = [];
 
-  private positions: string[] = ['GK', 'ATT', 'DEF', 'MID'];
+  positions: string[] = ['GK', 'ATT', 'DEF', 'MID'];
 
-  private attributes: string[] = [
+  attributes: string[] = [
     'Keeping',
     'Speed',
     'Shooting',
@@ -278,7 +273,7 @@ export default class PlayerForm extends Vue {
     'Vision',
     'Tackling',
     'Strength',
-    'Stamina',
+    'Stamina'
   ];
 
   get countries(): string[] {
@@ -289,13 +284,13 @@ export default class PlayerForm extends Vue {
     return calculatePlayerRating(this.form.Attributes, this.form.Position);
   }
 
-  private attrColor(value: number): string {
+  attrColor(value: number): string {
     if (value <= 50) return 'red';
     if (value < 80) return 'orange';
     return 'green';
   }
 
-  private submit(): void {
+  submit(): void {
     const playerId = this.$route.params['id'];
 
     const url = this.isUpdate
@@ -313,11 +308,11 @@ export default class PlayerForm extends Vue {
       });
   }
 
-  private goBack() {
+  goBack() {
     this.$router.back();
   }
 
-  private deletePlayer() {
+  deletePlayer() {
     const answer = confirm(
       'Are you sure you want to delete ' +
         this.form.FirstName +
@@ -341,7 +336,7 @@ export default class PlayerForm extends Vue {
     }
   }
 
-  private mounted(): void {
+  mounted(): void {
     if (this.isUpdate) {
       const playerId = this.$route.params['id'];
       // const clubCode = this.$route.params['code'];

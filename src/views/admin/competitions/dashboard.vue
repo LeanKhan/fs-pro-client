@@ -5,7 +5,7 @@
         <v-card>
           <v-card-title>
             Competitions
-            <v-spacer></v-spacer>
+            <v-spacer />
             <v-btn append-icon="mdi-plus" color="success" to="competitions/new">
               New
             </v-btn>
@@ -17,54 +17,54 @@
         <v-card>
           <v-card-title>
             All Competitions
-            <v-spacer></v-spacer>
+            <v-spacer />
             <v-text-field
               v-model="search"
               append-icon="mdi-magnify"
               label="Search"
               single-line
               hide-details
-            ></v-text-field>
+            />
           </v-card-title>
           <v-data-table
             :headers="headers"
             :items="competitions"
-            :loading="!competitions.length > 0"
+            :loading="competitions && competitions.length > 0"
             :search="search"
             loading-text="Fetching Competitions..."
             class="elevation-1"
           >
-            <template v-slot:item.Clubs="{ item }">
+            <template #item.Clubs="{ item }">
               {{ item.Clubs.length }}
             </template>
 
-            <template v-slot:item.Country="{ item }">
+            <template #item.Country="{ item }">
               {{ item.Country.Name }}
             </template>
 
-            <template v-slot:item.Seasons="{ item }">
+            <template #item.Seasons="{ item }">
               {{ item.Seasons.length }}
             </template>
 
             <!-- TODO: Add these titles *everywhere* -->
-            <template v-slot:item.Actions="{ item }">
+            <template #item.Actions="{ item }">
               <v-btn
-                text
+                variant="text"
                 icon
-                color="success lighten-2"
+                color="success-lighten-2"
                 title="View Competition"
               >
-                <v-icon small @click="viewCompetition(item)">
+                <v-icon size="small" @click="viewCompetition(item)">
                   mdi-eye
                 </v-icon>
               </v-btn>
               <v-btn
-                text
+                variant="text"
                 icon
-                color="blue lighten-2"
+                color="blue-lighten-2"
                 title="Update Competition"
               >
-                <v-icon small @click="updateCompetition(item)">
+                <v-icon size="small" @click="updateCompetition(item)">
                   mdi-pencil
                 </v-icon>
               </v-btn>
@@ -77,20 +77,20 @@
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-facing-decorator';
-import { Competition } from '@/interfaces/competition';
+import { type Competition } from '@/interfaces/competition';
 
 @Component({})
 export default class CompetitionsHome extends Vue {
-  private headers: any[] = [
+  headers: any[] = [
     { text: 'ID', value: 'CompetitionID', filterable: true },
     {
       text: 'Name',
       align: 'start',
-      value: 'Name',
+      value: 'Name'
     },
     {
       text: 'Type',
-      value: 'Type',
+      value: 'Type'
     },
     { text: 'Code', value: 'CompetitionCode' },
     { text: 'Teams', value: 'NumberOfTeams' },
@@ -99,18 +99,18 @@ export default class CompetitionsHome extends Vue {
     {
       text: 'Clubs',
       value: 'Clubs',
-      filterable: false,
+      filterable: false
     },
     { text: 'Seasons', value: 'Seasons', filterable: false },
-    { text: 'Actions', value: 'Actions', sortable: false, filterable: false },
+    { text: 'Actions', value: 'Actions', sortable: false, filterable: false }
   ];
 
   //   TODO: Add a filter by competition type...
   // it can be a select menu :)...
 
-  private competitions: Competition[] = [];
+  competitions: Competition[] = [];
 
-  private search = '';
+  search = '';
 
   public viewCompetition(comp: Competition): void {
     const compCode = comp.CompetitionCode.toLowerCase();
@@ -118,7 +118,7 @@ export default class CompetitionsHome extends Vue {
 
     this.$router.push({
       name: 'View Competition',
-      params: { id: compID as string, code: compCode },
+      params: { id: compID as string, code: compCode }
     });
   }
 
@@ -128,7 +128,7 @@ export default class CompetitionsHome extends Vue {
 
     this.$router.push({
       name: 'Update Competition',
-      params: { id: compID as string, code: compCode },
+      params: { id: compID as string, code: compCode }
     });
   }
 

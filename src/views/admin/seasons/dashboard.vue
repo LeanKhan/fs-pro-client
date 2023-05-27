@@ -5,19 +5,14 @@
         <v-card>
           <v-card-title>
             Seasons
-            <v-spacer></v-spacer>
-            <v-btn append-icon="mdi-plus" color="success">
-              Add
-            </v-btn>
+            <v-spacer />
+            <v-btn append-icon="mdi-plus" color="success">Add</v-btn>
           </v-card-title>
         </v-card>
       </v-col>
 
       <v-col cols="12">
-        <seasons-table
-          :seasons="seasons"
-          :competition-id="competitionId"
-        ></seasons-table>
+        <seasons-table :seasons="seasons" :competition-id="competitionId" />
       </v-col>
     </v-row>
   </div>
@@ -25,22 +20,22 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-facing-decorator';
 import SeasonsTable from '@/components/seasons/seasons-table.vue';
-import { Season } from '@/interfaces/season';
+import { type Season } from '@/interfaces/season';
 
 @Component({
   components: {
-    SeasonsTable,
-  },
+    SeasonsTable
+  }
 })
 export default class CompetitionSeasonsHome extends Vue {
   //   TODO: Add a filter by competition type...
   // it can be a select menu :)...
 
-  private seasons: Season[] = [];
+  seasons: Season[] = [];
 
-  private competitionId = 'undefined';
+  competitionId = 'undefined';
 
-  private search = '';
+  search = '';
 
   public mounted() {
     const compId = this.$route.params['id'];

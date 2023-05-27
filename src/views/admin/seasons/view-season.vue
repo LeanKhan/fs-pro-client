@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="12">
         <v-card>
-          <div class="overline">
+          <div class="text-overline">
             {{ season.SeasonCode }}
           </div>
           <v-card-title>
@@ -14,43 +14,39 @@
           </v-card-title>
 
           <v-card-actions>
-            <v-btn :to="`/finish/season/${season._id}`">
-              View Stats
-            </v-btn>
+            <v-btn :to="`/finish/season/${season._id}`">View Stats</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
 
       <v-col>
         <v-card>
-          <v-sheet color="green green-lighten" height="100"></v-sheet>
+          <v-sheet color="green green-lighten" height="100" />
         </v-card>
       </v-col>
 
       <v-col>
         <v-card>
-          <v-sheet color="green green-lighten" height="100"></v-sheet>
+          <v-sheet color="green green-lighten" height="100" />
         </v-card>
       </v-col>
 
       <v-col>
         <v-card>
-          <v-sheet color="green green-lighten" height="100"></v-sheet>
+          <v-sheet color="green green-lighten" height="100" />
         </v-card>
       </v-col>
 
       <v-col>
         <v-card>
-          <v-sheet color="green green-lighten" height="100"></v-sheet>
+          <v-sheet color="green green-lighten" height="100" />
         </v-card>
       </v-col>
     </v-row>
     <v-row>
       <v-col cols="6">
         <v-card>
-          <v-card-title>
-            Calendar
-          </v-card-title>
+          <v-card-title>Calendar</v-card-title>
           <v-sheet color="purple purple-lighten-1" height="180">
             Nothing here...
           </v-sheet>
@@ -59,13 +55,9 @@
       <v-col cols="6">
         <template v-if="season.Standings && season.Standings.length > 0">
           <v-card>
-            <v-card-title>
-              Standings (Table)
-            </v-card-title>
+            <v-card-title>Standings (Table)</v-card-title>
             <v-card-text>
-              <standings-scroller
-                :standings="season.Standings"
-              ></standings-scroller>
+              <standings-scroller :standings="season.Standings" />
             </v-card-text>
           </v-card>
         </template>
@@ -79,10 +71,8 @@
     <v-row>
       <v-col cols="12">
         <v-card>
-          <v-card-title>
-            Fixtures
-          </v-card-title>
-          <fixtures-table :fixtures="season.Fixtures"></fixtures-table>
+          <v-card-title>Fixtures</v-card-title>
+          <fixtures-table :fixtures="season.Fixtures" />
           <!-- <v-sheet
             class="text-center"
             color="secondary secondary-lighten"
@@ -96,18 +86,14 @@
       </v-col>
       <v-col cols="12">
         <v-card>
-          <v-card-title>
-            Player Stats (Records)
-          </v-card-title>
-          <v-sheet color="secondary secondary-lighten" height="250"></v-sheet>
+          <v-card-title>Player Stats (Records)</v-card-title>
+          <v-sheet color="secondary secondary-lighten" height="250" />
         </v-card>
       </v-col>
 
       <v-col cols="12">
         <v-card>
-          <v-card-title>
-            Settings
-          </v-card-title>
+          <v-card-title>Settings</v-card-title>
           <v-sheet color="secondary secondary-lighten">
             <v-btn @click="deleteSeason">Delete Season</v-btn>
           </v-sheet>
@@ -119,20 +105,20 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-facing-decorator';
-import { Season } from '@/interfaces/season';
+import { type Season } from '@/interfaces/season';
 import StandingsScroller from '@/components/seasons/standings-scroller.vue';
 import FixturesTable from '@/components/seasons/fixtures-table.vue';
 
 @Component({
   components: {
     StandingsScroller,
-    FixturesTable,
-  },
+    FixturesTable
+  }
 })
 export default class ViewSeason extends Vue {
-  private season: any = {};
+  season: any = {};
 
-  private generateFixtures(): void {
+  generateFixtures(): void {
     const seasonId = this.$route.params['seasonId'];
     const leagueCode = this.$route.params['code'];
     const competitionId = this.$route.params['id'];
@@ -152,12 +138,12 @@ export default class ViewSeason extends Vue {
       });
   }
 
-  private startSeason(): void {
+  startSeason(): void {
     // ... fish ...
     console.log('Starting Season...');
   }
 
-  private deleteSeason() {
+  deleteSeason() {
     const seasonID = this.$route.params['seasonId'];
 
     const ans = confirm(
@@ -178,7 +164,7 @@ export default class ViewSeason extends Vue {
     }
   }
 
-  private mounted(): void {
+  mounted(): void {
     const seasonID = this.$route.params['seasonId'];
     this.$axios
       .get(`/seasons/${seasonID}`)

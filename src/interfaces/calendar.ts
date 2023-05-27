@@ -27,6 +27,9 @@ export interface ICalendar {
   CurrentDay?: number;
   /** If the Calendar is the active one */
   isActive: boolean;
-  /** Array of the ids of Days */
+  /** See if Calendar has been ended pata pata */
+  isEnded: boolean;
+  /** Are all Seasons completed? */
+  allSeasonsCompleted: boolean;
   Days: string[];
 }

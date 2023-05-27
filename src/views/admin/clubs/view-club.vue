@@ -1,31 +1,25 @@
 <template>
   <div>
     <v-dialog v-model="openPlayersModal" persistent max-width="900px">
-      <all-players-table @close-players-modal="closeModal"></all-players-table>
+      <all-players-table @close-players-modal="closeModal" />
     </v-dialog>
     <v-row>
       <v-col cols="12">
         <v-card>
-          <v-toolbar flat color="amber darken-1">
+          <v-toolbar flat color="amber-darken-1">
             <v-btn icon @click="goBack">
-              <v-icon>
-                mdi-arrow-left
-              </v-icon>
+              <v-icon>mdi-arrow-left</v-icon>
             </v-btn>
-            <v-toolbar-title class="ml-1">
-              Club
-            </v-toolbar-title>
-            <v-spacer></v-spacer>
+            <v-toolbar-title class="ml-1">Club</v-toolbar-title>
+            <v-spacer />
 
             <v-btn
               :disabled="!shouldReload"
-              @click="fetchClub"
               icon
               color="white"
+              @click="fetchClub"
             >
-              <v-icon>
-                mdi-reload
-              </v-icon>
+              <v-icon>mdi-reload</v-icon>
             </v-btn>
           </v-toolbar>
         </v-card>
@@ -40,48 +34,51 @@
               <v-img
                 :src="`${apiUrl}/img/clubs/logos/${club.ClubCode}.png`"
                 width="200"
-              ></v-img>
+              />
             </v-col>
 
             <v-col cols="6">
-              <div class="title">
-                <span class="subtitle-1 grey--text">Name:</span>
+              <div class="text-h6">
+                <span class="text-subtitle-1 text-grey">Name:</span>
                 {{ club ? club.Name : 'N/A' }}
 
-                <span class="grey--text">{{ club.ClubCode }}</span>
+                <span class="text-grey">{{ club.ClubCode }}</span>
               </div>
 
-              <div v-if="club.Manager && club.Manager.FirstName" class="title">
-                <span class="subtitle-1 grey--text">Manager:</span>
+              <div
+                v-if="club.Manager && club.Manager.FirstName"
+                class="text-h6"
+              >
+                <span class="text-subtitle-1 text-grey">Manager:</span>
                 {{ club.Manager.FirstName }} {{ club.Manager.LastName }}
               </div>
-              <div v-else class="title">
-                <span class="subtitle-1 grey--text">Manager:</span>
+              <div v-else class="text-h6">
+                <span class="text-subtitle-1 text-grey">Manager:</span>
                 No Manager
               </div>
 
-              <div class="title">
-                <span class="subtitle-1 grey--text">League:</span>
+              <div class="text-h6">
+                <span class="text-subtitle-1 text-grey">League:</span>
                 {{ club.LeagueCode }}
               </div>
 
-              <div class="title">
-                <span class="subtitle-1 grey--text">Stadium:</span>
+              <div class="text-h6">
+                <span class="text-subtitle-1 text-grey">Stadium:</span>
                 <span>{{ club.Stadium.Name }}</span>
                 &nbsp;
-                <span class="grey--text">{{ club.Stadium.Location }}</span>
+                <span class="text-grey">{{ club.Stadium.Location }}</span>
               </div>
 
-              <div class="title">
-                <span class="subtitle-1 grey--text">Rating:</span>
+              <div class="text-h6">
+                <span class="text-subtitle-1 text-grey">Rating:</span>
                 <v-rating
-                  :value="clubRating"
+                  :model-value="clubRating"
                   :half-increments="true"
                   :readonly="true"
-                  color="amber darken-1"
-                  background-color="secondary lighten-1"
-                ></v-rating>
-                <span class="font-italic success--text">{{ clubRating }}</span>
+                  color="amber-darken-1"
+                  class="bg-secondary-lighten-1"
+                />
+                <span class="font-italic text-success">{{ clubRating }}</span>
               </div>
             </v-col>
 
@@ -92,7 +89,7 @@
                   :value="value"
                   line-width="2"
                   color="ember darken-3"
-                ></v-sparkline>
+                />
               </v-sheet>
             </v-col>
           </v-row>
@@ -103,11 +100,11 @@
     <v-row>
       <v-col cols="12">
         <players-table
+          :players="allPlayers"
+          :view-club="true"
           @add-player="openPlayersModal = true"
           @remove-player="removePlayer"
-          :players="allPlayers"
-          :viewClub="true"
-        ></players-table>
+        />
       </v-col>
     </v-row>
   </div>
@@ -117,36 +114,36 @@
 import { Component, Vue } from 'vue-facing-decorator';
 import PlayersTable from '@/components/players/players-table.vue';
 import AllPlayersTable from '@/components/players/allplayers-table.vue';
-import { Club } from '@/interfaces/club';
+import { type Club } from '@/interfaces/club';
 
 @Component({
   components: {
     PlayersTable,
-    AllPlayersTable,
-  },
+    AllPlayersTable
+  }
 })
 export default class ViewClub extends Vue {
-  private club: any | Club = {};
+  club: any | Club = {};
 
-  private openPlayersModal = false;
+  openPlayersModal = false;
 
-  private shouldReload = false;
+  shouldReload = false;
 
-  private labels = ['GK', 'DEF', 'MID', 'ATT'];
+  labels = ['GK', 'DEF', 'MID', 'ATT'];
 
-  private value = [5, 0, 0, 0];
+  value = [5, 0, 0, 0];
 
   get allPlayers() {
-     if (this.club.Players) {
+    if (this.club.Players) {
       return this.club.Players;
     } else {
       return [];
     }
-  };
+  }
 
   set allPlayers(players) {
     this.club.Players = players;
-  };
+  }
 
   get apiUrl() {
     return this.$store.getters.apiUrl;
@@ -160,7 +157,7 @@ export default class ViewClub extends Vue {
     }
   }
 
-  private closeModal(playerIds: string[]) {
+  closeModal(playerIds: string[]) {
     this.openPlayersModal = false;
     // add player to club :)
     if (playerIds) {
@@ -168,7 +165,7 @@ export default class ViewClub extends Vue {
     }
   }
 
-  private signPlayer(playerIds: string[]) {
+  signPlayer(playerIds: string[]) {
     const clubId = this.$route.params['id'];
     const clubCode = this.$route.params['code'];
     const isSigned = false;
@@ -188,9 +185,9 @@ export default class ViewClub extends Vue {
         this.shouldReload = true;
         console.log('Player added successfully', response.data);
 
-            this.$store.dispatch('SHOW_TOAST', {
+        this.$store.dispatch('SHOW_TOAST', {
           message: 'Player(s) signed successfully',
-          style: 'success',
+          style: 'success'
         });
 
         this.fetchPlayers();
@@ -198,14 +195,14 @@ export default class ViewClub extends Vue {
       .catch(response => {
         console.log('Error adding player!', response);
 
-            this.$store.dispatch('SHOW_TOAST', {
+        this.$store.dispatch('SHOW_TOAST', {
           message: 'Error signing Player',
-          style: 'error',
+          style: 'error'
         });
       });
   }
 
-  private removePlayer(playerId: string) {
+  removePlayer(playerId: string) {
     const clubId = this.$route.params['id'];
     const clubCode = this.$route.params['code'];
     const isSigned = true;
@@ -227,7 +224,7 @@ export default class ViewClub extends Vue {
 
         this.$store.dispatch('SHOW_TOAST', {
           message: 'Player removed successfully',
-          style: 'success',
+          style: 'success'
         });
 
         this.fetchPlayers();
@@ -235,18 +232,18 @@ export default class ViewClub extends Vue {
       .catch(response => {
         console.log('Error removing player!', response);
 
-            this.$store.dispatch('SHOW_TOAST', {
+        this.$store.dispatch('SHOW_TOAST', {
           message: 'Error removing Player',
-          style: 'error',
+          style: 'error'
         });
       });
   }
 
-  private goBack(): void {
+  goBack(): void {
     this.$router.back();
   }
 
-  private fetchClub(): void {
+  fetchClub(): void {
     const clubId = this.$route.params['id'];
 
     const populate = JSON.stringify([{ path: 'Players' }, { path: 'Manager' }]);
@@ -267,8 +264,8 @@ export default class ViewClub extends Vue {
       });
   }
 
-    private fetchPlayers(): void {
-    const clubId = this.$route.params['id'];
+  fetchPlayers(): void {
+    // const clubId = this.$route.params['id'];
 
     const query = JSON.stringify({ ClubCode: this.club.ClubCode });
     this.$axios
@@ -288,7 +285,7 @@ export default class ViewClub extends Vue {
       });
   }
 
-  private mounted(): void {
+  mounted(): void {
     this.fetchClub();
   }
 }

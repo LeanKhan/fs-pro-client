@@ -4,11 +4,9 @@
     <v-row>
       <v-col cols="12">
         <v-card>
-          <v-toolbar flat color="amber darken-1">
+          <v-toolbar flat color="amber-darken-1">
             <v-btn icon @click="goBack">
-              <v-icon>
-                mdi-arrow-left
-              </v-icon>
+              <v-icon>mdi-arrow-left</v-icon>
             </v-btn>
 
             <v-toolbar-title class="ml-1">
@@ -79,33 +77,33 @@
         <!-- lol sorry! -->
         <image-uploader
           v-if="form.ClubCode"
-          v-bind:card="{
+          :card="{
             title: 'Upload Club Logo',
             class: 'mb-3',
-            height: 'auto',
+            height: 'auto'
           }"
-          v-bind:cardSheet="{ height: 'auto' }"
-          v-bind:previewImage="{
+          :card-sheet="{ height: 'auto' }"
+          :preview-image="{
             src: isUpdate ? `${api}/img/clubs/logos/${form.ClubCode}.png` : '',
-            contain: true,
+            contain: true
           }"
-          :fileName="form.ClubCode"
-          :filePath="'/clubs/logos/'"
-        ></image-uploader>
+          :file-name="form.ClubCode"
+          :file-path="'/clubs/logos/'"
+        />
 
         <image-uploader
           v-if="form.ClubCode"
-          v-bind:card="{ title: 'Upload Club Kit', height: 400 }"
-          v-bind:cardSheet="{ height: 400 }"
-          v-bind:previewImage="{
+          :card="{ title: 'Upload Club Kit', height: 400 }"
+          :card-sheet="{ height: 400 }"
+          :preview-image="{
             src: isUpdate
               ? `${api}/img/clubs/kits/${form.ClubCode}-kit.png`
               : '',
-            contain: true,
+            contain: true
           }"
-          :fileName="`${form.ClubCode}-kit`"
-          :filePath="'/clubs/kits/'"
-        ></image-uploader>
+          :file-name="`${form.ClubCode}-kit`"
+          :file-path="'/clubs/kits/'"
+        />
       </v-col>
 
       <v-col cols="9">
@@ -121,87 +119,87 @@
               <v-row>
                 <v-col cols="6">
                   <v-text-field
-                    color="amber darken-1"
-                    label="Name"
                     v-model="form.Name"
-                  ></v-text-field>
+                    color="amber-darken-1"
+                    label="Name"
+                  />
                 </v-col>
 
                 <v-col cols="6">
                   <v-text-field
-                    color="amber darken-1"
-                    label="Code"
                     v-model="form.ClubCode"
-                  ></v-text-field>
+                    color="amber-darken-1"
+                    label="Code"
+                  />
                 </v-col>
 
                 <v-col cols="6">
-                  <div class="subtitle-1">Stadium</div>
+                  <div class="text-subtitle-1">Stadium</div>
                   <div class="d-flex flex-column">
                     <v-text-field
-                      color="amber darken-1"
-                      label="Name"
                       v-model="form.Stadium.Name"
-                    ></v-text-field>
+                      color="amber-darken-1"
+                      label="Name"
+                    />
 
                     <v-text-field
-                      color="amber darken-1"
-                      label="Capacity"
                       v-model="form.Stadium.Capacity"
-                    ></v-text-field>
+                      color="amber-darken-1"
+                      label="Capacity"
+                    />
 
                     <v-text-field
-                      color="amber darken-1"
-                      label="Location"
                       v-model="form.Stadium.Location"
-                    ></v-text-field>
+                      color="amber-darken-1"
+                      label="Location"
+                    />
                   </div>
                 </v-col>
 
                 <v-col class="px-2" cols="6">
-                  <div class="subtitle-1">Address</div>
+                  <div class="text-subtitle-1">Address</div>
                   <div class="d-flex flex-column">
                     <v-text-field
-                      color="amber darken-1"
-                      label="Section"
                       v-model="form.Address.Section"
-                    ></v-text-field>
+                      color="amber-darken-1"
+                      label="Section"
+                    />
 
                     <v-text-field
-                      color="amber darken-1"
-                      label="City"
                       v-model="form.Address.City"
-                    ></v-text-field>
+                      color="amber-darken-1"
+                      label="City"
+                    />
 
                     <v-select
-                      color="amber darken-1"
+                      v-model="form.Address.Country"
+                      color="amber-darken-1"
                       label="Country"
                       :items="countries"
-                      item-text="Name"
+                      item-title="Name"
                       item-value="_id"
-                      v-model="form.Address.Country"
-                    ></v-select>
+                    />
                   </div>
                 </v-col>
               </v-row>
             </v-container>
 
-            <v-divider></v-divider>
+            <v-divider />
 
             <v-card-actions>
-              <v-spacer></v-spacer>
+              <v-spacer />
               <v-btn
-                @click="submit"
                 :color="`${isUpdate ? 'warning' : 'success'}`"
+                @click="submit"
               >
                 {{ isUpdate ? 'Update' : 'Create Club' }}
               </v-btn>
 
-              <v-btn @click="$router.push('../clubs')" color="secondary">
+              <v-btn color="secondary" @click="$router.push('../clubs')">
                 Cancel
               </v-btn>
 
-              <v-btn v-if="isUpdate" @click="deleteClub" color="error">
+              <v-btn v-if="isUpdate" color="error" @click="deleteClub">
                 Remove
               </v-btn>
             </v-card-actions>
@@ -214,39 +212,39 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-facing-decorator';
-import { Club } from '@/interfaces/club';
+import { type Club } from '@/interfaces/club';
 import { apiUrl } from '@/store';
 import ImageUploader from '@/components/helpers/image-uploader.vue';
 
 @Component({
   components: {
-    ImageUploader,
-  },
+    ImageUploader
+  }
 })
 export default class ClubForm extends Vue {
   @Prop({ required: false }) readonly isUpdate!: boolean;
-  private club: {} = {};
+  club: object = {};
 
-  private image!: File | undefined;
+  image!: File | undefined;
 
-  private api: string = apiUrl;
+  api: string = apiUrl;
 
-  private uploadedImage: any = '';
+  uploadedImage: any = '';
 
-  private form: any = {
+  form: any = {
     Name: '',
     ClubCode: '',
     Manager: '',
     Address: {
       Section: '',
       City: '',
-      Country: '',
+      Country: ''
     },
     Stadium: {
       Name: '',
       Capacity: '',
-      Location: '',
-    },
+      Location: ''
+    }
   };
 
   // TODO: upload files to server!
@@ -259,22 +257,22 @@ export default class ClubForm extends Vue {
   //   'Ekhastan',
   // ];
 
-  private uploading = false;
+  uploading = false;
 
   get countries(): string[] {
     return this.$store.getters.countries;
   }
 
-  private upload() {
-    const fileUploader = this.$refs.fileUploader as Vue;
+  upload() {
+    const fileUploader = this.$refs.fileUploader as any;
 
     const fileInput = fileUploader.$refs.input as HTMLInputElement;
     fileInput.click();
   }
 
-  private uploadLogo() {
+  uploadLogo() {
     const headers = {
-      'Content-Type': 'multipart/form-data',
+      'Content-Type': 'multipart/form-data'
     };
 
     this.uploading = true;
@@ -289,7 +287,7 @@ export default class ClubForm extends Vue {
 
     this.$axios
       .post(`/files/upload?club_code=${clubCode}&path=${path}`, formData, {
-        headers,
+        headers
       })
       .then(response => {
         console.log('res => ', response.data);
@@ -306,7 +304,7 @@ export default class ClubForm extends Vue {
       });
   }
 
-  private imageUploaded(file: File) {
+  imageUploaded(file: File) {
     this.image = file;
 
     const reader = new FileReader();
@@ -319,7 +317,7 @@ export default class ClubForm extends Vue {
     reader.readAsDataURL(file);
   }
 
-  private mounted(): void {
+  mounted(): void {
     if (this.isUpdate) {
       const clubID = this.$route.params['id'];
       // const clubCode = this.$route.params['code'];
@@ -335,7 +333,7 @@ export default class ClubForm extends Vue {
     }
   }
 
-  private submit(): void {
+  submit(): void {
     const clubID = this.$route.params['id'];
 
     const url = this.isUpdate ? `/clubs/${clubID}/update` : '/clubs/new';
@@ -351,11 +349,11 @@ export default class ClubForm extends Vue {
       });
   }
 
-  private goBack() {
+  goBack() {
     this.$router.back();
   }
 
-  private deleteClub() {
+  deleteClub() {
     const answer = confirm(
       'Are you sure you want to delete ' + this.form.Name + '?!!'
     );

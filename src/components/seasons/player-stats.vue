@@ -13,7 +13,10 @@
             </v-card-title>
 
             <v-list v-if="top_players[attr].length > 0">
-              <v-list-item v-for="(p, i) in (top_players[attr] as any)" :key="i">
+              <v-list-item
+                v-for="(p, i) in (top_players[attr] as any)"
+                :key="i"
+              >
                 <v-list-item-avatar>
                   <v-icon style="font-size: 30px; height: 30px" size="large">
                     ${{ p.player.ClubCode }}

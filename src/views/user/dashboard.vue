@@ -44,9 +44,8 @@
               <template v-if="!selectedDay.isFree">
                 <v-row class="px-2">
                   <v-col cols="6">
-                    <FixtureCard
-                      :match="selectedMatch || selectedDay.Matches[0]"
-                    />
+                    <!-- TODO: Make selectedMatch work for FixtureCard  -->
+                    <FixtureCard :match="selectedDay.Matches[0]" />
                   </v-col>
 
                   <v-col cols="6">
@@ -149,6 +148,7 @@ import FixtureCard from '@/components/user-dashboard/FixtureCard.vue';
 import DayFixturesList from '@/components/user-dashboard/DayFixturesList.vue';
 import { defineComponent } from 'vue';
 import type { IDay } from '@/interfaces/calendar';
+import type { Competition } from '@/interfaces/competition';
 
 export default defineComponent({
   components: {
@@ -166,7 +166,7 @@ export default defineComponent({
 
       seasonTab: null,
 
-      leagues: [],
+      leagues: [] as Competition[],
 
       // id of the selected League
       selectedLeagueId: '',
@@ -271,7 +271,7 @@ export default defineComponent({
       const week =
         this.calendar.CurrentDay == 0
           ? 1
-          : Math.ceil(this.calendar.CurrentDay / limit);
+          : Math.ceil(this.calendar?.CurrentDay / limit);
 
       // TODO: might put week back - 24/1/22
       const query = `/calendar/${this.yearString}/days?paginate=true&populate=true&limit=${limit}&week=${week}&not_played=true`;
