@@ -5,8 +5,11 @@
         <!-- Current day -->
         <v-toolbar-title>
           <template v-if="club && season">
-            <v-icon x-large>${{ club.ClubCode }}</v-icon>
-            <v-chip small class="ml-1 subtitle-1 font-weight-bold white--text">
+            <v-icon size="x-large">${{ club.ClubCode }}</v-icon>
+            <v-chip
+              small
+              class="ml-1 text-subtitle-1 font-weight-bold text-white"
+            >
               {{ club.League.Name }}
             </v-chip>
           </template>
@@ -14,10 +17,10 @@
 
         <!-- TODO: Add backer button, make tabs routable, fix the router function after firing manager -->
 
-        <v-spacer></v-spacer>
+        <v-spacer />
         <template v-if="club">
-          <v-icon x-large>${{ club.ClubCode }}</v-icon>
-          <span class="subtitle-1 font-weight-bold white--text">
+          <v-icon size="x-large">${{ club.ClubCode }}</v-icon>
+          <span class="text-subtitle-1 font-weight-bold text-white">
             {{ club.Name }}
           </span>
         </template>
@@ -25,29 +28,21 @@
 
       <!-- Main -->
       <!-- TABS! -->
-      <v-tabs fixed-tabs v-model="tab">
-        <v-tab>
-          Home
-        </v-tab>
+      <v-tabs v-model="tab" fixed-tabs>
+        <v-tab>Home</v-tab>
 
-        <v-tab>
-          Squad Zone
-        </v-tab>
+        <v-tab>Squad Zone</v-tab>
 
-        <v-tab>
-          Club Zone
-        </v-tab>
+        <v-tab>Club Zone</v-tab>
 
-        <v-tab>
-          Transfer Zone
-        </v-tab>
+        <v-tab>Transfer Zone</v-tab>
       </v-tabs>
     </v-card>
 
     <v-tabs-items
+      v-model="tab"
       background-color="transparent"
       color="transparent"
-      v-model="tab"
     >
       <v-tab-item>
         <v-row>
@@ -60,14 +55,17 @@
                   min-height="180px"
                   class="text-center"
                   flat
-                  tile
+                  rounded="0"
                 >
                   <v-card-text>
                     <v-row>
                       <v-col cols="9">
                         <span>HOME</span>
                         <v-avatar tile size="70px">
-                          <v-icon style="font-size: 70px; height: 70px" x-large>
+                          <v-icon
+                            style="font-size: 70px; height: 70px"
+                            size="x-large"
+                          >
                             ${{
                               selectedDay.Matches[competitionIndex].Fixture.Home
                             }}
@@ -77,7 +75,10 @@
                         vs
 
                         <v-avatar tile size="70px">
-                          <v-icon style="font-size: 70px; height: 70px" x-large>
+                          <v-icon
+                            style="font-size: 70px; height: 70px"
+                            size="x-large"
+                          >
                             ${{
                               selectedDay.Matches[competitionIndex].Fixture.Away
                             }}
@@ -86,14 +87,14 @@
                         <span>AWAY</span>
 
                         <div class="pa-0 text-center">
-                          <p class="mb-2 caption white--text">
+                          <p class="mb-2 text-caption text-white">
                             {{
                               selectedDay.Matches[competitionIndex].Fixture
                                 .Title
                             }}
                           </p>
 
-                          <p class="mb-0 caption">
+                          <p class="mb-0 text-caption">
                             {{
                               selectedDay.Matches[competitionIndex].Fixture
                                 .Stadium
@@ -107,7 +108,7 @@
                           {{
                             selectedDay.Matches[competitionIndex].Competition
                           }}
-                          <v-icon large color="amber lighten-3">
+                          <v-icon size="large" color="amber-lighten-3">
                             mdi-trophy
                           </v-icon>
                         </v-card-subtitle>
@@ -120,9 +121,9 @@
                             "
                             :to="
                               '/matchzone/' +
-                                selectedDay.Matches[
-                                  competitionIndex
-                                ].Fixture._id.toString()
+                              selectedDay.Matches[
+                                competitionIndex
+                              ].Fixture._id.toString()
                             "
                           >
                             Play
@@ -144,15 +145,15 @@
               </template>
 
               <!-- Fixtures scroller -->
-              <v-divider class="mx-2"></v-divider>
+              <v-divider class="mx-2" />
               <v-sheet width="100%" color="transparent" tile class="mt-5 pb-3">
                 <!-- <v-subheader>Upcoming Fixtures</v-subheader> -->
                 <day-scroll
                   :days="clubDays"
-                  :singleLeague="true"
+                  :single-league="true"
                   :club="club.ClubCode"
                   @selected-day-index-changed="selectDay"
-                ></day-scroll>
+                />
               </v-sheet>
             </v-card>
 
@@ -166,9 +167,7 @@
                 </v-card-title>
 
                 <v-card-text>
-                  <standings-scroller
-                    :standings="season.Standings"
-                  ></standings-scroller>
+                  <standings-scroller :standings="season.Standings" />
                 </v-card-text>
               </template>
               <template v-else>
@@ -178,7 +177,7 @@
           </v-col>
           <v-col cols="4">
             <v-card>
-              <v-sheet height="400px" width="100%" color="green darken-2">
+              <v-sheet height="400px" width="100%" color="green-darken-2">
                 Yeet beat
               </v-sheet>
             </v-card>
@@ -186,13 +185,13 @@
         </v-row>
       </v-tab-item>
       <v-tab-item>
-        <squad-zone :club="club"></squad-zone>
+        <squad-zone :club="club" />
       </v-tab-item>
       <v-tab-item>
-        <club-zone :club="club" @update-available="refresh"></club-zone>
+        <club-zone :club="club" @update-available="refresh" />
       </v-tab-item>
       <v-tab-item>
-        <transfer-zone></transfer-zone>
+        <transfer-zone />
       </v-tab-item>
     </v-tabs-items>
   </div>
@@ -206,7 +205,7 @@ import { ClubZone, SquadZone, TransferZone } from './zones';
 // Other UI components
 import DayScroll from '@/components/calendar/day-scroll.vue';
 import StandingsScroller from '@/components/seasons/standings-scroller.vue';
-import { ICalendar, IDay } from '@/interfaces/calendar';
+import { type ICalendar, type IDay } from '@/interfaces/calendar';
 // import { IFixture } from '@/interfaces/fixture';
 @Component({
   components: {
@@ -214,7 +213,7 @@ import { ICalendar, IDay } from '@/interfaces/calendar';
     SquadZone,
     TransferZone,
     DayScroll,
-    StandingsScroller,
+    StandingsScroller
   },
   beforeRouteUpdate(
     to: Route,
@@ -225,22 +224,22 @@ import { ICalendar, IDay } from '@/interfaces/calendar';
 
     this.fetchClub(clubId);
     next();
-  },
+  }
 })
 export default class ClubHome extends Vue {
-  private club: any = {};
+  club: any = {};
 
-  private selectedDayIndex = 0;
+  selectedDayIndex = 0;
 
-  private tab: any = null;
+  tab: any = null;
 
-  private seasonTab = null;
+  seasonTab = null;
 
-  private days: IDay[] = [];
+  days: IDay[] = [];
 
-  private season: any = {};
+  season: any = {};
 
-  private limit = 14;
+  limit = 14;
 
   /** Club calendar */
   get calendar(): ICalendar {
@@ -316,31 +315,40 @@ export default class ClubHome extends Vue {
 
   /* === Methods ===  */
 
-  private selectDay(val: number) {
+  selectDay(val: number) {
     this.selectedDayIndex = val;
   }
 
-  private fetchCurrentSeason() {
-    if(this.calendar && this.calendar.YearString){
+  fetchCurrentSeason() {
+    if (this.calendar && this.calendar.YearString) {
       this.$axios
-      .get(`/seasons?query=${JSON.stringify({Year: this.calendar.YearString, Competition: this.club.League})}`)
-      .then(response => {
-        // Check for errors here o
-        if (response.data.success) {
-          this.season = response.data.payload[0];
-        }
-      })
-      .catch(response => {
-        console.log('Error fetching club current Season! => ', response);
-      });
+        .get(
+          `/seasons?query=${JSON.stringify({
+            Year: this.calendar.YearString,
+            Competition: this.club.League
+          })}`
+        )
+        .then(response => {
+          // Check for errors here o
+          if (response.data.success) {
+            this.season = response.data.payload[0];
+          }
+        })
+        .catch(response => {
+          console.log('Error fetching club current Season! => ', response);
+        });
     }
   }
 
-  private fetchClub(clubId: string): void {
+  fetchClub(clubId: string): void {
     const populate = [
-      { path: 'Players', select: 'FirstName LastName Fullname Rating Position Nationality RatingsHistory Age' },
+      {
+        path: 'Players',
+        select:
+          'FirstName LastName Fullname Rating Position Nationality RatingsHistory Age'
+      },
       { path: 'Manager' },
-      { path: 'League', select: '-Clubs -Seasons' },
+      { path: 'League', select: '-Clubs -Seasons' }
     ];
     this.$axios
       .get(`/clubs/${clubId}?populate=${JSON.stringify(populate)}`)
@@ -355,13 +363,13 @@ export default class ClubHome extends Vue {
       });
   }
 
-  private getDays() {
+  getDays() {
     // const week =
     //   this.calendar.CurrentDay == 0
     //     ? 1
     //     : Math.ceil((this.calendar.CurrentDay as number) / this.limit);
 
-        const query = `/calendar/${this.yearString}/days?paginate=true&populate=true&limit=${this.limit}&not_played=true`;
+    const query = `/calendar/${this.yearString}/days?paginate=true&populate=true&limit=${this.limit}&not_played=true`;
 
     this.$axios
       .get(query)
@@ -373,17 +381,17 @@ export default class ClubHome extends Vue {
       });
   }
 
-  private refresh() {
+  refresh() {
     this.fetchClub(this.club._id);
   }
 
-  private newGame() {
+  newGame() {
     // send that event and wait for the result...
     // if success then go to match zone and send 'join-match' event...
     // or maybe we should just go to matchzone straight? and wait for the match...
   }
 
-  private mounted(): void {
+  mounted(): void {
     const clubId = this.$route.params['id'];
 
     this.getDays();
@@ -391,7 +399,7 @@ export default class ClubHome extends Vue {
     this.fetchCurrentSeason();
   }
 
-  //   private beforeRouteEnter(to: any, from: any, next: any): void {
+  //    beforeRouteEnter(to: any, from: any, next: any): void {
   //     console.log('To From', to, from);
   //     next();
   //   }
