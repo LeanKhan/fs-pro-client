@@ -80,7 +80,7 @@ const vuetifyComponents = import.meta.env.DEV
       }
     };
 const fsProTheme = {
-  dark: false,
+  dark: true,
   colors: {
     primary: '#7535ed',
     accent: '#c23361',
