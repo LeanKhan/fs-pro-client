@@ -7,13 +7,14 @@ import store, { apiUrl, type RootState } from './store';
 import axios, { type AxiosInstance } from 'axios';
 import { roundTo, ordinal } from './helpers/misc';
 
-import VueSocketIOExt from 'vue-socket.io-extended';
-import io, { type Socket } from 'socket.io-client';
+// import VueSocketIOExt from 'vue-socket.io-extended';
+import { type Socket } from 'socket.io-client';
 import type { Store } from 'vuex/types/index.js';
+import { socket } from './store/socket';
 
 const app = createApp(App);
 
-const socket = io(`${apiUrl}`, { autoConnect: false });
+// const socket = io(`${apiUrl}`, { autoConnect: false });
 
 // baseURL: 'http://localhost:3000/api',
 
@@ -37,7 +38,7 @@ app.config.globalProperties.$socket = socket;
 declare module 'vue' {
   interface ComponentCustomProperties {
     $axios: AxiosInstance;
-    $socket: typeof Socket;
+    $socket: Socket;
     $store: Store<RootState>;
     $filters: {
       currency: (value: number) => string;
@@ -53,7 +54,7 @@ app.use({
   }
 });
 
-app.use(VueSocketIOExt, socket);
+// app.use(socket);
 
 app.use(vuetify);
 app.use(router);

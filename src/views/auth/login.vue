@@ -27,7 +27,7 @@
         </template>
 
         <template v-else>
-          <[object Object]>Change Password</[object Object]>
+          <h3>Change Password</h3>
 
           <v-text-field
             v-model="newForm.Username"

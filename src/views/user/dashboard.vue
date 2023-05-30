@@ -265,13 +265,13 @@ export default defineComponent({
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     getDays(_day: number) {
       // if the currentDay is greater than 14 get the next page...
-      if (!this.calendar) return;
+      if (!this.calendar.CurrentDay) return;
 
       const limit = 7;
       const week =
         this.calendar.CurrentDay == 0
           ? 1
-          : Math.ceil(this.calendar?.CurrentDay / limit);
+          : Math.ceil(this.calendar.CurrentDay / limit);
 
       // TODO: might put week back - 24/1/22
       const query = `/calendar/${this.yearString}/days?paginate=true&populate=true&limit=${limit}&week=${week}&not_played=true`;

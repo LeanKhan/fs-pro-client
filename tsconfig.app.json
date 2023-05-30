@@ -24,6 +24,7 @@
     "useDefineForClassFields": true,
     "skipLibCheck": true,
     "noImplicitAny": false,
+    "experimentalDecorators": true,
 
     /* Bundler mode */
     "moduleResolution": "bundler",

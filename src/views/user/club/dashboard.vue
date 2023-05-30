@@ -199,7 +199,6 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-facing-decorator';
-import { Route, RawLocation } from 'vue-router';
 // Zone Components
 import { ClubZone, SquadZone, TransferZone } from './zones';
 // Other UI components
@@ -216,14 +215,12 @@ import { type ICalendar, type IDay } from '@/interfaces/calendar';
     StandingsScroller
   },
   beforeRouteUpdate(
-    to: Route,
-    from: Route,
-    next: (to?: RawLocation | false | ((vm: ClubHome) => any) | void) => void
+    to,
+    from,
   ): void {
     const clubId = to.params['id'];
 
     this.fetchClub(clubId);
-    next();
   }
 })
 export default class ClubHome extends Vue {

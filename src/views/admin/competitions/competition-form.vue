@@ -15,17 +15,17 @@
         <v-container>
           <v-row>
             <v-col cols="6">
-              <v-text-field label="Name" v-model="form.Name" />
+              <v-text-field v-model="form.Name" label="Name" />
             </v-col>
 
             <v-col cols="6">
-              <v-text-field label="Code" v-model="form.CompetitionCode" />
+              <v-text-field v-model="form.CompetitionCode" label="Code" />
             </v-col>
 
             <v-col cols="6">
               <v-radio-group
-                label="Type"
                 v-model="form.Type"
+                label="Type"
                 @update:modelValue="typeChanged"
               >
                 <v-radio
@@ -39,78 +39,78 @@
 
             <v-col cols="6">
               <v-select
+                v-model="form.Country"
                 label="Country"
                 :items="countries"
-                item-text="Name"
+                item-title="Name"
                 item-value="_id"
-                v-model="form.Country"
               />
             </v-col>
 
             <v-col cols="6">
               <v-select
+                v-model="form.Division"
                 label="Division"
                 :items="divisions"
-                v-model="form.Division"
                 hint="Whether it's in the first division and so on..."
               />
             </v-col>
 
             <v-col cols="6">
               <v-text-field
+                v-model="form.NumberOfTeams"
                 required
                 type="number"
                 label="Number of Teams"
                 max="40"
                 min="1"
-                v-model="form.NumberOfTeams"
               />
             </v-col>
 
-            <v-col cols="6" v-if="form.Division != 1">
+            <v-col v-if="form.Division != 1" cols="6">
               <v-text-field
+                v-model="form.TeamsPromoted"
                 required
                 type="number"
                 label="TeamsPromoted"
                 max="5"
                 min="0"
-                v-model="form.TeamsPromoted"
               />
             </v-col>
 
             <v-col cols="6">
               <v-text-field
+                v-model="form.TeamsRelegated"
                 required
                 type="number"
                 label="TeamsRelegated"
                 max="5"
                 min="0"
-                v-model="form.TeamsRelegated"
               />
             </v-col>
 
             <v-col cols="6">
               <v-text-field
+                v-model="form.NumberOfWeeks"
                 required
                 type="number"
                 max="40"
                 min="1"
                 label="Number of Weeks"
-                v-model="form.NumberOfWeeks"
               />
             </v-col>
 
             <v-col cols="6">
               <club-list
                 v-if="isUpdate"
-                @open-club-modal="openClubModal = true"
                 :clubs="competition.Clubs"
                 :actions="true"
+                @open-club-modal="openClubModal = true"
               />
 
               <v-card v-else>
                 <v-sheet
-                  color="pink lighten-1"
+                  color="pink-lighten-1"
                   height="100%"
                   width="100%"
                   class="px-3 py-2 text-center"
@@ -130,15 +130,15 @@
 
         <v-card-actions>
           <v-spacer />
-          <v-btn @click="submit" :color="`${isUpdate ? 'warning' : 'success'}`">
+          <v-btn :color="`${isUpdate ? 'warning' : 'success'}`" @click="submit">
             {{ isUpdate ? 'Update' : 'Create Competition' }}
           </v-btn>
 
-          <v-btn @click="$router.push('/competitions')" color="secondary">
+          <v-btn color="secondary" @click="$router.push('/competitions')">
             Cancel
           </v-btn>
 
-          <v-btn v-if="isUpdate" @click="deleteCompetition" color="error">
+          <v-btn v-if="isUpdate" color="error" @click="deleteCompetition">
             Remove
           </v-btn>
         </v-card-actions>
@@ -149,7 +149,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-facing-decorator';
-import { Competition } from '@/interfaces/competition';
+import { type Competition } from '@/interfaces/competition';
 import ClubList from '@/components/clubs/club-list.vue';
 import ClubsTable from '@/components/clubs/clubs-table.vue';
 
@@ -161,7 +161,7 @@ import ClubsTable from '@/components/clubs/clubs-table.vue';
 })
 export default class ComponentForm extends Vue {
   @Prop({ required: false }) readonly isUpdate!: boolean;
-  competition: {} = {};
+  competition: any = {};
   types = ['League', 'Cup', 'Tournament'];
   divisions = [1, 2, 3, 4, 0];
 
@@ -219,8 +219,8 @@ export default class ComponentForm extends Vue {
         let id = '';
         let code = '';
         if (this.isUpdate) {
-          id = this.$route.params._id;
-          code = this.$route.params.CompetitionCode;
+          id = this.$route.params._id as string;
+          code = this.$route.params.CompetitionCode as string;
         } else {
           id = response.data.payload._doc._id;
           code = response.data.payload._doc.CompetitionCode;
@@ -260,7 +260,13 @@ export default class ComponentForm extends Vue {
     this.openClubModal = false;
     if (event) {
       const competitionID = this.$route.params['id'];
-      const compCode = this.$route.params['code'].toUpperCase();
+      let compCode;
+
+      if (Array.isArray(this.$route.params['code'])) {
+        compCode = this.$route.params['code'][0].toUpperCase();
+      } else {
+        compCode = this.$route.params['code'].toUpperCase();
+      }
 
       this.$axios
         .post(`/competitions/${competitionID}/add-club`, {
