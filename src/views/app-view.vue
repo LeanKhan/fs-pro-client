@@ -151,7 +151,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-facing-decorator';
 import { Route, RawLocation } from 'vue-router';
 import { apiUrl } from '@/store';
 
@@ -172,22 +172,22 @@ import { apiUrl } from '@/store';
   },
 })
 export default class AppView extends Vue {
-  private drawer = true;
+   drawer = true;
 
-  private appBar = true;
+   appBar = true;
 
-  private show = false;
+   show = false;
 
   public api: string = apiUrl;
 
   // public errorOverlay = false;
 
-  // private items(): any[] {
+  //  items(): any[] {
   //   if(this.$route.fullPath.split('/'))
   // }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private adminNavItems: any[] = [
+   adminNavItems: any[] = [
     { title: 'Home', icon: 'mdi-soccer', link: '/a', color: 'primary' },
     { title: 'Clubs', icon: 'mdi-security', link: '/a/clubs', color: 'amber' },
     {
@@ -216,12 +216,12 @@ export default class AppView extends Vue {
     },
   ];
 
-  // private userNavItems: any[] = [
+  //  userNavItems: any[] = [
   //   { title: 'Home', icon: 'mdi-soccer', link: '/u', color: 'primary' },
   //   { title: 'Clubs', icon: 'mdi-security', link: '/u/clubs', color: 'amber' },
   // ];
 
-  private logout() {
+   logout() {
     this.$axios
       .delete(`/users/${this.user.userID}/logout`)
       .then(response => {
@@ -237,7 +237,7 @@ export default class AppView extends Vue {
       });
   }
 
-  private goBackToPreviousState() {
+   goBackToPreviousState() {
     this.$store.commit('TOGGLE_ERROR_OVERLAY');
     this.$router.back();
   }
@@ -278,7 +278,7 @@ export default class AppView extends Vue {
     // { title: 'Clubs', icon: 'mdi-security', link: '/u/clubs', color: 'amber' },
   }
 
-  private mini = true;
+   mini = true;
 
   get userMode(): boolean {
     return this.$route.path.split('/')[1] == 'u';
@@ -296,7 +296,7 @@ export default class AppView extends Vue {
     return this.userNavItems;
   }
 
-  private enter() {
+   enter() {
     const { userID, session: sessionID } = this.user;
 
     console.log('user => ', this.user);

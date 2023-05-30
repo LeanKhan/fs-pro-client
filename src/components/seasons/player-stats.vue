@@ -1,21 +1,24 @@
 <template>
-  <v-card elevation="2" class="pa-2" color="green accent-2">
+  <v-card elevation="2" class="pa-2" color="green-accent-2">
     <v-toolbar>
       Best Players
       <v-icon>mdi-chart-areaspline</v-icon>
     </v-toolbar>
     <v-row>
-      <template v-for="(attr, k) in stats_attributes">
-        <v-col cols="6" v-bind:key="k">
-          <v-card color="green accent-1">
-            <v-card-title class="capitalize subtitle-1 black--text">
+      <template v-for="(attr, index) in stats_attributes" :key="index">
+        <v-col cols="6">
+          <v-card color="green-accent-1">
+            <v-card-title class="capitalize text-subtitle-1 text-black">
               Highest {{ attr }}
             </v-card-title>
 
             <v-list v-if="top_players[attr].length > 0">
-              <v-list-item v-for="(p, i) in top_players[attr]" :key="i">
+              <v-list-item
+                v-for="(p, i) in (top_players[attr] as any)"
+                :key="i"
+              >
                 <v-list-item-avatar>
-                  <v-icon style="font-size: 30px; height: 30px" large>
+                  <v-icon style="font-size: 30px; height: 30px" size="large">
                     ${{ p.player.ClubCode }}
                   </v-icon>
                 </v-list-item-avatar>
@@ -24,20 +27,20 @@
                 </v-list-item-title>
 
                 <v-list-item-avatar size="40px" color="blue">
-                  <span class="white--text font-weight-bold">
-                    {{ p[attr] | roundTo(2) }}
+                  <span class="text-white font-weight-bold">
+                    {{ $filters.roundTo(p[attr], 2) }}
                   </span>
                 </v-list-item-avatar>
               </v-list-item>
             </v-list>
 
-            <v-sheet class="pa-2" v-else>
+            <v-sheet v-else class="pa-2">
               <v-btn
                 block
-                depressed
+                variant="flat"
                 :disabled="loading_player_stats"
                 :loading="loading_player_stats"
-                @click="load_stats(attr)"
+                @click="loadStats(attr)"
               >
                 Load
               </v-btn>
@@ -50,8 +53,7 @@
 </template>
 
 <script lang="ts">
-/* eslint-disable @typescript-eslint/camelcase */
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'vue-facing-decorator';
 
 @Component({})
 export default class PlayerStats extends Vue {
@@ -60,13 +62,13 @@ export default class PlayerStats extends Vue {
   //   @Prop({ required: true }) stats_attributes!: string[];
   @Prop({ required: true }) seasonId!: string;
 
-  private loading = false;
+  loading = false;
 
-  private loading_player_stats = false;
+  loading_player_stats = false;
 
-  private stats_attributes = ['points', 'goals', 'assists', 'saves'];
+  stats_attributes = ['points', 'goals', 'assists', 'saves'];
 
-  private top_players: {
+  top_players: {
     points: [];
     goals: [];
     assists: [];
@@ -76,11 +78,10 @@ export default class PlayerStats extends Vue {
     points: [],
     goals: [],
     assists: [],
-    saves: [],
+    saves: []
   };
 
-  // eslint-disable-next-line @typescript-eslint/camelcase
-  private load_stats(attribute: string) {
+  loadStats(attribute: string) {
     this.loading_player_stats = true;
     this.$axios
       .get(

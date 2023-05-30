@@ -1,5 +1,5 @@
 <template>
-  <div class="align-center d-flex flex-column " :class="isHome">
+  <div class="align-center d-flex flex-column" :class="isHome">
     <v-card-subtitle>
       {{ clubName }} -
       <b>{{ clubCode }}</b>
@@ -15,33 +15,34 @@
       offset-y="10"
     >
       <v-avatar tile size="30px">
-        <v-icon color="gold" style="font-size: 30px; height: 30px" large>
+        <v-icon color="gold" style="font-size: 30px; height: 30px" size="large">
           mdi-trophy
         </v-icon>
       </v-avatar>
     </v-badge>
 
     <v-avatar tile size="100px">
-      <v-img
-        :src="`${api}/img/clubs/logos/${clubCode}.png`"
-        width="100px"
-      ></v-img>
+      <v-img :src="`${api}/img/clubs/logos/${clubCode}.png`" width="100px" />
     </v-avatar>
 
     <div>
       <v-rating
-        :value="clubRating"
+        :model-value="clubRating"
         :half-increments="true"
         :readonly="true"
         size="14px"
         :color="isHome ? 'deep-purple darken-3' : 'pink accent-3'"
-        background-color="secondary lighten-1"
-      ></v-rating>
-      <span class="caption text-muted ml-1">{{ clubRating | roundTo(1) }}</span>
+        class="bg-secondary-lighten-1"
+      />
+      <span class="text-caption text-muted ml-1">
+        {{ $filters.roundTo(clubRating, 1) }}
+      </span>
     </div>
 
-    <div class="caption" v-if="clubStandings.standing">
-      <span class="ma-0 pr-2">{{ clubStandings.position | ordinal }} </span>
+    <div v-if="clubStandings.standing" class="text-caption">
+      <span class="ma-0 pr-2">
+        {{ $filters.ordinal(clubStandings.position) }}
+      </span>
       -
       <span class="ma-0 pl-2">{{ clubStandings.standing.Points }} Pts</span>
     </div>
@@ -49,7 +50,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'vue-facing-decorator';
 import { apiUrl } from '@/store';
 
 @Component({})
@@ -61,7 +62,7 @@ export default class ClubWidget extends Vue {
   @Prop({ required: false }) readonly clubStandings: any;
   @Prop({ required: false }) readonly winner!: string;
 
-  private api = apiUrl;
+  api = apiUrl;
 
   get clubRating() {
     if (this.rating) {

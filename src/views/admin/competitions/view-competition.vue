@@ -1,23 +1,23 @@
 <template>
   <div>
     <v-dialog v-model="openClubModal" persistent max-width="800px">
-      <clubs-table @close-club-modal="closeModal"></clubs-table>
+      <clubs-table @close-club-modal="closeModal" />
     </v-dialog>
     <v-row>
       <v-col cols="6">
         <!-- Competition Details -->
         <v-card>
           <v-list-item>
-            <v-list-item-title class="headline mb-1">
-              <div class="overline mb-4">
+            <v-list-item-title class="text-h5 mb-1">
+              <div class="text-overline mb-4">
                 {{ competition.CompetitionID }}
               </div>
               {{ competition.Name }}
               <v-chip>{{ competition.Type }}</v-chip>
             </v-list-item-title>
             <v-list-item-content>
-              <v-btn text icon color="indigo lighten-2">
-                <v-icon small @click="updateCompetition">
+              <v-btn variant="text" icon color="indigo-lighten-2">
+                <v-icon size="small" @click="updateCompetition">
                   mdi-pencil
                 </v-icon>
               </v-btn>
@@ -28,13 +28,11 @@
             Country: {{ competition.Country.Name }} Type: {{ competition.Type }}
           </v-card-text>
 
-          <v-divider></v-divider>
+          <v-divider />
           <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn text small color="indigo" to="./seasons">
-              <v-icon color="indigo">
-                mdi-calendar
-              </v-icon>
+            <v-spacer />
+            <v-btn variant="text" size="small" color="indigo" to="./seasons">
+              <v-icon color="indigo">mdi-calendar</v-icon>
               View Seasons
             </v-btn>
           </v-card-actions>
@@ -44,10 +42,10 @@
       <!-- Clubs -->
       <v-col cols="6">
         <club-list
-          @open-club-modal="openClubModal = true"
           :actions="true"
           :clubs="competition.Clubs"
-        ></club-list>
+          @open-club-modal="openClubModal = true"
+        />
       </v-col>
     </v-row>
 
@@ -59,30 +57,30 @@
         <seasons-table
           :seasons="competition.Seasons"
           :competition-id="competition._id"
-        ></seasons-table>
+        />
       </v-col>
     </v-row>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-facing-decorator';
 import ClubList from '@/components/clubs/club-list.vue';
 import SeasonsTable from '@/components/seasons/seasons-table.vue';
 import ClubsTable from '@/components/clubs/clubs-table.vue';
-import { Competition } from '@/interfaces/competition';
+import { type Competition } from '@/interfaces/competition';
 
 @Component({
   components: {
     ClubList,
     SeasonsTable,
-    ClubsTable,
-  },
+    ClubsTable
+  }
 })
 export default class ViewComponent extends Vue {
-  private competition: any = {};
+  competition: any = {};
 
-  private openClubModal = false;
+  openClubModal = false;
 
   public updateCompetition(): void {
     const code = this.competition.CompetitionCode.toLowerCase();
@@ -94,12 +92,18 @@ export default class ViewComponent extends Vue {
     this.openClubModal = false;
     if (event) {
       const competitionID = this.$route.params['id'];
-      const compCode = this.$route.params['code'].toUpperCase();
+      // TODO ensure this is not an array
+      let compCode;
+      if (Array.isArray(this.$route.params['code'])) {
+        compCode = this.$route.params['code'][0].toUpperCase();
+      } else {
+        compCode = this.$route.params['code'].toUpperCase();
+      }
 
       this.$axios
         .post(`/competitions/${competitionID}/add-club`, {
           clubId: event.id,
-          leagueCode: compCode,
+          leagueCode: compCode
         })
         .then(response => {
           console.log('Successfully added club to competition => ', response);
@@ -111,7 +115,7 @@ export default class ViewComponent extends Vue {
     }
   }
 
-  private mounted(): void {
+  mounted(): void {
     const compID = this.$route.params['id'];
 
     this.$axios

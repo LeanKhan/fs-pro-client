@@ -1,23 +1,17 @@
 <template>
-  <v-card elevation="2" class="pa-2 my-4" color="green accent-3">
+  <v-card elevation="2" class="pa-2 my-4" color="green-accent-3">
     <v-toolbar>
       Awards
       <v-icon>mdi-trophy</v-icon>
     </v-toolbar>
-    <v-card-text class="white">
-      <v-window
-        v-model="step"
-        reverse
-        :continuous="true"
-        :show-arrows="true"
-        show-arrows-on-hover
-      >
+    <v-card-text class="bg-white">
+      <v-window v-model="step" reverse :continuous="true" :show-arrows="true">
         <v-window-item v-for="(award, i) in awards" :key="i">
           <v-card>
             <v-img
               :src="`${api}/img/clubs/kits/${award.Club.ClubCode}-kit.png`"
               width="100px"
-            ></v-img>
+            />
             <v-card-title>
               {{ award.Name }}
             </v-card-title>
@@ -28,15 +22,14 @@
         </v-window-item>
       </v-window>
     </v-card-text>
-    <v-overlay :value="loading">
-      <v-progress-circular indeterminate size="68"></v-progress-circular>
+    <v-overlay :model-value="loading">
+      <v-progress-circular indeterminate size="68" />
     </v-overlay>
   </v-card>
 </template>
 
 <script lang="ts">
-/* eslint-disable @typescript-eslint/camelcase */
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'vue-facing-decorator';
 import { apiUrl } from '@/store';
 @Component({})
 export default class PlayerAwards extends Vue {
@@ -45,7 +38,7 @@ export default class PlayerAwards extends Vue {
   //   @Prop({ required: true }) stats_attributes!: string[];
   @Prop({ required: true }) seasonId!: string;
 
-  private api = apiUrl;
+  api = apiUrl;
   /**
    * Fetch Awards, thank you Jesus!
    */
@@ -55,7 +48,9 @@ export default class PlayerAwards extends Vue {
     this.$axios
       .get(`/awards/season/${this.seasonId}?recipient=player&populate=club`)
       .then(response => {
-        const managerIndex = response.data.payload.findIndex((a: any) => !a.Recipient);
+        const managerIndex = response.data.payload.findIndex(
+          (a: any) => !a.Recipient
+        );
         this.manager = response.data.payload.splice(managerIndex, 1);
         this.awards = response.data.payload;
         // thank you Jesus!
@@ -67,15 +62,15 @@ export default class PlayerAwards extends Vue {
         this.loading = false;
       });
   }
-  private step = 0;
+  step = 0;
 
-  private loading = false;
+  loading = false;
 
-  private awards = [];
+  awards: any[] = [];
 
-  private manager = {};
+  manager = {};
 
-  //   private mounted() {
+  //    mounted() {
   //     //   load awards! Thank you Jesus!
   //     this.fetchAwards();
   //   }

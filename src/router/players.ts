@@ -12,13 +12,13 @@ const routes: RouteRecordRaw = {
       path: '',
       component: () => import('../views/admin/players/dashboard.vue'),
       name: 'Players Home',
-      meta: { title: 'Players Dashboard' },
+      meta: { title: 'Players Dashboard' }
     },
     {
       path: 'new',
       name: 'New Player',
       component: () => import('../views/admin/players/players-form.vue'),
-      meta: { title: 'New Player' },
+      meta: { title: 'New Player' }
     },
     {
       path: ':id/:code',
@@ -28,18 +28,18 @@ const routes: RouteRecordRaw = {
           path: '',
           component: () => import('../views/admin/players/view-player.vue'),
           name: 'View Player',
-          meta: { title: 'View Player' },
+          meta: { title: 'View Player' }
         },
         {
           path: 'update',
           name: 'Update Player',
           component: () => import('../views/admin/players/players-form.vue'),
           meta: { title: 'Update Player' },
-          props: { isUpdate: true },
-        },
-      ],
-    },
-  ],
+          props: { isUpdate: true }
+        }
+      ]
+    }
+  ]
 };
 
 export default routes;

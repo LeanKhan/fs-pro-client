@@ -11,28 +11,28 @@
         <v-container>
           <v-row>
             <v-col cols="6">
-              <v-text-field label="Title" v-model="form.Title"></v-text-field>
+              <v-text-field v-model="form.Title" label="Title" />
             </v-col>
 
             <v-col cols="6">
-              <v-date-picker v-model="form.StartDate"></v-date-picker>
+              <v-date-picker v-model="form.StartDate" />
             </v-col>
           </v-row>
         </v-container>
 
-        <v-divider></v-divider>
+        <v-divider />
 
         <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn @click="submit" :color="`${isUpdate ? 'warning' : 'success'}`">
+          <v-spacer />
+          <v-btn :color="`${isUpdate ? 'warning' : 'success'}`" @click="submit">
             {{ isUpdate ? 'Update' : 'Create Season' }}
           </v-btn>
-          <v-btn @click="$router.push('/a/competitions')" color="secondary">
+          <v-btn color="secondary" @click="$router.push('/a/competitions')">
             Cancel
           </v-btn>
-          <v-btn v-if="isUpdate" @click="deleteSeason" color="error">
+          <!-- <v-btn v-if="isUpdate" @click="deleteSeason" color="error">
             Remove
-          </v-btn>
+          </v-btn> -->
         </v-card-actions>
       </v-card>
     </v-form>
@@ -40,21 +40,21 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'vue-facing-decorator';
 
-@Component
+@Component({})
 export default class SeasonForm extends Vue {
   @Prop({ required: false }) readonly isUpdate!: boolean;
-  private season: {} = {};
+  season: any = {};
 
-  private openClubModal = false;
+  openClubModal = false;
 
-  private form: any = {
+  form: any = {
     Title: '',
-    StartDate: '',
+    StartDate: ''
   };
 
-  private submit(): void {
+  submit(): void {
     const Competition = this.$route.params['id'];
     const CompetitionCode = this.$route.params['code'];
 
@@ -70,7 +70,7 @@ export default class SeasonForm extends Vue {
         console.log('Response => ', response.data.payload);
         this.$router.push({
           name: 'View Competition',
-          params: { Competition, CompetitionCode },
+          params: { Competition, CompetitionCode }
         });
       })
       .catch(response => {

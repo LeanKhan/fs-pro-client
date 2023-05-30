@@ -3,56 +3,56 @@
     <v-card>
       <v-card-text>
         <template v-if="!showForgotSection">
-          <v-subheader>Login to FSPro</v-subheader>
+          <h3>Login to FSPro</h3>
 
           <v-text-field
+            v-model="form.Username"
             required
             type="text"
             label="Username"
             :disabled="loading"
             :loading="loading"
             color="green"
-            v-model="form.Username"
-          ></v-text-field>
+          />
 
           <v-text-field
+            v-model="form.Password"
             required
             type="text"
             label="Password"
             :disabled="loading"
             :loading="loading"
             color="green"
-            v-model="form.Password"
-          ></v-text-field>
+          />
         </template>
 
         <template v-else>
-          <v-subheader>Change Password</v-subheader>
+          <h3>Change Password</h3>
 
           <v-text-field
+            v-model="newForm.Username"
             required
             type="text"
             label="Username"
             :disabled="loading"
             :loading="loading"
             color="pink"
-            v-model="newForm.Username"
-          ></v-text-field>
+          />
 
           <v-text-field
+            v-model="newForm.NewPassword"
             required
             type="text"
             label="New Password"
             :disabled="loading"
             :loading="loading"
             color="pink"
-            v-model="newForm.NewPassword"
-          ></v-text-field>
+          />
         </template>
         <!-- Forgot Password -->
         <div>
           Forgot your password?
-          <v-btn outlined depressed @click="showForgot">
+          <v-btn variant="outlined flat" @click="showForgot">
             Yup, ama fish eater
           </v-btn>
         </div>
@@ -60,20 +60,20 @@
       <v-card-actions>
         <v-btn
           v-if="!showForgotSection"
-          color="green darken-2"
-          @click="login"
+          color="green-darken-2"
           block
           :loading="loading"
+          @click="login"
         >
           Login
         </v-btn>
 
         <v-btn
           v-else
-          color="pink darken-2"
-          @click="submitNewPassword"
+          color="pink-darken-2"
           block
           :loading="loading"
+          @click="submitNewPassword"
         >
           Change Password
         </v-btn>
@@ -83,24 +83,24 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-@Component
+import { Component, Vue } from 'vue-facing-decorator';
+@Component({})
 export default class Login extends Vue {
-  private form = {
+  form = {
     Username: '',
-    Password: '',
+    Password: ''
   };
 
-  private newForm = {
+  newForm = {
     Username: '',
-    NewPassword: '',
+    NewPassword: ''
   };
 
   public loading = false;
 
   public showForgotSection = false;
 
-  private login() {
+  login() {
     this.loading = true;
     this.$axios
       .post(
@@ -111,11 +111,10 @@ export default class Login extends Vue {
       .then(response => {
         console.log('Response => ', response.data);
         if (response.data.success) {
-
-        this.$store.dispatch('SHOW_TOAST', {
-          message: 'Signed in Successfully!',
-          style: 'success',
-        });
+          this.$store.dispatch('SHOW_TOAST', {
+            message: 'Signed in Successfully!',
+            style: 'success'
+          });
 
           this.$store.dispatch('SET_USER', {
             username: response.data.payload.Username,
@@ -124,13 +123,13 @@ export default class Login extends Vue {
             session: response.data.payload.Session,
             isAdmin: response.data.payload.isAdmin,
             avatar: response.data.payload.Avatar,
-            fullname: response.data.payload.FullName,
+            fullname: response.data.payload.FullName
           });
         } else {
-        this.$store.dispatch('SHOW_TOAST', {
-          message: response.data.message,
-          style: 'error',
-        });
+          this.$store.dispatch('SHOW_TOAST', {
+            message: response.data.message,
+            style: 'error'
+          });
         }
 
         this.$socket.client.emit('authenticate');
@@ -145,7 +144,7 @@ export default class Login extends Vue {
       });
   }
 
-  private submitNewPassword() {
+  submitNewPassword() {
     this.loading = true;
     this.$axios
       .post('/users/change-password', this.newForm, { withCredentials: true })
@@ -159,7 +158,7 @@ export default class Login extends Vue {
             session: response.data.payload.Session,
             isAdmin: response.data.payload.isAdmin,
             avatar: response.data.payload.Avatar,
-            fullname: response.data.payload.FullName,
+            fullname: response.data.payload.FullName
           });
         }
 
@@ -176,7 +175,7 @@ export default class Login extends Vue {
       });
   }
 
-  private showForgot() {
+  showForgot() {
     this.showForgotSection = true;
   }
 }

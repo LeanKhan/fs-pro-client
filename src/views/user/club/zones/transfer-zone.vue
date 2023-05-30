@@ -1,13 +1,11 @@
 <template>
-  <div>
-    Transfer Zone works! :)
-  </div>
+  <div>Transfer Zone works! :)</div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-facing-decorator';
 
-@Component
+@Component({})
 export default class TransferZone extends Vue {}
 </script>
 

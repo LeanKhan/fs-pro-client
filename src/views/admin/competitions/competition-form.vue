@@ -2,7 +2,7 @@
   <div>
     <!-- Inset form here!  -->
     <v-dialog v-model="openClubModal" persistent max-width="800px">
-      <clubs-table @close-club-modal="closeModal"></clubs-table>
+      <clubs-table @close-club-modal="closeModal" />
     </v-dialog>
     <v-form @submit.prevent="submit">
       <v-card>
@@ -15,105 +15,102 @@
         <v-container>
           <v-row>
             <v-col cols="6">
-              <v-text-field label="Name" v-model="form.Name"></v-text-field>
+              <v-text-field v-model="form.Name" label="Name" />
             </v-col>
 
             <v-col cols="6">
-              <v-text-field
-                label="Code"
-                v-model="form.CompetitionCode"
-              ></v-text-field>
+              <v-text-field v-model="form.CompetitionCode" label="Code" />
             </v-col>
 
             <v-col cols="6">
               <v-radio-group
-                label="Type"
                 v-model="form.Type"
-                @change="typeChanged"
+                label="Type"
+                @update:modelValue="typeChanged"
               >
                 <v-radio
                   v-for="(type, i) in types"
                   :key="i"
                   :label="type"
                   :value="type.toLowerCase()"
-                ></v-radio>
+                />
               </v-radio-group>
             </v-col>
 
             <v-col cols="6">
               <v-select
+                v-model="form.Country"
                 label="Country"
                 :items="countries"
-                item-text="Name"
+                item-title="Name"
                 item-value="_id"
-                v-model="form.Country"
-              ></v-select>
+              />
             </v-col>
 
             <v-col cols="6">
               <v-select
+                v-model="form.Division"
                 label="Division"
                 :items="divisions"
-                v-model="form.Division"
                 hint="Whether it's in the first division and so on..."
-              ></v-select>
+              />
             </v-col>
 
             <v-col cols="6">
               <v-text-field
+                v-model="form.NumberOfTeams"
                 required
                 type="number"
                 label="Number of Teams"
                 max="40"
                 min="1"
-                v-model="form.NumberOfTeams"
-              ></v-text-field>
+              />
             </v-col>
 
-            <v-col cols="6" v-if="form.Division != 1">
+            <v-col v-if="form.Division != 1" cols="6">
               <v-text-field
+                v-model="form.TeamsPromoted"
                 required
                 type="number"
                 label="TeamsPromoted"
                 max="5"
                 min="0"
-                v-model="form.TeamsPromoted"
-              ></v-text-field>
+              />
             </v-col>
 
             <v-col cols="6">
               <v-text-field
+                v-model="form.TeamsRelegated"
                 required
                 type="number"
                 label="TeamsRelegated"
                 max="5"
                 min="0"
-                v-model="form.TeamsRelegated"
-              ></v-text-field>
+              />
             </v-col>
 
             <v-col cols="6">
               <v-text-field
+                v-model="form.NumberOfWeeks"
                 required
                 type="number"
                 max="40"
                 min="1"
                 label="Number of Weeks"
-                v-model="form.NumberOfWeeks"
-              ></v-text-field>
+              />
             </v-col>
 
             <v-col cols="6">
               <club-list
                 v-if="isUpdate"
-                @open-club-modal="openClubModal = true"
                 :clubs="competition.Clubs"
                 :actions="true"
-              ></club-list>
+                @open-club-modal="openClubModal = true"
+              />
 
               <v-card v-else>
                 <v-sheet
-                  color="pink lighten-1"
+                  color="pink-lighten-1"
                   height="100%"
                   width="100%"
                   class="px-3 py-2 text-center"
@@ -129,19 +126,19 @@
           </v-row>
         </v-container>
 
-        <v-divider></v-divider>
+        <v-divider />
 
         <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn @click="submit" :color="`${isUpdate ? 'warning' : 'success'}`">
+          <v-spacer />
+          <v-btn :color="`${isUpdate ? 'warning' : 'success'}`" @click="submit">
             {{ isUpdate ? 'Update' : 'Create Competition' }}
           </v-btn>
 
-          <v-btn @click="$router.push('/competitions')" color="secondary">
+          <v-btn color="secondary" @click="$router.push('/competitions')">
             Cancel
           </v-btn>
 
-          <v-btn v-if="isUpdate" @click="deleteCompetition" color="error">
+          <v-btn v-if="isUpdate" color="error" @click="deleteCompetition">
             Remove
           </v-btn>
         </v-card-actions>
@@ -151,26 +148,26 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
-import { Competition } from '@/interfaces/competition';
+import { Component, Vue, Prop } from 'vue-facing-decorator';
+import { type Competition } from '@/interfaces/competition';
 import ClubList from '@/components/clubs/club-list.vue';
 import ClubsTable from '@/components/clubs/clubs-table.vue';
 
 @Component({
   components: {
     ClubList,
-    ClubsTable,
-  },
+    ClubsTable
+  }
 })
 export default class ComponentForm extends Vue {
   @Prop({ required: false }) readonly isUpdate!: boolean;
-  private competition: {} = {};
-  private types = ['League', 'Cup', 'Tournament'];
-  private divisions = [1, 2, 3, 4, 0];
+  competition: any = {};
+  types = ['League', 'Cup', 'Tournament'];
+  divisions = [1, 2, 3, 4, 0];
 
-  private openClubModal = false;
+  openClubModal = false;
 
-  private form: any = {
+  form: any = {
     Name: '',
     Type: '',
     CompetitionCode: '',
@@ -184,31 +181,31 @@ export default class ComponentForm extends Vue {
     Tournament: false,
     Division: '',
     Clubs: [],
-    Seasons: [],
+    Seasons: []
   };
 
   get countries(): string[] {
     return this.$store.getters.countries;
   }
 
-  private mounted(): void {
+  mounted(): void {
     if (this.isUpdate) {
       const competitionID = this.$route.params['id'];
       // const competitionCode = this.$route.params['code'];
 
       this.$axios
         .get(`/competitions/${competitionID}?populate=false`)
-        .then((response) => {
+        .then(response => {
           this.competition = response.data.payload as Competition;
           this.form = response.data.payload as Competition;
         })
-        .catch((response) => {
+        .catch(response => {
           console.log('Response => ', response);
         });
     }
   }
 
-  private submit(): void {
+  submit(): void {
     const competitionID = this.$route.params['id'];
 
     const url = this.isUpdate
@@ -217,20 +214,20 @@ export default class ComponentForm extends Vue {
 
     this.$axios
       .post(url, { data: this.form })
-      .then((response) => {
+      .then(response => {
         console.log('Response => ', response);
         let id = '';
         let code = '';
         if (this.isUpdate) {
-          id = this.$route.params._id;
-          code = this.$route.params.CompetitionCode;
+          id = this.$route.params._id as string;
+          code = this.$route.params.CompetitionCode as string;
         } else {
           id = response.data.payload._doc._id;
           code = response.data.payload._doc.CompetitionCode;
         }
         this.$router.push({ name: 'View Competition', params: { id, code } });
       })
-      .catch((response) => {
+      .catch(response => {
         console.log('Response => ', response);
       });
   }
@@ -263,24 +260,30 @@ export default class ComponentForm extends Vue {
     this.openClubModal = false;
     if (event) {
       const competitionID = this.$route.params['id'];
-      const compCode = this.$route.params['code'].toUpperCase();
+      let compCode;
+
+      if (Array.isArray(this.$route.params['code'])) {
+        compCode = this.$route.params['code'][0].toUpperCase();
+      } else {
+        compCode = this.$route.params['code'].toUpperCase();
+      }
 
       this.$axios
         .post(`/competitions/${competitionID}/add-club`, {
           clubId: event.id,
-          leagueCode: compCode,
+          leagueCode: compCode
         })
-        .then((response) => {
+        .then(response => {
           console.log('Successfully added club to competition => ', response);
           // this.$router.push('/competitions');
         })
-        .catch((response) => {
+        .catch(response => {
           console.log('Error deleting comp =>', response.data);
         });
     }
   }
 
-  private deleteCompetition() {
+  deleteCompetition() {
     const answer = confirm(
       'Are you sure you want to delete ' + this.form.Name + '?!!'
     );
@@ -290,11 +293,11 @@ export default class ComponentForm extends Vue {
 
       this.$axios
         .delete(`/competitions/${competitionID}`)
-        .then((response) => {
+        .then(response => {
           console.log('Successfully deleted competition => ', response);
           this.$router.push('/a/competitions');
         })
-        .catch((response) => {
+        .catch(response => {
           console.log('Error deleting comp =>', response.data);
         });
     }

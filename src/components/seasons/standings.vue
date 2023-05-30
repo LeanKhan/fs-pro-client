@@ -34,7 +34,7 @@ export default class Standings extends Vue {
   // private Table: IWeek['Table'] =
   // this.WeekStandings.Table || this.WeekStandings;
 
-  private headers: any[] = [
+  headers: any[] = [
     {
       text: 'Club',
       align: 'start',

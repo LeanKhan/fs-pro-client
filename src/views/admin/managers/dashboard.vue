@@ -3,12 +3,10 @@
     <v-row>
       <v-col cols="12">
         <v-card>
-          <v-toolbar flat color="indigo darken-1">
-            <v-toolbar-title class="ml-1">
-              Dashboard
-            </v-toolbar-title>
+          <v-toolbar flat color="indigo-darken-1">
+            <v-toolbar-title class="ml-1">Dashboard</v-toolbar-title>
 
-            <v-spacer></v-spacer>
+            <v-spacer />
 
             <v-btn append-icon="mdi-plus" color="success" to="/a/managers/new">
               New
@@ -18,24 +16,24 @@
       </v-col>
 
       <v-col cols="12">
-        <managers-table :managers="managers"></managers-table>
+        <managers-table :managers="managers" />
       </v-col>
     </v-row>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-facing-decorator';
 import ManagersTable from '@/components/managers/managers-table.vue';
 // import { Player } from '@/interfaces/player';
 
 @Component({
   components: {
-    ManagersTable,
-  },
+    ManagersTable
+  }
 })
 export default class ManagersDashboard extends Vue {
-  private managers: any[] = [];
+  managers: any[] = [];
 
   public mounted() {
     this.$axios

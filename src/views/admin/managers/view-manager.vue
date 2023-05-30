@@ -1,16 +1,12 @@
 <template>
   <div>
     <v-card>
-      <v-toolbar flat color="indigo darken-1">
+      <v-toolbar flat color="indigo-darken-1">
         <v-btn icon @click="goBack">
-          <v-icon>
-            mdi-arrow-left
-          </v-icon>
+          <v-icon>mdi-arrow-left</v-icon>
         </v-btn>
 
-        <v-toolbar-title class="ml-1">
-          View Manager
-        </v-toolbar-title>
+        <v-toolbar-title class="ml-1">View Manager</v-toolbar-title>
       </v-toolbar>
     </v-card>
 
@@ -25,17 +21,17 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-facing-decorator';
 
-@Component
+@Component({})
 export default class ViewManager extends Vue {
-  private goBack() {
+  goBack() {
     this.$router.back();
   }
 
-  private manager = {};
+  manager: any = {};
 
-  private mounted(): void {
+  mounted(): void {
     const managerId = this.$route.params['id'];
     // const clubCode = this.$route.params['code'];
     this.$axios

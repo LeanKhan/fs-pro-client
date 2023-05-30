@@ -4,14 +4,14 @@
       <!-- // Toolbar -->
       <v-toolbar>
         <!-- Current day -->
-        <v-toolbar-title class="subtitle-1 font-weight-bold indigo--text">
+        <v-toolbar-title class="text-subtitle-1 font-weight-bold text-indigo">
           Current Calendar: {{ calendar.YearString }}
         </v-toolbar-title>
 
         <v-toolbar-items>
           <v-btn
-            color="warning"
             v-if="calendar.allSeasonsCompleted"
+            color="warning"
             @click="endYear()"
           >
             END YEAR
@@ -32,27 +32,20 @@
               New Calendar Year
             </v-btn>
             <br />
-            <v-checkbox
-              v-model="randomMonth"
-              label="Random Month"
-              hint="Random Month like 'CGB'"
-            ></v-checkbox>
+            <span class="hint">Random Month like 'CGB'</span>
+            <v-checkbox v-model="randomMonth" label="Random Month" />
           </v-col>
           <v-col cols="6">
-            <v-input readonly value="2020"></v-input>
+            <v-input readonly model-value="2020" />
           </v-col>
         </v-row>
       </v-card-text>
 
-      <v-snackbar color="success" v-model="success">
-        success!
-      </v-snackbar>
+      <v-snackbar v-model="success" color="success">success!</v-snackbar>
     </v-card>
 
     <v-card>
-      <v-card-title>
-        Calendars
-      </v-card-title>
+      <v-card-title>Calendars</v-card-title>
 
       <v-card-text>
         <ul>
@@ -63,14 +56,12 @@
               {{ cndr.isActive ? 'Active' : 'Not Active' }}
             </v-chip>
 
-            <v-chip small v-if="cndr.isEnded">
-              Ended
-            </v-chip>
+            <v-chip v-if="cndr.isEnded" small>Ended</v-chip>
 
             <v-btn
               v-if="cndr.Days && cndr.Days.length > 0"
-              text
-              small
+              variant="text"
+              size="small"
               @click="startCalendarYear(cndr.YearString, cndr._id)"
             >
               Start Year
@@ -78,8 +69,8 @@
 
             <v-btn
               v-else-if="!cndr.Days || cndr.Days.length == 0"
-              text
-              small
+              variant="text"
+              size="small"
               class="ml-2"
               color="accent"
               @click="setupAndStartCalendarYear(cndr.YearString, cndr._id)"
@@ -92,8 +83,8 @@
     </v-card>
 
     <!-- loading overlay -->
-    <v-overlay :value="loading">
-      <v-progress-circular indeterminate size="68"></v-progress-circular>
+    <v-overlay :model-value="loading">
+      <v-progress-circular indeterminate size="68" />
     </v-overlay>
 
     <v-snackbar v-model="toast.show" :timeout="3000" :color="toast.color">
@@ -103,28 +94,28 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-facing-decorator';
 
-@Component
+@Component({})
 export default class Calendar extends Vue {
-  private month = '';
+  month = '';
 
-  private success = false;
+  success = false;
 
-  private loading = false;
+  loading = false;
 
-  private calendars: any = [];
+  calendars: any = [];
 
-  private response: any = '';
+  response: any = '';
 
-  private randomMonth = false;
+  randomMonth = false;
 
-  private showToast = false;
+  showToast = false;
   // TODO: make this a global service!
-  private toast = {
+  toast = {
     show: false,
     color: 'success',
-    message: 'Inside Calendar!',
+    message: 'Inside Calendar!'
   };
 
   get currentDay() {
@@ -135,7 +126,7 @@ export default class Calendar extends Vue {
     return this.$store.state.calendar;
   }
 
-  private createNewYear() {
+  createNewYear() {
     this.loading = true;
 
     this.$axios
@@ -146,7 +137,7 @@ export default class Calendar extends Vue {
         this.toast = {
           show: true,
           color: 'success',
-          message: 'Calendar created successfully!',
+          message: 'Calendar created successfully!'
         };
 
         this.getCalendars();
@@ -159,7 +150,7 @@ export default class Calendar extends Vue {
       });
   }
 
-  private getCurrentCalendar() {
+  getCurrentCalendar() {
     this.$axios
       .post('/calendar/current')
       .then(response => {
@@ -170,7 +161,7 @@ export default class Calendar extends Vue {
       });
   }
 
-  private getCalendars() {
+  getCalendars() {
     this.$axios
       .get('/calendar/calendars')
       .then(response => {
@@ -181,7 +172,35 @@ export default class Calendar extends Vue {
       });
   }
 
-  private getCompetitions() {
+  endYear() {
+    const ans = confirm('Are you sure you want to end this Year?');
+
+    if (!ans) return false;
+
+    this.loading = true;
+    this.$axios
+      .post(`/calendar/${this.calendar._id}/end`)
+      .then(response => {
+        if (response.data.success) {
+          console.log(response.data);
+
+          // this.calendar = response.data.payload;
+          // this.ended = true;
+
+          // Well, set new current Calendar! This should return null...
+          this.$store.dispatch('SET_CALENDAR');
+        }
+      })
+      .catch(() => {
+        console.log('Error ending Calendar => ');
+        // this.calendar = response;
+      })
+      .finally(() => {
+        this.loading = false;
+      });
+  }
+
+  getCompetitions() {
     this.$axios
       .get('/seasons?started=false')
       .then(response => {
@@ -194,7 +213,7 @@ export default class Calendar extends Vue {
 
   // TODO: make this page more usefule and add more feedback for users...
 
-  private startCalendarYear(year: string, id: string) {
+  startCalendarYear(year: string, id: string) {
     this.loading = true;
     this.$axios
       .post(`/calendar/${year}/${id}/start`)
@@ -209,7 +228,7 @@ export default class Calendar extends Vue {
         this.toast = {
           show: true,
           color: 'success',
-          message: 'Year started successfully!',
+          message: 'Year started successfully!'
         };
 
         this.$store.dispatch('SET_CALENDAR');
@@ -222,7 +241,7 @@ export default class Calendar extends Vue {
       });
   }
 
-  private setupAndStartCalendarYear(year: string, id: string) {
+  setupAndStartCalendarYear(year: string, id: string) {
     this.loading = true;
     this.$axios
       .post(`/calendar/${year}/${id}/setup-and-start`)
@@ -237,7 +256,7 @@ export default class Calendar extends Vue {
         this.toast = {
           show: true,
           color: 'success',
-          message: 'Calendar Year setup & started successfully!',
+          message: 'Calendar Year setup & started successfully!'
         };
 
         this.$store.dispatch('SET_CALENDAR');
@@ -248,7 +267,7 @@ export default class Calendar extends Vue {
         this.toast = {
           show: true,
           color: 'error',
-          message: 'Error setting up & starting Year!',
+          message: 'Error setting up & starting Year!'
         };
       })
       .finally(() => {

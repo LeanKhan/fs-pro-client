@@ -1,35 +1,33 @@
 <template>
   <div>
     <!-- For the stats gan -->
-    <v-simple-table v-if="matchDetails">
-      <template v-slot:default>
+    <v-table v-if="matchDetails">
+      <template #default>
         <tr>
           <td>
             <v-avatar tile size="30px">
-              <v-icon style="font-size: 30px; height: 30px" large>
+              <v-icon style="font-size: 30px; height: 30px" size="large">
                 ${{ home }}
               </v-icon>
             </v-avatar>
           </td>
 
-          <td>
-            -
-          </td>
+          <td>-</td>
 
           <td>
             <v-avatar tile size="30px">
-              <v-icon style="font-size: 30px; height: 30px" large>
+              <v-icon style="font-size: 30px; height: 30px" size="large">
                 ${{ away }}
               </v-icon>
             </v-avatar>
           </td>
         </tr>
-        <tr class="pa-0" v-for="(stat, i) in statLabels" :key="i">
+        <tr v-for="(stat, i) in statLabels" :key="i" class="pa-0">
           <td class="pa-0">
             {{ matchDetails.Home[stat.key] }}
           </td>
 
-          <td class="font-weight-bold body-2 white--text text-center pa-0">
+          <td class="font-weight-bold text-body-2 text-white text-center pa-0">
             {{ stat.label }}
           </td>
 
@@ -38,25 +36,25 @@
           </td>
         </tr>
       </template>
-    </v-simple-table>
+    </v-table>
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'vue-facing-decorator';
 @Component({})
 export default class Results extends Vue {
   @Prop({ required: true, type: String }) home!: any;
   @Prop({ required: true, type: String }) away!: any;
   @Prop({ required: true, type: Object }) matchDetails!: any;
 
-  private statLabels = [
+  statLabels = [
     { label: 'Goals', key: 'Goals' },
     { label: 'Possession', key: 'Possession' },
     { label: 'Passes', key: 'Passes' },
     { label: 'Shots on Target', key: 'ShotsOnTarget' },
     { label: 'Fouls', key: 'Fouls' },
     { label: 'Yellow Cards', key: 'YellowCards' },
-    { label: 'Red Cards', key: 'RedCards' },
+    { label: 'Red Cards', key: 'RedCards' }
   ];
 
   /** MatchSide Details

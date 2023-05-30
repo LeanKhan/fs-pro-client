@@ -4,13 +4,13 @@
   <v-list>
     <v-list-item-group
       v-model="selectedMatch"
-      :mandatory="MandatorySelect"
+      :mandatory="mandatorySelect"
       two-line
       color="primary"
-      @change="$emit('match-selected', props.Matches[selectedMatch])"
+      @change="$emit('match-selected', props.matches[selectedMatch])"
     >
       <v-list-item
-        v-for="(match, i) in props.Matches"
+        v-for="(match, i) in props.matches"
         :key="i"
         :title="match.Fixture.Title + ' -> ' + match.Competition"
       >
@@ -21,7 +21,7 @@
         </v-list-item-icon>
 
         <v-list-item-content>
-          <div v-if="Detail == 'details'">
+          <div v-if="detail == 'details'">
             <v-list-item-title>
               {{ match.Fixture.Title }}
             </v-list-item-title>
@@ -29,7 +29,7 @@
             <v-list-item-subtitle v-text="match.Fixture.Competition" />
           </div>
 
-          <div v-if="Detail == 'results' && match.Fixture.Details">
+          <div v-if="detail == 'results' && match.Fixture.Details">
             {{ match.Fixture.Details.HomeTeamScore }} :
             {{ match.Fixture.Details.AwayTeamScore }}
           </div>
@@ -48,16 +48,16 @@ const $emit = defineEmits(['match-selected']);
 const selectedMatch = ref<any>(null);
 
 const props = defineProps({
-  Matches: {
+  matches: {
     type: Array as () => ICalendarMatch[],
     required: true
   },
-  Detail: {
+  detail: {
     type: String as () => 'details' | 'results',
     required: false,
     default: 'details'
   },
-  MandatorySelect: {
+  mandatorySelect: {
     type: Boolean,
     required: false,
     default: true

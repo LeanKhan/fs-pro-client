@@ -1,24 +1,32 @@
-import { RootState } from '.';
-import { Module } from 'vuex';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { reactive } from 'vue';
+import { io } from 'socket.io-client';
 
-export interface SocketState {
-  poop: string;
-}
+export const state = reactive({
+  connected: false,
+  fooEvents: [] as any[],
+  barEvents: [] as any[]
+});
 
-export const state: SocketState = {
-  poop: '',
-};
+// "undefined" means the URL will be computed from the `window.location` object
+const URL =
+  process.env.NODE_ENV === 'production'
+    ? 'http://localhost:3000'
+    : (import.meta.env.VITE_APP_API_BASE_URL as string);
+export const socket = io(URL, { autoConnect: false });
 
-const socket: Module<SocketState, RootState> = {
-  namespaced: true,
-  state,
-  getters: {
-    poop: state => {
-      return state.poop;
-    },
-  },
-  mutations: {},
-  actions: {},
-};
+socket.on('connect', () => {
+  state.connected = true;
+});
 
-export default socket;
+socket.on('disconnect', () => {
+  state.connected = false;
+});
+
+socket.on('foo', (...args) => {
+  return state.fooEvents.push(args);
+});
+
+socket.on('bar', (...args) => {
+  return state.barEvents.push(args);
+});

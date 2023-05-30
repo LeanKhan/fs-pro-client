@@ -2,16 +2,16 @@
   <v-card>
     <v-card-title>
       Players
-      <v-spacer></v-spacer>
+      <v-spacer />
       <v-text-field
         v-model="search"
         append-icon="mdi-magnify"
-        color="indigo darken-1"
+        color="indigo-darken-1"
         label="Search"
         single-line
         hide-details
         :clearable="true"
-      ></v-text-field>
+      />
       <v-btn
         v-if="viewClub"
         append-icon="mdi-plus"
@@ -35,27 +35,26 @@
       loading-text="Fetching Players..."
       class="elevation-1"
     >
-      <template v-slot:item.Id="{ item }">
+      <template #item.Id="{ item }">
         <v-img
-          position="top"
           :src="`${api}/img/clubs/kits/${item.ClubCode}-kit.png`"
           max-height="50px"
           max-width="120px"
-        ></v-img>
+        />
       </template>
-      <template v-slot:item.Rating="{ item }">
+      <template #item.Rating="{ item }">
         <v-chip :color="getColor(item.Rating)" dark>
           {{ Math.round(item.Rating) }}
         </v-chip>
       </template>
 
-      <template v-slot:item.Nationality="{ item }">
-        {{ item.Nationality ? item.Nationality.Name : "-" }}
+      <template #item.Nationality="{ item }">
+        {{ item.Nationality ? item.Nationality.Name : '-' }}
       </template>
 
-      <template v-slot:item.isSigned="{ item }">
+      <template #item.isSigned="{ item }">
         <v-chip
-          style="background-color: transparent;"
+          style="background-color: transparent"
           :color="item.isSigned ? 'green' : 'orange'"
         >
           {{ item.isSigned }}
@@ -63,43 +62,37 @@
       </template>
 
       <!-- Players actions -->
-      <template v-slot:item.Actions="{ item }">
+      <template #item.Actions="{ item }">
         <v-btn
-          @click="viewPlayer(item._id, item.PlayerID)"
           icon
-          color="success lighten-2"
+          color="success-lighten-2"
+          @click="viewPlayer(item._id, item.PlayerID)"
         >
-          <v-icon small>
-            mdi-eye-outline
-          </v-icon>
+          <v-icon size="small">mdi-eye-outline</v-icon>
         </v-btn>
         <v-btn
           icon
-          color="blue lighten-2"
+          color="blue-lighten-2"
           @click="updatePlayer(item._id, item.PlayerID)"
         >
-          <v-icon small>
-            mdi-pencil-outline
-          </v-icon>
+          <v-icon size="small">mdi-pencil-outline</v-icon>
         </v-btn>
         <!-- remove player -->
         <v-btn
           v-if="viewClub"
-          @click="removePlayer(item._id)"
           icon
-          color="red lighten-2"
+          color="red-lighten-2"
+          @click="removePlayer(item._id)"
         >
-          <v-icon small>
-            mdi-delete-outline
-          </v-icon>
+          <v-icon size="small">mdi-delete-outline</v-icon>
         </v-btn>
       </template>
     </v-data-table>
   </v-card>
 </template>
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
-import { Player } from '@/interfaces/player';
+import { Component, Vue, Prop } from 'vue-facing-decorator';
+import { type Player } from '@/interfaces/player';
 import { apiUrl } from '@/store';
 
 @Component({})
@@ -107,17 +100,17 @@ export default class PlayersTable extends Vue {
   @Prop({ required: true }) readonly players!: Player[];
   @Prop({ required: true, default: false }) readonly viewClub!: boolean;
 
-  private api = apiUrl;
+  api = apiUrl;
 
-  private headers: any[] = [
+  headers: any[] = [
     {
       text: 'First Name',
 
-      value: 'FirstName',
+      value: 'FirstName'
     },
     {
       text: 'Last Name',
-      value: 'LastName',
+      value: 'LastName'
     },
     { text: 'Club', value: 'ClubCode' },
     { text: 'Age', value: 'Age', filterable: false },
@@ -133,15 +126,15 @@ export default class PlayersTable extends Vue {
         if (!this.isSigned) return true;
 
         return value == this.isSigned;
-      },
+      }
     },
     { text: 'Rating', value: 'Rating', filterable: false },
-    { text: 'Actions', value: 'Actions', filterable: false, sortable: false },
+    { text: 'Actions', value: 'Actions', filterable: false, sortable: false }
   ];
 
-  private search = '';
+  search = '';
 
-  private isSigned = null;
+  isSigned = null;
 
   public getColor(rating: number): string {
     if (rating >= 80) return 'green';

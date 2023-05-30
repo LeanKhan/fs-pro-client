@@ -1,10 +1,10 @@
 <template>
   <v-card>
-    <v-card-title class="title font-weight-regular justify-space-between">
+    <v-card-title class="text-h6 font-weight-regular justify-space-between">
       <span>{{ currentTitle }}</span>
       <v-avatar
-        color="primary lighten-2"
-        class="subheading white--text"
+        color="primary-lighten-2"
+        class="subheading text-white"
         size="40"
       >
         <v-icon color="white">
@@ -18,37 +18,37 @@
           <v-card>
             <v-card-text>
               <v-text-field
+                v-model="form.FullName"
                 required
                 type="text"
                 label="Full Name"
                 color="green"
-                v-model="form.FullName"
-              ></v-text-field>
+              />
 
               <v-text-field
+                v-model="form.Username"
                 required
                 type="text"
                 label="Username"
                 color="green"
-                v-model="form.Username"
-              ></v-text-field>
+              />
 
               <v-text-field
+                v-model="form.Password"
                 required
                 type="text"
                 label="Password"
                 color="green"
-                v-model="form.Password"
-              ></v-text-field>
+              />
 
               <v-text-field
+                v-model="confirmPassword"
                 :error="confirmPassword != form.Password"
                 required
                 type="text"
                 label="Confirm Password"
                 color="green"
-                v-model="confirmPassword"
-              ></v-text-field>
+              />
             </v-card-text>
           </v-card>
         </form>
@@ -61,25 +61,25 @@
                 Join
               </v-btn>
             </v-card-actions> -->
-          <v-card flat tile>
+          <v-card flat rounded="0">
             <v-list>
               <v-list-item-group v-model="form.Clubs" multiple>
                 <v-list-item
                   v-for="(club, i) in visibleClubs"
+                  :key="i"
                   :value="club._id"
                   :input-value="
                     form.Clubs.filter(c => c === club._id).length > 0
                   "
-                  :key="i"
                 >
-                  <template v-slot:default="{ active, toggle }">
+                  <template #default="{ active, toggle }">
                     <v-list-item-action>
                       <v-checkbox
                         color="green"
                         :true-value="club._id"
-                        :input-value="active"
+                        :model-value="active"
                         @click="toggle"
-                      ></v-checkbox>
+                      />
                     </v-list-item-action>
 
                     <v-list-item-content>
@@ -93,7 +93,7 @@
                       <v-img
                         :src="`${api}/img/clubs/logos/${club.ClubCode}.png`"
                         width="40px"
-                      ></v-img>
+                      />
                     </v-list-item-avatar>
                   </template>
                 </v-list-item>
@@ -101,24 +101,26 @@
             </v-list>
             <v-card-actions>
               <v-pagination
-                circle
                 v-model="page"
+                rounded
                 :length="Math.ceil(clubs.length / perPage)"
-              ></v-pagination>
+              />
             </v-card-actions>
           </v-card>
         </v-card-text>
       </v-window-item>
     </v-window>
 
-    <v-divider></v-divider>
+    <v-divider />
 
     <v-card-actions>
-      <v-btn :disabled="step === 1" text @click="step--">
-        Back
-      </v-btn>
-      <v-spacer></v-spacer>
-      <v-btn color="primary" depressed @click="step == 2 ? register() : step++">
+      <v-btn :disabled="step === 1" variant="text" @click="step--">Back</v-btn>
+      <v-spacer />
+      <v-btn
+        color="primary"
+        variant="flat"
+        @click="step == 2 ? register() : step++"
+      >
         {{ step == 2 ? 'Submit' : 'Next' }}
       </v-btn>
     </v-card-actions>
@@ -126,24 +128,24 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-facing-decorator';
 import { apiUrl } from '@/store';
 @Component
 export default class Register extends Vue {
   public api: string = apiUrl;
-  private form = {
+  form = {
     FullName: '',
     Username: '',
     Password: '',
-    Clubs: [],
+    Clubs: []
   };
-  private clubs = [];
-  private page = 1;
-  private perPage = 5;
-  // private pages = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
-  private confirmPassword = '';
-  private step = 1;
-  private get currentTitle() {
+  clubs = [];
+  page = 1;
+  perPage = 5;
+  //  pages = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+  confirmPassword = '';
+  step = 1;
+  get currentTitle() {
     switch (this.step) {
       case 1:
         return 'Account Details';
@@ -153,7 +155,7 @@ export default class Register extends Vue {
         return 'Account created';
     }
   }
-  private get currentIcon() {
+  get currentIcon() {
     switch (this.step) {
       case 1:
         return 'mdi-account';
@@ -164,13 +166,13 @@ export default class Register extends Vue {
     }
   }
 
-  private get visibleClubs() {
+  get visibleClubs() {
     return this.clubs.slice(
       (this.page - 1) * this.perPage,
       this.page * this.perPage
     );
   }
-  private getClubs() {
+  getClubs() {
     const query = JSON.stringify({ User: null });
     const select = JSON.stringify('Name ClubCode _id');
     this.$axios
@@ -182,7 +184,7 @@ export default class Register extends Vue {
         console.log('Error! => ', err);
       });
   }
-  private register() {
+  register() {
     this.$axios
       .post(
         '/users/join',
@@ -199,7 +201,7 @@ export default class Register extends Vue {
             isAdmin: response.data.payload.isAdmin,
             session: response.data.payload.Session,
             avatar: response.data.payload.Avatar,
-            fullname: response.data.payload.FullName,
+            fullname: response.data.payload.FullName
           });
 
           this.$socket.client.emit('authenticate');

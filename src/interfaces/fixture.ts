@@ -1,5 +1,5 @@
 export interface IFixture {
-Competition: any;
+  Competition: any;
   _id: string;
   Title: string;
   FixtureID: string;

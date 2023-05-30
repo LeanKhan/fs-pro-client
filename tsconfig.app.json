@@ -23,6 +23,8 @@
     "types": ["vue/ref-macros", "vuetify", "@types/node"],
     "useDefineForClassFields": true,
     "skipLibCheck": true,
+    "noImplicitAny": false,
+    "experimentalDecorators": true,
 
     /* Bundler mode */
     "moduleResolution": "bundler",
